@@ -1,67 +1,78 @@
-import React from "react";
-import "./Home.css"; // Importamos o CSS exclusivo desta página
+import { Link } from "react-router-dom"; // Importamos o Link para navegação SPA
+import "./Home.css";
 
 export function Home() {
+  // Estrutura de Dados atualizada com o "path" (URL amigável)
+  const servicesList = [
+    {
+      id: 1,
+      title: "Lavagem Premium",
+      description:
+        "Limpeza profunda e higienização interna com produtos específicos que não agridem o material original do seu sneaker.",
+      icon: "🧼",
+      path: "/servicos/lavagem-premium", // Nova propriedade
+    },
+    {
+      id: 2,
+      title: "Pintura & Restauração",
+      description:
+        "Devolvemos a cor original de fábrica ou removemos arranhões e desgastes profundos do couro e camurça.",
+      icon: "🎨",
+      path: "/servicos/pintura-restauracao",
+    },
+    {
+      id: 3,
+      title: "Troca de Solado",
+      description:
+        "Solados amarelados, trincados ou esfarelando? Fazemos a substituição completa garantindo estrutura e conforto.",
+      icon: "👟",
+      path: "/servicos/troca-solado",
+    },
+    {
+      id: 4,
+      title: "Customização",
+      description:
+        "Transforme seu tênis em uma obra de arte exclusiva. Nossos artistas criam designs únicos de acordo com a sua ideia.",
+      icon: "✨",
+      path: "/servicos/customizacao",
+    },
+  ];
+
   return (
     <div className="home-container">
-      {/* HEADER: Elemento de navegação no topo */}
-      <header className="home-header">
-        <h2 className="logo">NEXUS</h2>
-        <nav className="home-nav">
-          <a href="#">Início</a>
-          <a href="#">Sobre</a>
-          <a href="#">Contato</a>
-          <button className="btn-outline">Login</button>
-        </nav>
-      </header>
-
-      {/* MAIN: O conteúdo principal da página */}
       <main className="home-main">
-        {/* Hero Section: A seção principal de chamariz do site */}
         <section className="hero-section">
           <h1>
-            Bem-vindo ao <span className="text-accent">Nexus</span>
+            Nova vida para os seus <span className="text-accent">Sneakers</span>
           </h1>
           <p>
-            Esta é uma página inicial padrão estruturada com elementos clássicos
-            de Engenharia Front-end. Pronta para receber suas cores e regras de
-            negócio.
+            Especialistas na estética e restauração de tênis. Da lavagem
+            minuciosa à customização exclusiva, cuidamos do seu par favorito.
           </p>
-          <div className="hero-buttons">
-            <button className="btn-primary">Começar Agora</button>
-            <button className="btn-secondary">Saiba Mais</button>
-          </div>
         </section>
 
-        {/* Cards Section: Elementos em grade (Grid) para exibir recursos */}
-        <section className="features-section">
-          <div className="card">
-            <h3>Arquitetura Limpa</h3>
-            <p>
-              Componentes separados e responsabilidade única facilitam a
-              manutenção do código.
-            </p>
-          </div>
-          <div className="card">
-            <h3>Design Tokens</h3>
-            <p>
-              Utilização de variáveis CSS para facilitar a mudança global de
-              cores da interface.
-            </p>
-          </div>
-          <div className="card">
-            <h3>Alta Performance</h3>
-            <p>
-              Construído com Vite e React, garantindo carregamento rápido no
-              Client-Side.
-            </p>
+        <section id="servicos" className="services-container">
+          <h2 className="section-title">Nossos Serviços</h2>
+
+          <div className="features-section">
+            {servicesList.map((service) => (
+              <div className="card" key={service.id}>
+                <div className="card-icon">{service.icon}</div>
+                <h3>{service.title}</h3>
+                <p>{service.description}</p>
+
+                {/* NOVO: Botão de redirecionamento */}
+                <Link to={service.path} className="btn-card">
+                  Ver Detalhes &rarr;
+                </Link>
+              </div>
+            ))}
           </div>
         </section>
       </main>
 
-      {/* FOOTER: Rodapé da página */}
       <footer className="home-footer">
-        <p>&copy; 2026 Nexus-PI. Todos os direitos reservados.</p>
+        <p>&copy; 2026 Nexus Sneaker Care. Todos os direitos reservados.</p>
       </footer>
     </div>
   );
