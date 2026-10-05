@@ -1,0 +1,120 @@
+.custom-service-container {
+  max-width: 800px; /* Reduzi o tamanho máximo pois o formulário sozinho não precisa ser tão largo quanto uma tabela */
+  margin: 0 auto;
+  padding: 40px 24px;
+  color: var(--text);
+}
+
+.custom-service-header {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 20px;
+  margin-bottom: 32px;
+}
+
+.btn-back {
+  display: inline-block;
+  margin-bottom: 16px;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity 0.3s;
+}
+
+.btn-back:hover {
+  opacity: 0.8;
+}
+
+.custom-service-header h1 {
+  margin: 0;
+  font-size: 32px;
+  color: var(--text-h);
+}
+
+.custom-service-header p {
+  margin: 8px 0 0 0;
+  color: var(--text);
+  font-size: 16px;
+}
+
+.custom-form-card {
+  background-color: var(--social-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 30px;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow);
+}
+
+.custom-form-card h2 {
+  margin-top: 0;
+  font-size: 20px;
+  color: var(--text-h);
+  margin-bottom: 24px;
+}
+
+/* Grid System: Define como os campos se distribuem na tela. 
+   O auto-fit com minmax(220px, 1fr) garante que fique responsivo em celulares */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-h);
+  margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: var(--bg);
+  color: var(--text-h);
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
+  font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+/* Força um elemento do Grid a ocupar todas as colunas disponíveis */
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.btn-submit {
+  background-color: var(--accent);
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
+  width: 100%; /* Em formulários menores, botões 100% aumentam a área de clique */
+  margin-top: 10px;
+}
+
+.btn-submit:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
