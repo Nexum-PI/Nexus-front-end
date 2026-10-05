@@ -1,17 +1,18 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Home } from "./pages/Home";
 import { ServiceDetails } from "./pages/ServiceDetails";
+import { WashService } from "./pages/WashService"; // Importamos a nova página
 
 function App() {
   return (
-    // BrowserRouter "envolve" a aplicação para que ela consiga ler a URL do navegador
     <BrowserRouter>
-      {/* Routes é onde definimos nossos caminhos */}
       <Routes>
-        {/* Rota principal (Home) */}
         <Route path="/" element={<Home />} />
 
-        {/* Rota dinâmica. O ":slug" atua como uma variável na URL */}
+        {/* ROTA ESPECÍFICA: Intercepta o clique em "Lavagem Premium" */}
+        <Route path="/servicos/lavagem-premium" element={<WashService />} />
+
+        {/* ROTA DINÂMICA: Serve para os outros serviços que ainda não têm página própria */}
         <Route path="/servicos/:slug" element={<ServiceDetails />} />
       </Routes>
     </BrowserRouter>
