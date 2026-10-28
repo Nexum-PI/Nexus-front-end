@@ -1,0 +1,119 @@
+/* Estilo compartilhado por Login e Cadastro (usa as variáveis do index.css) */
+
+.auth-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  text-align: left;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background-color: var(--social-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: var(--shadow);
+}
+
+.auth-card .btn-back {
+  display: inline-block;
+  margin-bottom: 16px;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity 0.3s;
+}
+
+.auth-card .btn-back:hover {
+  opacity: 0.8;
+}
+
+.auth-card h1 {
+  margin: 0;
+  font-size: 32px;
+  color: var(--text-h);
+}
+
+.auth-card > p {
+  margin: 8px 0 24px 0;
+  color: var(--text);
+  font-size: 16px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.auth-card .form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-card .form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-h);
+  margin-bottom: 8px;
+}
+
+.auth-card .form-group input {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  background-color: var(--bg);
+  color: var(--text-h);
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
+}
+
+.auth-card .form-group input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+.auth-card .btn-submit {
+  background-color: var(--accent);
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
+}
+
+.auth-card .btn-submit:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.auth-card .auth-switch {
+  margin: 24px 0 0 0;
+  text-align: center;
+  font-size: 15px;
+  color: var(--text);
+}
+
+.auth-card .auth-switch a {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-card .auth-switch a:hover {
+  text-decoration: underline;
+}

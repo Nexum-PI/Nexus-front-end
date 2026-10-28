@@ -8,7 +8,7 @@
 }
 
 /* =========================================
-   HEADER (CABEÇALHO) - CORRIGIDO
+  HEADER (CABEÇALHO) - CORRIGIDO
    ========================================= */
 .home-header {
   display: flex;
@@ -47,7 +47,7 @@
 }
 
 /* =========================================
-   MAIN CONTENT & HERO SECTION
+  MAIN CONTENT & HERO SECTION
    ========================================= */
 .home-main {
   flex: 1;
@@ -90,7 +90,7 @@
 }
 
 /* =========================================
-   SERVICES SECTION & CARDS
+  SERVICES SECTION & CARDS
    ========================================= */
 .services-container {
   display: flex;
@@ -205,7 +205,7 @@ button {
 }
 
 /* =========================================
-   FOOTER (RODAPÉ)
+  FOOTER (RODAPÉ)
    ========================================= */
 .home-footer {
   text-align: center;
@@ -214,4 +214,16 @@ button {
   color: var(--text);
   font-size: 0.9rem;
   margin-top: 40px;
+}
+.home-nav a.btn-nav {
+  background-color: var(--accent);
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.home-nav a.btn-nav:hover {
+  color: #fff;
+  opacity: 0.9;
 }

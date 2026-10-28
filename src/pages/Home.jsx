@@ -36,7 +36,7 @@ export function Home() {
 
   return (
     <div className="home-container">
-      {/* CABEÇALHO ATUALIZADO (Sem o botão Agendar) */}
+      {/* CABEÇALHO ATUALIZADO (com Entrar e Cadastre-se) */}
       <header className="home-header">
         <h2 className="logo">NEXUS<span className="text-accent">.</span>CARE</h2>
         <nav className="home-nav">
@@ -46,6 +46,10 @@ export function Home() {
           <Link to="/gerenciamento" className="text-accent" style={{ fontWeight: '700' }}>
             Painel Admin
           </Link>
+
+          {/* NOVOS: Login e Cadastro */}
+          <Link to="/login">Entrar</Link>
+          <Link to="/cadastro" className="btn-nav">Cadastre-se</Link>
         </nav>
       </header>
 
