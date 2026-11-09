@@ -1,6 +1,8 @@
 /* Consulta de pedido pelo cliente (usa as variáveis do index.css) */
 
 .track-container {
+  width: 100%;
+  box-sizing: border-box;
   max-width: 760px;
   margin: 0 auto;
   padding: 40px 24px;
@@ -68,6 +70,8 @@
 }
 
 .track-search .btn-submit {
+  width: auto; /* os CSS das páginas de serviço também definem .btn-submit com 100% */
+  flex-shrink: 0;
   background-color: var(--accent);
   color: #ffffff;
   border: none;

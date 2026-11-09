@@ -1,4 +1,7 @@
 .management-container {
+  /* #root é flex em coluna: sem largura própria o contêiner encolhe até o conteúdo e estoura no celular */
+  width: 100%;
+  box-sizing: border-box;
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 24px;
