@@ -159,7 +159,35 @@
 .badge-info { background-color: var(--accent-bg); color: var(--accent); }
 .badge-danger { background-color: rgba(239, 68, 68, 0.15); color: #ef4444; }
 
+.badge-default { background-color: var(--border); color: var(--text); }
+
+.text-danger { color: #ef4444; }
+
+/* Status editável pela equipe + avisos derivados do prazo */
+.status-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.status-select {
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.status-select:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
 .btn-action {
+  display: inline-block;
   background-color: transparent;
   border: 1px solid var(--border);
   color: var(--text-h);
@@ -167,6 +195,7 @@
   border-radius: 6px;
   font-size: 13px;
   font-weight: 600;
+  text-decoration: none;
   cursor: pointer;
   transition: all 0.2s;
 }

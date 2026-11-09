@@ -1,31 +1,40 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useOrders } from '../context/useOrders';
+import {
+  ACTIVE_STATUS,
+  STATUS,
+  STATUS_KEYS,
+  formatDate,
+  isDueSoon,
+  isLate,
+} from '../data/orders';
 import './Management.css';
 
 export function Management() {
-  // Simulando dados vindos de um Banco de Dados (Ex: MongoDB ou PostgreSQL)
-  const [pedidos] = useState([
-    { id: 'NX-1042', cliente: 'Carlos Eduardo', modelo: 'Nike Air Force 1', servico: 'Lavagem Premium', status: 'Em Andamento', entrega: '2026-10-16' },
-    { id: 'NX-1043', cliente: 'Mariana Costa', modelo: 'Yeezy Boost 350', servico: 'Lavagem Premium', status: 'Pendente', entrega: '2026-10-18' },
-    { id: 'NX-1044', cliente: 'Rafael Souza', modelo: 'Air Jordan 1', servico: 'Pintura & Restauração', status: 'Concluído', entrega: '2026-10-14' },
-    { id: 'NX-1045', cliente: 'Ana Lima', modelo: 'Vans Old Skool', servico: 'Customização', status: 'Atrasado', entrega: '2026-10-13' },
-    { id: 'NX-1046', cliente: 'Lucas Silva', modelo: 'New Balance 550', servico: 'Troca de Solado', status: 'Pendente', entrega: '2026-10-20' },
-  ]);
+  const { orders, changeStatus } = useOrders();
 
-  // Algoritmos de redução (Reduce) para calcular os resumos métricos dinamicamente
-  const totalPedidos = pedidos.length;
-  const pendentes = pedidos.filter(p => p.status === 'Pendente' || p.status === 'Em Andamento').length;
-  const concluidos = pedidos.filter(p => p.status === 'Concluído').length;
+  // "Hoje" fixo na abertura do painel; usado para calcular atrasos e prazos próximos
+  const [today] = useState(() => new Date());
 
-  // Função utilitária para retornar a classe CSS correta baseada no status
-  const getStatusBadge = (status) => {
-    switch (status) {
-      case 'Concluído': return 'badge-success';
-      case 'Pendente': return 'badge-warning';
-      case 'Em Andamento': return 'badge-info';
-      case 'Atrasado': return 'badge-danger';
-      default: return 'badge-default';
-    }
+  // Atrasado e prazo próximo são derivados da previsão de entrega (expected_at),
+  // não são status gravados no banco.
+  const totalPedidos = orders.length;
+  const emAndamento = orders.filter((p) => ACTIVE_STATUS.includes(p.status)).length;
+  const atrasados = orders.filter((p) => isLate(p, today)).length;
+  const prazoProximo = orders.filter((p) => isDueSoon(p, today)).length;
+  const entregues = orders.filter((p) => p.status === 'DELIVERED').length;
+
+  // Em andamento primeiro, pelos prazos mais curtos; depois os demais
+  const pedidosOrdenados = [...orders].sort((a, b) => {
+    const aAtivo = ACTIVE_STATUS.includes(a.status);
+    const bAtivo = ACTIVE_STATUS.includes(b.status);
+    if (aAtivo !== bAtivo) return aAtivo ? -1 : 1;
+    return a.expectedAt.localeCompare(b.expectedAt);
+  });
+
+  const handleStatusChange = (code, status) => {
+    changeStatus(code, status, 'Status atualizado pela equipe');
   };
 
   return (
@@ -35,29 +44,37 @@ export function Management() {
         <div className="header-titles">
           <Link to="/" className="btn-back">&larr; Voltar para Home</Link>
           <h1>Painel de Gerenciamento</h1>
-          <p>Visão geral e controle de todas as ordens de serviço ativas.</p>
+          <p>Visão geral e controle de todas as ordens de serviço.</p>
         </div>
         <div className="header-actions">
-          {/* Este botão poderia redirecionar para a página de formulário que criamos antes */}
+          {/* Leva às páginas de serviço, onde a equipe abre a ordem */}
           <Link to="/#servicos" className="btn-primary">
             + Nova Ordem
           </Link>
         </div>
       </header>
 
-      {/* Seção de Resumo (Métricas de BI - Business Intelligence básicas) */}
+      {/* Seção de Resumo */}
       <section className="summary-cards">
         <div className="summary-card">
           <h3>Total de Pedidos</h3>
           <span className="summary-value">{totalPedidos}</span>
         </div>
         <div className="summary-card">
-          <h3>Em Andamento / Pendentes</h3>
-          <span className="summary-value text-warning">{pendentes}</span>
+          <h3>Em andamento</h3>
+          <span className="summary-value text-warning">{emAndamento}</span>
         </div>
         <div className="summary-card">
-          <h3>Concluídos (Mês)</h3>
-          <span className="summary-value text-success">{concluidos}</span>
+          <h3>Prazo próximo (até 2 dias)</h3>
+          <span className="summary-value text-warning">{prazoProximo}</span>
+        </div>
+        <div className="summary-card">
+          <h3>Atrasados</h3>
+          <span className="summary-value text-danger">{atrasados}</span>
+        </div>
+        <div className="summary-card">
+          <h3>Entregues</h3>
+          <span className="summary-value text-success">{entregues}</span>
         </div>
       </section>
 
@@ -68,31 +85,57 @@ export function Management() {
           <table className="nexus-table">
             <thead>
               <tr>
-                <th>ID do Pedido</th>
+                <th>Código</th>
                 <th>Cliente</th>
-                <th>Modelo / Serviço</th>
-                <th>Data de Entrega</th>
+                <th>Tênis / Serviço</th>
+                <th>Previsão de Entrega</th>
                 <th>Status</th>
                 <th>Ações</th>
               </tr>
             </thead>
             <tbody>
-              {pedidos.map((pedido) => (
-                <tr key={pedido.id}>
-                  <td className="fw-bold">{pedido.id}</td>
-                  <td>{pedido.cliente}</td>
+              {pedidosOrdenados.map((pedido) => (
+                <tr key={pedido.code}>
+                  <td className="fw-bold">{pedido.code}</td>
+                  <td>{pedido.customerName}</td>
                   <td>
-                    <div className="fw-bold">{pedido.modelo}</div>
-                    <div className="text-muted">{pedido.servico}</div>
+                    {pedido.items.map((item) => (
+                      <div key={`${item.shoe}-${item.service}`}>
+                        <div className="fw-bold">{item.shoe}</div>
+                        <div className="text-muted">{item.service}</div>
+                      </div>
+                    ))}
                   </td>
-                  <td>{pedido.entrega}</td>
+                  <td>{formatDate(pedido.expectedAt)}</td>
                   <td>
-                    <span className={`status-badge ${getStatusBadge(pedido.status)}`}>
-                      {pedido.status}
-                    </span>
+                    <div className="status-cell">
+                      <select
+                        className={`status-select ${STATUS[pedido.status].badge}`}
+                        value={pedido.status}
+                        onChange={(e) => handleStatusChange(pedido.code, e.target.value)}
+                        aria-label={`Status do pedido ${pedido.code}`}
+                      >
+                        {STATUS_KEYS.map((key) => (
+                          <option key={key} value={key}>
+                            {STATUS[key].label}
+                          </option>
+                        ))}
+                      </select>
+                      {isLate(pedido, today) && (
+                        <span className="status-badge badge-danger">Atrasado</span>
+                      )}
+                      {isDueSoon(pedido, today) && (
+                        <span className="status-badge badge-warning">Prazo próximo</span>
+                      )}
+                    </div>
                   </td>
                   <td>
-                    <button className="btn-action">Ver Detalhes</button>
+                    <Link
+                      to={`/acompanhar/${pedido.code}`}
+                      className="btn-action"
+                    >
+                      Ver andamento
+                    </Link>
                   </td>
                 </tr>
               ))}
