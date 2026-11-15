@@ -2,6 +2,9 @@
 // Com `slot.src` preenchido (src/v1/data/media.js) mostra a foto; sem ele,
 // mostra um bloco temporário do mesmo tamanho, para a página não mudar de
 // estrutura quando as fotos definitivas chegarem.
+// Se o arquivo ainda não existir (ou falhar ao carregar), também mostra o
+// bloco temporário: dá para deixar o caminho pronto e subir a foto depois.
+import { useState } from "react";
 
 const BASE_WIDTH = 1600;
 
@@ -17,8 +20,12 @@ export function ImageSlot({
   eager = false, // true só para a imagem do topo da página
   sizes = "100vw",
   showLabel = true,
+  ratio: ratioOverride, // força outra proporção (ex.: card com uma foto só)
 }) {
-  const { src, srcMobile, alt = "", ratio = "4/3", label, position } = slot ?? {};
+  const { src: slotSrc, srcMobile, alt = "", label, position } = slot ?? {};
+  const ratio = ratioOverride ?? slot?.ratio ?? "4/3";
+  const [failedSrc, setFailedSrc] = useState(null);
+  const src = slotSrc && failedSrc !== slotSrc ? slotSrc : null;
   const style = fill ? undefined : { aspectRatio: ratio.replace("/", " / ") };
   const classes = ["v1-slot", fill && "v1-slot--fill", !src && "v1-slot--empty", className]
     .filter(Boolean)
@@ -48,6 +55,7 @@ export function ImageSlot({
       fetchPriority={eager ? "high" : undefined}
       decoding="async"
       style={position ? { objectPosition: position } : undefined}
+      onError={() => setFailedSrc(slotSrc)}
     />
   );
 

@@ -43,15 +43,17 @@ export const MEDIA = {
       "Par de tênis com solado branco novo, visto por baixo",
       { src: "/v1/servicos/solado-novo.webp", position: "50% 50%" },
     ),
-    // TODO: foto da customização em public/v1/servicos/customizacao-depois.webp
+    // Suba a foto com este nome exato em public/v1/servicos/. Enquanto o
+    // arquivo não existir, aparece o bloco temporário.
     customizacao: slot(
       "Serviço 04 · customização",
       "4/3",
-      "Calçado customizado sobre a bancada da loja",
+      "Calçado de camurça caramelo com solado plataforma customizado",
+      { src: "/v1/servicos/customizacao-depois.jpg", position: "50% 62%" },
     ),
   },
 
-  // Antes e depois: as duas fotos de cada caso devem ter enquadramento parecido.
+  // Antes e depois: cada caso mostra as duas fotos inteiras, lado a lado.
   beforeAfter: [
     {
       id: "pintura",
@@ -101,13 +103,24 @@ export const MEDIA = {
       ),
     },
     {
-      // TODO: fotos em public/v1/servicos/customizacao-antes.webp e customizacao-depois.webp
-      // Enquanto o "depois" não tiver foto, o caso fica escondido no carrossel.
+      // Fotos com estes nomes exatos em public/v1/servicos/ (customizacao-antes.jpg
+      // e customizacao-depois.jpg). Sem os arquivos, aparece o bloco temporário.
       id: "customizacao",
       title: "Customização",
       detail: "Solado plataforma aplicado à mão.",
-      before: slot("Antes · customização", "4/5", "Calçado de camurça antes da customização"),
-      after: slot("Depois · customização", "4/5", "O mesmo calçado com o novo solado plataforma"),
+      before: slot(
+        "Antes · customização",
+        "4/5",
+        "Calçado de camurça caramelo com o solado original",
+        {
+          src: "/v1/servicos/customizacao-antes.jpg",
+          position: "40% 70%",
+        },
+      ),
+      after: slot("Depois · customização", "4/5", "O mesmo calçado com o novo solado plataforma", {
+        src: "/v1/servicos/customizacao-depois.jpg",
+        position: "40% 70%",
+      }),
     },
   ],
 

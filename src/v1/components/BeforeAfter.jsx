@@ -1,61 +1,34 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Icon } from "./Icon";
 import { ImageSlot } from "./ImageSlot";
 
-// Comparador antes/depois. O controle é um <input type="range">, então
-// funciona com mouse, toque e teclado (setas) e é lido por leitores de tela.
-// Sem foto de "antes", mostra só o resultado (card estático).
+// Um caso de antes e depois: as duas fotos inteiras, lado a lado.
+// (As fotos da loja são tiradas em lugares e ângulos diferentes, então mostrar
+// cada uma completa fica mais fiel do que cortar as duas no meio.)
+// Sem foto de "antes", mostra só o resultado, com a mesma altura do par.
 export function BeforeAfter({ item }) {
-  const [position, setPosition] = useState(50);
-  const inputId = useId();
   const hasBefore = Boolean(item.before?.src);
 
   return (
     <figure className="v1-ba">
-      <div className="v1-ba__frame" style={{ "--pos": `${position}%` }}>
-        {hasBefore ? (
-          <>
-            <ImageSlot slot={item.before} className="v1-ba__img v1-ba__img--before" />
-            <div className="v1-ba__after">
-              <ImageSlot slot={item.after} fill className="v1-ba__img v1-ba__img--after" />
-            </div>
-
-            <span className="v1-ba__tag v1-ba__tag--before" aria-hidden="true">
-              Antes
-            </span>
-            <span className="v1-ba__tag v1-ba__tag--after" aria-hidden="true">
-              Depois
-            </span>
-
-            <div className="v1-ba__handle" aria-hidden="true">
-              <span className="v1-ba__knob">
-                <Icon name="chevronsLeftRight" size={18} />
-              </span>
-            </div>
-
-            <label htmlFor={inputId} className="v1-sr-only">
-              Comparar antes e depois: {item.title}
-            </label>
-            <input
-              id={inputId}
-              type="range"
-              min="0"
-              max="100"
-              value={position}
-              onChange={(e) => setPosition(Number(e.target.value))}
-              className="v1-ba__range"
-              aria-valuetext={`${position}% mostrando o depois`}
-            />
-          </>
-        ) : (
-          <>
-            <ImageSlot slot={item.after} className="v1-ba__img v1-ba__img--after" />
-            <span className="v1-ba__tag v1-ba__tag--after" aria-hidden="true">
-              Resultado
-            </span>
-          </>
-        )}
-      </div>
+      {hasBefore ? (
+        <div className="v1-ba__pair">
+          <div className="v1-ba__side">
+            <ImageSlot slot={item.before} sizes="(max-width: 900px) 50vw, 25vw" />
+            <span className="v1-ba__tag">Antes</span>
+          </div>
+          <div className="v1-ba__side">
+            <ImageSlot slot={item.after} sizes="(max-width: 900px) 50vw, 25vw" />
+            <span className="v1-ba__tag v1-ba__tag--after">Depois</span>
+          </div>
+        </div>
+      ) : (
+        <div className="v1-ba__side">
+          {/* 8/5 = largura de duas fotos 4/5: mesma altura dos pares */}
+          <ImageSlot slot={item.after} ratio="8/5" sizes="(max-width: 900px) 100vw, 50vw" />
+          <span className="v1-ba__tag v1-ba__tag--after">Resultado</span>
+        </div>
+      )}
 
       <figcaption className="v1-ba__caption">
         <span className="v1-ba__title">{item.title}</span>
@@ -65,13 +38,11 @@ export function BeforeAfter({ item }) {
   );
 }
 
-// Carrossel dos casos de antes e depois. No desktop cabem três por vez; no
-// celular, um por vez. Rola com as setas, com o teclado ou deslizando.
-// Casos sem nenhuma foto ainda (src vazio) ficam escondidos até as fotos chegarem.
+// Carrossel dos casos. Dois casos por vez no desktop e um no celular.
+// Rola com as setas, com o teclado (setas, quando focado) ou deslizando.
 export function BeforeAfterCarousel({ items }) {
   const trackRef = useRef(null);
   const [edges, setEdges] = useState({ start: true, end: true });
-  const visible = items.filter((item) => item.after?.src);
 
   useEffect(() => {
     const track = trackRef.current;
@@ -109,7 +80,7 @@ export function BeforeAfterCarousel({ items }) {
         aria-label="Casos de antes e depois"
         tabIndex={scrollable ? 0 : -1}
       >
-        {visible.map((item) => (
+        {items.map((item) => (
           <div key={item.id} className="v1-ba-slide">
             <BeforeAfter item={item} />
           </div>
