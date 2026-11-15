@@ -1,0 +1,117 @@
+/* =========================================================================
+   NEXUM v1 · Área da equipe (login)
+   ========================================================================= */
+
+.v1-login {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  min-height: 100svh;
+}
+
+.v1-login__media {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border-right: 1px solid var(--line);
+}
+.v1-login__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(to top, rgba(11, 11, 15, 0.9), rgba(11, 11, 15, 0) 55%);
+  pointer-events: none;
+}
+.v1-login__media .v1-slot__label {
+  top: var(--s-5);
+  bottom: auto;
+}
+
+.v1-login__media-copy {
+  position: absolute;
+  left: clamp(24px, 4vw, 56px);
+  right: clamp(24px, 4vw, 56px);
+  bottom: clamp(24px, 4vw, 56px);
+  z-index: 1;
+  display: grid;
+  gap: var(--s-4);
+}
+.v1-login__quote {
+  font-size: clamp(2.25rem, 4vw, 3.75rem);
+  max-width: 14ch;
+}
+
+.v1-login__main {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  padding: var(--s-5) clamp(20px, 5vw, 72px) var(--s-7);
+}
+
+.v1-login__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--s-4);
+  flex-wrap: wrap;
+}
+
+.v1-login__back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: var(--text-sm);
+  color: var(--fg-muted);
+  text-decoration: none;
+}
+.v1-login__back:hover {
+  color: var(--fg);
+}
+
+.v1-login__panel {
+  align-self: center;
+  display: grid;
+  gap: var(--s-4);
+  width: 100%;
+  max-width: 420px;
+  margin-inline: auto;
+  padding-block: var(--s-8);
+}
+
+.v1-login__title {
+  font-size: var(--display-md);
+}
+
+.v1-login__sub {
+  color: var(--fg-muted);
+}
+
+.v1-login__form {
+  display: grid;
+  gap: var(--s-5);
+  margin-top: var(--s-4);
+}
+
+.v1-login__switch {
+  margin-top: var(--s-3);
+  font-size: var(--text-sm);
+  color: var(--fg-muted);
+}
+.v1-login__switch a {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .v1-login {
+    grid-template-columns: 1fr;
+  }
+  .v1-login__media {
+    aspect-ratio: 16 / 9;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    order: 2;
+  }
+  .v1-login__media-copy {
+    display: none;
+  }
+}

@@ -1,0 +1,157 @@
+/* =========================================================================
+   NEXUM v1 · tokens
+   Tudo fica dentro de .v1 para não colidir com as telas antigas (src/pages)
+   nem com outras versões. Paleta derivada do guia visual da A Casa do Tênis:
+   base escura, creme para texto e o dourado como único destaque.
+   ========================================================================= */
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@500&display=swap");
+
+.v1 {
+  /* Cores · site público (escuro) */
+  --bg: #0b0b0f;
+  --bg-raised: #111116;
+  --surface: #16161c;
+  --surface-2: #1d1d24;
+  --line: rgba(242, 237, 224, 0.12);
+  --line-strong: rgba(242, 237, 224, 0.24);
+  --fg: #f2ede0;
+  --fg-muted: #aaa597;
+  --fg-faint: #8f8b7e;
+
+  /* Destaque único (dourado do guia). Use com parcimônia. */
+  --accent: #c9a24a;
+  --accent-hover: #d8b35c;
+  --accent-ink: #c9a24a; /* destaque usado como texto */
+  --on-accent: #0b0b0f;
+
+  /* Cores da marca (selo e sidebar do painel) */
+  --navy: #14283d;
+  --navy-deep: #0e1c2b;
+  --cream: #f3e9c6;
+
+  /* Bloco temporário de imagem */
+  --slot-bg: #17171d;
+  --slot-line: rgba(242, 237, 224, 0.035);
+  --slot-glow: rgba(201, 162, 74, 0.09);
+  --slot-label: #8d887b;
+
+  /* Tons de status (chips) */
+  --tone-yellow-bg: rgba(217, 165, 33, 0.16);
+  --tone-yellow-fg: #ebc767;
+  --tone-blue-bg: rgba(98, 150, 222, 0.17);
+  --tone-blue-fg: #a5c6f2;
+  --tone-green-bg: rgba(78, 170, 116, 0.17);
+  --tone-green-fg: #94d6ad;
+  --tone-gray-bg: rgba(242, 237, 224, 0.09);
+  --tone-gray-fg: #bdb8ab;
+  --tone-red-bg: rgba(226, 84, 84, 0.18);
+  --tone-red-fg: #f4a3a3;
+  --tone-orange-bg: rgba(236, 146, 64, 0.17);
+  --tone-orange-fg: #f2b97f;
+
+  /* Tipografia */
+  --font-display: "Anton", "Arial Narrow", Impact, sans-serif;
+  --font-sans: "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+
+  --text-xs: 0.75rem; /* 12 */
+  --text-sm: 0.875rem; /* 14 */
+  --text-base: 1rem; /* 16 */
+  --text-md: 1.125rem; /* 18 */
+  --text-lg: 1.375rem; /* 22 */
+  --display-sm: clamp(2rem, 3.4vw, 2.75rem);
+  --display-md: clamp(2.75rem, 6vw, 5.5rem);
+  --display-lg: clamp(3.5rem, 9.5vw, 10rem);
+
+  /* Espaçamento (escala de 4px) */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+  --s-9: 96px;
+  --s-10: 136px;
+  --section-y: clamp(72px, 10vw, 136px);
+
+  /* Layout */
+  --container: 1240px;
+  --gutter: clamp(16px, 4vw, 48px);
+  --header-h: 68px;
+
+  /* Forma */
+  --r-sm: 4px;
+  --r-md: 6px;
+  --r-lg: 10px;
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.25), 0 12px 32px -12px rgba(0, 0, 0, 0.45);
+
+  /* Movimento */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dur: 700ms;
+}
+
+/* =========================================================================
+   Painel da equipe: superfícies claras por padrão, tema escuro opcional.
+   ========================================================================= */
+.v1.v1-panel {
+  --bg: #f5f4f0;
+  --bg-raised: #efede7;
+  --surface: #ffffff;
+  --surface-2: #f8f7f3;
+  --line: #e4e1d8;
+  --line-strong: #cfcabd;
+  --fg: #15161a;
+  --fg-muted: #5c5e66;
+  --fg-faint: #6a6c73;
+  --accent-ink: #7a5e1c; /* dourado escurecido: contraste AA sobre branco */
+  --slot-bg: #ebe8e0;
+  --slot-line: rgba(21, 22, 26, 0.04);
+  --slot-glow: rgba(201, 162, 74, 0.12);
+  --slot-label: #85878e;
+  --shadow-soft: 0 1px 2px rgba(21, 22, 26, 0.04), 0 8px 24px -16px rgba(21, 22, 26, 0.18);
+
+  --tone-yellow-bg: #fbf0d2;
+  --tone-yellow-fg: #6e5200;
+  --tone-blue-bg: #e2ecf8;
+  --tone-blue-fg: #1d4b84;
+  --tone-green-bg: #e0f1e6;
+  --tone-green-fg: #1d6340;
+  --tone-gray-bg: #ecebe7;
+  --tone-gray-fg: #4f5158;
+  --tone-red-bg: #fbe3e3;
+  --tone-red-fg: #9c2424;
+  --tone-orange-bg: #fde8d4;
+  --tone-orange-fg: #84460c;
+}
+
+.v1.v1-panel[data-theme="dark"] {
+  --bg: #0b0b0f;
+  --bg-raised: #101015;
+  --surface: #15151b;
+  --surface-2: #1b1b22;
+  --line: rgba(242, 237, 224, 0.1);
+  --line-strong: rgba(242, 237, 224, 0.2);
+  --fg: #f2ede0;
+  --fg-muted: #aaa597;
+  --fg-faint: #8f8b7e;
+  --accent-ink: #c9a24a;
+  --slot-bg: #17171d;
+  --slot-line: rgba(242, 237, 224, 0.035);
+  --slot-label: #8d887b;
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -16px rgba(0, 0, 0, 0.6);
+
+  --tone-yellow-bg: rgba(217, 165, 33, 0.16);
+  --tone-yellow-fg: #ebc767;
+  --tone-blue-bg: rgba(98, 150, 222, 0.17);
+  --tone-blue-fg: #a5c6f2;
+  --tone-green-bg: rgba(78, 170, 116, 0.17);
+  --tone-green-fg: #94d6ad;
+  --tone-gray-bg: rgba(242, 237, 224, 0.09);
+  --tone-gray-fg: #bdb8ab;
+  --tone-red-bg: rgba(226, 84, 84, 0.18);
+  --tone-red-fg: #f4a3a3;
+  --tone-orange-bg: rgba(236, 146, 64, 0.17);
+  --tone-orange-fg: #f2b97f;
+}

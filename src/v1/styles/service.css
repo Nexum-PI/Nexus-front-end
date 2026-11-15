@@ -1,0 +1,174 @@
+/* =========================================================================
+   NEXUM v1 · páginas de serviço (formulários) e serviço sem página
+   Todas as classes começam com .v1-svc- para não vazar para outras telas.
+   ========================================================================= */
+
+.v1-svc-hero {
+  position: relative;
+  display: grid;
+  align-items: end;
+  /* width explícita: sem ela o aspect-ratio + min-height alarga o bloco */
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  min-height: 460px;
+  max-height: 72svh;
+  overflow: hidden;
+  isolation: isolate;
+}
+.v1-svc-hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+.v1-svc-hero__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(11, 11, 15, 0.94) 0%, rgba(11, 11, 15, 0.4) 50%, rgba(11, 11, 15, 0) 80%);
+}
+.v1-svc-hero .v1-slot__label {
+  top: var(--s-5);
+  bottom: auto;
+  left: auto;
+  right: var(--gutter);
+}
+
+.v1-svc-hero__content {
+  display: grid;
+  gap: var(--s-4);
+  justify-items: start;
+  padding-block: var(--s-8) clamp(32px, 5vw, 64px);
+}
+
+.v1-svc-back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-bottom: var(--s-3);
+  font-size: var(--text-sm);
+  color: var(--fg-muted);
+  text-decoration: none;
+}
+.v1-svc-back:hover {
+  color: var(--fg);
+}
+
+.v1-svc-hero__title {
+  font-size: var(--display-lg);
+}
+.v1-svc-hero__line {
+  font-size: var(--text-md);
+  color: var(--fg);
+  opacity: 0.86;
+  max-width: 46ch;
+  margin-bottom: var(--s-3);
+}
+
+@media (max-width: 720px) {
+  .v1-svc-hero {
+    aspect-ratio: 4 / 5;
+    min-height: 0;
+    max-height: none;
+  }
+  .v1-svc-hero__title {
+    font-size: clamp(3rem, 14vw, 4.5rem);
+  }
+}
+
+/* ---------- Formulário ---------- */
+.v1-svc-form-wrap {
+  display: grid;
+  grid-template-columns: 4fr 8fr;
+  gap: clamp(32px, 5vw, 80px);
+  padding-block: var(--section-y);
+  max-width: calc(1120px + var(--gutter) * 2);
+}
+
+.v1-svc-form-head {
+  display: grid;
+  gap: var(--s-3);
+  align-content: start;
+}
+.v1-svc-form-title {
+  font-size: var(--display-sm);
+}
+.v1-svc-form-sub {
+  color: var(--fg-muted);
+}
+
+.v1-svc-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-5);
+  padding: clamp(20px, 3vw, 40px);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+}
+.v1-svc-form__full {
+  grid-column: 1 / -1;
+}
+.v1-svc-form__actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-4) var(--s-6);
+  margin-top: var(--s-2);
+}
+
+@media (max-width: 900px) {
+  .v1-svc-form-wrap {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 600px) {
+  .v1-svc-form {
+    grid-template-columns: 1fr;
+  }
+  .v1-svc-form__actions .v1-btn {
+    width: 100%;
+  }
+}
+
+/* ---------- Serviço sem página própria ---------- */
+.v1-svc-missing {
+  display: grid;
+  gap: var(--s-5);
+  justify-items: start;
+  padding-block: clamp(56px, 9vw, 120px) var(--section-y);
+}
+.v1-svc-missing__title {
+  font-size: var(--display-md);
+}
+.v1-svc-missing__list {
+  width: 100%;
+  margin-top: var(--s-7);
+  border-top: 1px solid var(--line);
+}
+.v1-svc-missing__link {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  align-items: center;
+  gap: var(--s-4);
+  padding-block: var(--s-5);
+  border-bottom: 1px solid var(--line);
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+.v1-svc-missing__num {
+  color: var(--accent);
+  font-size: var(--text-lg);
+}
+.v1-svc-missing__name {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  text-transform: uppercase;
+}
+.v1-svc-missing__link svg {
+  transition: transform 250ms var(--ease);
+}
+.v1-svc-missing__link:hover svg {
+  transform: translateX(6px);
+}
+.v1-svc-missing__link:hover .v1-svc-missing__name {
+  color: var(--accent);
+}
