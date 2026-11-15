@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { BeforeAfter } from "../components/BeforeAfter";
+import { BeforeAfterCarousel } from "../components/BeforeAfter";
 import { Hero, ProofStrip } from "../components/Hero";
 import { Icon } from "../components/Icon";
 import { ScheduleButton } from "../components/ScheduleButton";
@@ -57,13 +57,11 @@ export function Home() {
               <h2 id="v1-ba-title" className="v1-display v1-section-title">
                 O resultado fala.
               </h2>
-              <p className="v1-lead">Arraste para comparar. Mesmo par, mesma luz.</p>
+              <p className="v1-lead">
+                Arraste a linha para comparar. Use as setas para ver mais casos.
+              </p>
             </header>
-            <div className="v1-ba-grid">
-              {MEDIA.beforeAfter.map((item) => (
-                <BeforeAfter key={item.id} item={item} />
-              ))}
-            </div>
+            <BeforeAfterCarousel items={MEDIA.beforeAfter} />
           </div>
         </section>
 

@@ -70,17 +70,39 @@ export const MEDIA = {
       id: "lavagem",
       title: "Lavagem",
       detail: "Camurça e sola sem as manchas de uso.",
-      before: slot("Antes · lavagem", "4/5", "Tênis de camurça caramelo sujo, com a sola manchada", {
-        src: "/v1/servicos/lavagem-antes.webp",
-        position: "50% 65%",
-      }),
+      before: slot(
+        "Antes · lavagem",
+        "4/5",
+        "Tênis de camurça caramelo sujo, com a sola manchada",
+        {
+          src: "/v1/servicos/lavagem-antes.webp",
+          position: "50% 65%",
+        },
+      ),
       after: slot("Depois · lavagem", "4/5", "O mesmo tênis de camurça limpo, com a sola branca", {
         src: "/v1/servicos/lavagem-depois.webp",
         position: "50% 65%",
       }),
     },
     {
+      // TODO: foto de "antes" da troca de sola (sem ela, o card mostra só o resultado)
+      id: "solado",
+      title: "Troca de sola",
+      detail: "Solado novo, colado e conferido na bancada.",
+      before: slot("Antes · troca de sola", "4/5", "Solado gasto, antes da troca"),
+      after: slot(
+        "Depois · troca de sola",
+        "4/5",
+        "Par de tênis com solado branco novo, visto por baixo",
+        {
+          src: "/v1/servicos/solado-novo.webp",
+          position: "50% 50%",
+        },
+      ),
+    },
+    {
       // TODO: fotos em public/v1/servicos/customizacao-antes.webp e customizacao-depois.webp
+      // Enquanto o "depois" não tiver foto, o caso fica escondido no carrossel.
       id: "customizacao",
       title: "Customização",
       detail: "Solado plataforma aplicado à mão.",

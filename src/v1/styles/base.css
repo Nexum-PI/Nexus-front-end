@@ -344,7 +344,12 @@ textarea.v1-input {
   background-color: var(--slot-bg);
   isolation: isolate;
 }
-.v1-slot > img {
+/* A foto preenche o espaço reservado sem alterar o tamanho dele, mesmo que a
+   proporção do arquivo seja diferente da reservada */
+.v1-slot > img,
+.v1-slot > picture > img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;

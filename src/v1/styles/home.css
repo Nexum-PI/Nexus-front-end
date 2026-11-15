@@ -219,10 +219,71 @@
 }
 
 /* ---------- Antes e depois ---------- */
-.v1-ba-grid {
+/* Carrossel: três casos por vez no desktop, dois no tablet, um no celular */
+.v1-ba-carousel {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
   gap: var(--s-5);
+}
+.v1-ba-track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - 2 * var(--s-5)) / 3);
+  gap: var(--s-5);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding-bottom: var(--s-1);
+}
+.v1-ba-track::-webkit-scrollbar {
+  display: none;
+}
+.v1-ba-track:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+.v1-ba-slide {
+  scroll-snap-align: start;
+  min-width: 0;
+}
+.v1-ba-nav {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--s-3);
+}
+.v1-ba-nav__btn {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--fg);
+  cursor: pointer;
+  transition:
+    border-color 200ms ease,
+    background-color 200ms ease,
+    opacity 200ms ease;
+}
+.v1-ba-nav__btn:hover:not(:disabled) {
+  border-color: var(--accent);
+  background: rgba(201, 162, 74, 0.12);
+}
+.v1-ba-nav__btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+@media (max-width: 960px) {
+  .v1-ba-track {
+    grid-auto-columns: calc((100% - var(--s-5)) / 2);
+  }
+}
+@media (max-width: 600px) {
+  .v1-ba-track {
+    grid-auto-columns: 86%;
+  }
 }
 
 .v1-ba {
@@ -308,11 +369,8 @@
 }
 
 .v1-ba__caption {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--s-4);
-  align-items: baseline;
-  flex-wrap: wrap;
+  display: grid;
+  gap: var(--s-1);
 }
 .v1-ba__title {
   font-family: var(--font-display);
@@ -324,16 +382,6 @@
   font-size: var(--text-sm);
 }
 
-@media (max-width: 960px) {
-  .v1-ba-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (max-width: 600px) {
-  .v1-ba-grid {
-    grid-template-columns: 1fr;
-  }
-}
 
 /* ---------- Como funciona ---------- */
 .v1-steps {
