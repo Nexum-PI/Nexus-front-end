@@ -15,12 +15,13 @@ export const STATUS_TONE = {
 // Cores sólidas para o gráfico de rosca. Status do mesmo tom ganham
 // variações de intensidade; a legenda sempre traz nome e número.
 export const STATUS_CHART_COLOR = {
-  RECEIVED: "#D9A521",
-  CLEANING: "#2F6FB5",
-  RESTORING: "#7AA7DF",
-  READY: "#3F9A66",
-  DELIVERED: "#1F5E3C",
-  CANCELED: "#9A9A9A",
+  // Cores de status do guia visual NEXUM v1
+  RECEIVED: "#6B7F94",
+  CLEANING: "#2F6F9F",
+  RESTORING: "#B9822F",
+  READY: "#3F7D5A",
+  DELIVERED: "#3E5E80", // azul Nexum clareado: aparece também no tema escuro
+  CANCELED: "#A9A390",
 };
 
 // Etapas do stepper do cliente (mesma ordem do "Como funciona").

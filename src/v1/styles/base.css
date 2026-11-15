@@ -7,13 +7,13 @@
 
 /* Fundo da página inteira enquanto uma tela v1 estiver aberta */
 html:has(.v1) body {
-  background: var(--v1-page-bg, #0b0b0f);
+  background: var(--v1-page-bg, #14283d);
 }
 html:has(.v1-panel) body {
-  --v1-page-bg: #f5f4f0;
+  --v1-page-bg: #faf6e8;
 }
 html:has(.v1-panel[data-theme="dark"]) body {
-  --v1-page-bg: #0b0b0f;
+  --v1-page-bg: #0e1c2b;
 }
 
 .v1 {
@@ -150,9 +150,8 @@ html:has(.v1-panel[data-theme="dark"]) body {
 .v1-display {
   font-family: var(--font-display);
   font-weight: 400;
-  text-transform: uppercase;
-  /* >= 1: os acentos das maiúsculas (Ê, Ã, Ó) não encostam na linha de cima */
-  line-height: 1.02;
+  /* Lilita One em caixa normal, como no guia ("Seu tênis, como novo.") */
+  line-height: 1.04;
   letter-spacing: 0.005em;
 }
 
@@ -302,6 +301,8 @@ textarea.v1-input {
 .v1-input[type="date"] {
   color-scheme: dark;
 }
+.v1-theme-paper .v1-input[type="date"],
+.v1-theme-cream .v1-input[type="date"],
 .v1-panel:not([data-theme="dark"]) .v1-input[type="date"] {
   color-scheme: light;
 }

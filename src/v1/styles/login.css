@@ -19,7 +19,7 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: linear-gradient(to top, rgba(11, 11, 15, 0.9), rgba(11, 11, 15, 0) 55%);
+  background: linear-gradient(to top, rgba(var(--scrim), 0.9), rgba(var(--scrim), 0) 55%);
   pointer-events: none;
 }
 .v1-login__media .v1-slot__label {

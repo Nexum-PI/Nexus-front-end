@@ -63,7 +63,7 @@ html.v1-no-scroll {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(11, 11, 15, 0.86);
+  background: rgba(var(--scrim), 0.86);
   backdrop-filter: saturate(140%) blur(14px);
   -webkit-backdrop-filter: saturate(140%) blur(14px);
   border-bottom: 1px solid var(--line);
@@ -152,7 +152,6 @@ html.v1-no-scroll {
   border-bottom: 1px solid var(--line);
   font-family: var(--font-display);
   font-size: 2rem;
-  text-transform: uppercase;
   text-decoration: none;
   line-height: 1.1;
 }
@@ -197,6 +196,7 @@ html.v1-no-scroll {
 
 /* ---------- Rodapé ---------- */
 .v1-footer {
+  background: var(--navy-deep);
   border-top: 1px solid var(--line);
   padding-block: var(--s-9) var(--s-6);
   color: var(--fg-muted);

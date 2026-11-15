@@ -26,7 +26,11 @@ export function Home() {
         <ProofStrip />
 
         {/* 01 · Serviços */}
-        <section id="servicos" className="v1-section" aria-labelledby="v1-servicos-title">
+        <section
+          id="servicos"
+          className="v1-section v1-theme-paper"
+          aria-labelledby="v1-servicos-title"
+        >
           <div className="v1-container">
             <header className="v1-section-head" data-reveal>
               <p className="v1-kicker">Serviços</p>
@@ -64,7 +68,11 @@ export function Home() {
         </section>
 
         {/* 03 · Como funciona */}
-        <section id="como-funciona" className="v1-section" aria-labelledby="v1-steps-title">
+        <section
+          id="como-funciona"
+          className="v1-section v1-theme-paper"
+          aria-labelledby="v1-steps-title"
+        >
           <div className="v1-container">
             <header className="v1-section-head" data-reveal>
               <p className="v1-kicker">Como funciona</p>
@@ -98,7 +106,7 @@ export function Home() {
         {/* 04 · Depoimentos */}
         <section
           id="depoimentos"
-          className="v1-section v1-section--raised"
+          className="v1-section v1-theme-cream"
           aria-labelledby="v1-quotes-title"
         >
           <div className="v1-container">
@@ -132,7 +140,7 @@ export function Home() {
         </section>
 
         {/* 06 · A loja */}
-        <section className="v1-section" aria-labelledby="v1-store-title">
+        <section className="v1-section v1-theme-paper" aria-labelledby="v1-store-title">
           <div className="v1-container v1-store">
             <div className="v1-store__media" data-reveal>
               <StoreMap />
@@ -203,9 +211,7 @@ export function Home() {
               <br />
               Nós cuidamos do resto.
             </h2>
-            <p className="v1-lead">
-              Avaliação na loja e prazo combinado antes de começar.
-            </p>
+            <p className="v1-lead">Avaliação na loja e prazo combinado antes de começar.</p>
             <ScheduleButton />
           </div>
         </section>
