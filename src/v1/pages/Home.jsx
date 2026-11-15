@@ -58,7 +58,7 @@ export function Home() {
                 O resultado fala.
               </h2>
               <p className="v1-lead">
-                Fotos reais da bancada. Use as setas para ver mais casos.
+                Arraste a linha para comparar. Use as setas para ver mais casos.
               </p>
             </header>
             <BeforeAfterCarousel items={MEDIA.beforeAfter} />
