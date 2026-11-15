@@ -5,11 +5,11 @@
 
 // ── Status (enum orders.status) ──────────────────────────────────────────────
 export const STATUS = {
-  RECEIVED: { label: "Recebido", badge: "badge-warning" },
-  CLEANING: { label: "Em higienização", badge: "badge-info" },
-  RESTORING: { label: "Em restauração", badge: "badge-info" },
-  READY: { label: "Pronto para retirada/entrega", badge: "badge-success" },
-  DELIVERED: { label: "Entregue", badge: "badge-success" },
+  RECEIVED: { label: "Recebido", badge: "badge-received" },
+  CLEANING: { label: "Em higienização", badge: "badge-cleaning" },
+  RESTORING: { label: "Em restauração", badge: "badge-restoring" },
+  READY: { label: "Pronto para retirada/entrega", badge: "badge-ready" },
+  DELIVERED: { label: "Entregue", badge: "badge-delivered" },
   CANCELED: { label: "Cancelado", badge: "badge-default" },
 };
 

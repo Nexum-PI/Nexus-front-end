@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { Logo } from "../components/Logo";
 import { useOrders } from "../context/useOrders";
 import {
   STATUS,
@@ -38,7 +39,10 @@ export function TrackOrder() {
         <Link to="/" className="btn-back">
           &larr; Voltar para Home
         </Link>
-        <h1>Acompanhar pedido</h1>
+        <div className="track-title">
+          <Logo size={64} />
+          <h1>Onde está meu tênis?</h1>
+        </div>
         <p>Digite o código informado pela loja quando você deixou o tênis.</p>
       </header>
 

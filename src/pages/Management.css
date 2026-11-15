@@ -85,9 +85,10 @@
   line-height: 1;
 }
 
-/* Cores de utilidade para as métricas */
-.text-warning { color: #f59e0b; }
-.text-success { color: #10b981; }
+/* Cores de utilidade para as métricas (status do guia visual) */
+.text-warning { color: var(--status-restoring); }
+.text-success { color: var(--status-ready); }
+.text-danger { color: var(--status-late); }
 
 /* ================= TABLE SECTION ================= */
 .management-table-section {
@@ -156,15 +157,7 @@
   white-space: nowrap;
 }
 
-/* Cores semânticas para Status */
-.badge-success { background-color: rgba(16, 185, 129, 0.15); color: #10b981; }
-.badge-warning { background-color: rgba(245, 158, 11, 0.15); color: #f59e0b; }
-.badge-info { background-color: var(--accent-bg); color: var(--accent); }
-.badge-danger { background-color: rgba(239, 68, 68, 0.15); color: #ef4444; }
-
-.badge-default { background-color: var(--border); color: var(--text); }
-
-.text-danger { color: #ef4444; }
+/* Cores de cada status: ver "STATUS DO PEDIDO" no index.css */
 
 /* Status editável pela equipe + avisos derivados do prazo */
 .status-cell {
@@ -207,4 +200,19 @@
   border-color: var(--accent);
   color: var(--accent);
   background-color: var(--accent-bg);
+}
+/* Botão "+ Nova Ordem" (é um <Link>, então precisa do estilo completo) */
+.header-actions .btn-primary {
+  display: inline-block;
+  padding: 12px 22px;
+  border-radius: 999px;
+  background-color: var(--accent);
+  color: var(--on-accent);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.header-actions .btn-primary:hover {
+  background-color: var(--accent-hover);
 }

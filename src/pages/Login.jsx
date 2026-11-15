@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Logo } from "../components/Logo";
 import "./Auth.css";
 
 export function Login() {
@@ -42,6 +43,10 @@ export function Login() {
         <Link to="/" className="btn-back">
           &larr; Voltar para Home
         </Link>
+
+        <div className="auth-logo">
+          <Logo size={88} />
+        </div>
 
         <h1>Área da equipe</h1>
         <p>Acesso para atendentes, técnicos e administradores.</p>

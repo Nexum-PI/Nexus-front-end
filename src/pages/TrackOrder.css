@@ -17,6 +17,12 @@
   color: var(--text-h);
 }
 
+.track-title {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 .track-header p {
   margin: 8px 0 24px 0;
   font-size: 16px;
@@ -73,7 +79,7 @@
   width: auto; /* os CSS das páginas de serviço também definem .btn-submit com 100% */
   flex-shrink: 0;
   background-color: var(--accent);
-  color: #ffffff;
+  color: var(--on-accent);
   border: none;
   padding: 12px 24px;
   border-radius: 8px;
@@ -141,8 +147,8 @@
   margin: 20px 0 0 0;
   padding: 12px 16px;
   border-radius: 8px;
-  background-color: rgba(239, 68, 68, 0.12);
-  color: #ef4444;
+  background-color: #fbeeee;
+  color: #9a2f2f;
   font-weight: 600;
   font-size: 15px;
 }
@@ -217,7 +223,7 @@
 }
 
 .track-timeline li.current::before {
-  background-color: var(--accent);
+  background-color: var(--gold);
 }
 
 .timeline-status {
@@ -238,8 +244,4 @@
   font-weight: 700;
   white-space: nowrap;
 }
-
-.track-card .badge-success { background-color: rgba(16, 185, 129, 0.15); color: #10b981; }
-.track-card .badge-warning { background-color: rgba(245, 158, 11, 0.15); color: #f59e0b; }
-.track-card .badge-info { background-color: var(--accent-bg); color: var(--accent); }
-.track-card .badge-default { background-color: var(--border); color: var(--text); }
+/* Cores de cada status: ver "STATUS DO PEDIDO" no index.css */
