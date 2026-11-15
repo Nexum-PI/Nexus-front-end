@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { useOrders } from "../../context/useOrders";
+import { useAuth } from "../auth/useAuth";
 import { STATUS, findOrderByCode, formatDate, formatDateTime, isLate } from "../../data/orders";
 import { Icon } from "../components/Icon";
 import { SiteLayout } from "../components/SiteLayout";
@@ -14,6 +15,8 @@ import "../styles/track.css";
 export function TrackOrder() {
   const { code: codeParam } = useParams();
   const { orders } = useOrders();
+  // Equipe logada (veio do painel pelo "Ver andamento"): volta para o painel
+  const { session } = useAuth();
 
   const order = codeParam ? findOrderByCode(orders, codeParam) : null;
   const notFound = Boolean(codeParam) && !order;
@@ -24,9 +27,15 @@ export function TrackOrder() {
       <div className="v1-theme-paper">
         <div className="v1-container v1-track">
           <header className="v1-track__head">
-            <Link to="/" className="v1-track__back">
-              <Icon name="arrowLeft" size={16} /> Início
-            </Link>
+            {session ? (
+              <Link to="/gerenciamento#ordens" className="v1-track__back">
+                <Icon name="arrowLeft" size={16} /> Voltar ao painel
+              </Link>
+            ) : (
+              <Link to="/" className="v1-track__back">
+                <Icon name="arrowLeft" size={16} /> Início
+              </Link>
+            )}
             <p className="v1-kicker">Acompanhar pedido</p>
             <h1 className="v1-display v1-track__title">Onde está meu tênis?</h1>
             <p className="v1-lead">
