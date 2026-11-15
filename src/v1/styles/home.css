@@ -36,6 +36,17 @@
     linear-gradient(to right, rgba(11, 11, 15, 0.5) 0%, rgba(11, 11, 15, 0) 55%);
 }
 
+/* Com foto: tom mais escuro e menos saturado, para o texto e o dourado
+   se destacarem. O lado do texto escurece mais que o resto. */
+.v1-hero .v1-slot > img {
+  filter: saturate(0.8) brightness(0.72) contrast(1.05);
+}
+.v1-hero:has(.v1-slot > img) .v1-hero__scrim {
+  background:
+    linear-gradient(to right, rgba(11, 11, 15, 0.9) 0%, rgba(11, 11, 15, 0.72) 42%, rgba(11, 11, 15, 0.3) 75%, rgba(11, 11, 15, 0.2) 100%),
+    linear-gradient(to top, rgba(11, 11, 15, 0.95) 0%, rgba(11, 11, 15, 0) 45%);
+}
+
 .v1-hero .v1-slot__label {
   top: var(--s-5);
   bottom: auto;
@@ -77,12 +88,13 @@
     max-height: none;
     min-height: 0;
   }
-  .v1-hero__scrim {
+  .v1-hero__scrim,
+  .v1-hero:has(.v1-slot > img) .v1-hero__scrim {
     background: linear-gradient(
       to top,
-      rgba(11, 11, 15, 0.96) 0%,
-      rgba(11, 11, 15, 0.7) 45%,
-      rgba(11, 11, 15, 0.1) 80%
+      rgba(11, 11, 15, 0.97) 0%,
+      rgba(11, 11, 15, 0.82) 50%,
+      rgba(11, 11, 15, 0.35) 85%
     );
   }
   .v1-hero__content {

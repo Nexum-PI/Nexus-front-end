@@ -12,11 +12,13 @@ const slot = (label, ratio, alt, extra = {}) => ({ src: null, alt, ratio, label,
 
 export const MEDIA = {
   // Hero: foto horizontal em desktop. `srcMobile` é opcional (recorte vertical).
+  // Foto atual: vitrine da loja (public/v1/loja-fachada.webp, 1344×896).
+  // Para uma imagem mais nítida em telas grandes, use uma versão de 1920px ou mais.
   hero: slot(
-    "Hero · par restaurado sob luz lateral",
+    "Hero · vitrine da loja",
     "16/9",
-    "Par de tênis restaurado sobre bancada escura, iluminado de lado",
-    { srcMobile: null, ratioMobile: "3/4" },
+    "Vitrine da A Casa do Tênis com o selo da loja no vidro e prateleiras iluminadas ao fundo",
+    { src: "/v1/loja-fachada.webp", srcMobile: null, ratioMobile: "3/4" },
   ),
 
   services: {
@@ -71,6 +73,7 @@ export const MEDIA = {
     "Loja · fachada ou balcão",
     "3/2",
     "Interior da A Casa do Tênis com prateleiras de madeira e luz quente",
+    { src: "/v1/loja-fachada.webp" },
   ),
 
   login: slot(
