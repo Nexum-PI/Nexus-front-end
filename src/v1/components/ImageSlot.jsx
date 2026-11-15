@@ -18,7 +18,7 @@ export function ImageSlot({
   sizes = "100vw",
   showLabel = true,
 }) {
-  const { src, srcMobile, alt = "", ratio = "4/3", label } = slot ?? {};
+  const { src, srcMobile, alt = "", ratio = "4/3", label, position } = slot ?? {};
   const style = fill ? undefined : { aspectRatio: ratio.replace("/", " / ") };
   const classes = ["v1-slot", fill && "v1-slot--fill", !src && "v1-slot--empty", className]
     .filter(Boolean)
@@ -47,6 +47,7 @@ export function ImageSlot({
       loading={eager ? "eager" : "lazy"}
       fetchPriority={eager ? "high" : undefined}
       decoding="async"
+      style={position ? { objectPosition: position } : undefined}
     />
   );
 

@@ -5,6 +5,8 @@
 //  - ratio: proporção reservada na página ("largura/altura"). Exporte a foto
 //    nessa proporção para não haver cortes inesperados.
 //  - label: aparece só no bloco temporário, para a equipe saber que foto vai ali.
+//  - position (opcional): ponto da foto que fica visível no recorte, como no
+//    CSS object-position (ex.: "50% 65%" = centro, um pouco abaixo do meio).
 // Regras: fotos próprias da loja, com tratamento escuro e luz quente;
 // sem logos ou nomes de marcas de tênis visíveis.
 
@@ -21,51 +23,69 @@ export const MEDIA = {
     { src: "/v1/loja-fachada.webp", srcMobile: null, ratioMobile: "3/4" },
   ),
 
+  // Fotos dos serviços: public/v1/servicos/
   services: {
     "lavagem-premium": slot(
       "Serviço 01 · lavagem",
       "4/3",
-      "Tênis sendo higienizado à mão com escova macia",
+      "Tênis de camurça caramelo limpo, sobre a bancada da loja",
+      { src: "/v1/servicos/lavagem-depois.webp", position: "50% 62%" },
     ),
     "pintura-restauracao": slot(
       "Serviço 02 · pintura e restauração",
       "4/3",
-      "Retoque de pintura no cabedal de couro",
+      "Tênis branco e roxo com a cor restaurada, sobre a bancada da loja",
+      { src: "/v1/servicos/pintura-depois.webp", position: "50% 58%" },
     ),
     "troca-solado": slot(
       "Serviço 03 · troca de solado",
       "4/3",
-      "Solado novo sendo colado na bancada",
+      "Par de tênis com solado branco novo, visto por baixo",
+      { src: "/v1/servicos/solado-novo.webp", position: "50% 50%" },
     ),
+    // TODO: foto da customização em public/v1/servicos/customizacao-depois.webp
     customizacao: slot(
       "Serviço 04 · customização",
       "4/3",
-      "Detalhe de customização pintada à mão",
+      "Calçado customizado sobre a bancada da loja",
     ),
   },
 
-  // Antes e depois: as duas fotos de cada caso precisam ter o mesmo enquadramento.
+  // Antes e depois: as duas fotos de cada caso devem ter enquadramento parecido.
   beforeAfter: [
     {
-      id: "couro",
-      title: "Couro branco",
-      detail: "Cabedal amarelado e vincado.",
-      before: slot("Antes · caso 01", "4/5", "Tênis de couro branco amarelado, antes do serviço"),
-      after: slot("Depois · caso 01", "4/5", "O mesmo tênis de couro branco depois da restauração"),
+      id: "pintura",
+      title: "Pintura",
+      detail: "Cor desbotada, recuperada.",
+      before: slot("Antes · pintura", "4/5", "Tênis branco e roxo desbotado, antes da pintura", {
+        src: "/v1/servicos/pintura-antes.webp",
+        position: "50% 60%",
+      }),
+      after: slot("Depois · pintura", "4/5", "O mesmo tênis com o roxo restaurado", {
+        src: "/v1/servicos/pintura-depois.webp",
+        position: "50% 60%",
+      }),
     },
     {
-      id: "camurca",
-      title: "Camurça",
-      detail: "Manchas de uso e pelo achatado.",
-      before: slot("Antes · caso 02", "4/5", "Tênis de camurça manchado, antes do serviço"),
-      after: slot("Depois · caso 02", "4/5", "O mesmo tênis de camurça depois da higienização"),
+      id: "lavagem",
+      title: "Lavagem",
+      detail: "Camurça e sola sem as manchas de uso.",
+      before: slot("Antes · lavagem", "4/5", "Tênis de camurça caramelo sujo, com a sola manchada", {
+        src: "/v1/servicos/lavagem-antes.webp",
+        position: "50% 65%",
+      }),
+      after: slot("Depois · lavagem", "4/5", "O mesmo tênis de camurça limpo, com a sola branca", {
+        src: "/v1/servicos/lavagem-depois.webp",
+        position: "50% 65%",
+      }),
     },
     {
-      id: "solado",
-      title: "Solado",
-      detail: "Entressola ressecada e trincada.",
-      before: slot("Antes · caso 03", "4/5", "Solado trincado, antes da troca"),
-      after: slot("Depois · caso 03", "4/5", "Tênis com solado novo depois da troca"),
+      // TODO: fotos em public/v1/servicos/customizacao-antes.webp e customizacao-depois.webp
+      id: "customizacao",
+      title: "Customização",
+      detail: "Solado plataforma aplicado à mão.",
+      before: slot("Antes · customização", "4/5", "Calçado de camurça antes da customização"),
+      after: slot("Depois · customização", "4/5", "O mesmo calçado com o novo solado plataforma"),
     },
   ],
 
