@@ -91,7 +91,11 @@ export const MEDIA = {
       id: "solado",
       title: "Troca de sola",
       detail: "Solado novo, colado e conferido na bancada.",
-      before: slot("Antes · troca de sola", "4/5", "Solado gasto, antes da troca"),
+      // Sem foto de "antes" deste par: usa um solado gasto de outro par como referência
+      before: slot("Antes · troca de sola", "4/5", "Solado gasto e manchado, antes da troca", {
+        src: "/v1/servicos/lavagem-antes.webp",
+        position: "50% 70%",
+      }),
       after: slot(
         "Depois · troca de sola",
         "4/5",
