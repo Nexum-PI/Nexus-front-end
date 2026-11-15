@@ -4,14 +4,14 @@ import { Icon } from "./Icon";
 import { Wordmark } from "./Wordmark";
 
 const ITEMS = [
-  { href: "#visao-geral", label: "Visão geral", icon: "grid" },
-  { href: "#ordens", label: "Ordens de serviço", icon: "list" },
-  { to: "/#servicos", label: "Nova ordem", icon: "plus" },
-  { to: "/acompanhar", label: "Acompanhar pedido", icon: "track" },
+  { key: "overview", to: "/gerenciamento", label: "Visão geral", icon: "grid" },
+  { key: "orders", to: "/gerenciamento#ordens", label: "Ordens de serviço", icon: "list" },
+  { key: "new", to: "/gerenciamento/nova-ordem", label: "Nova ordem", icon: "plus" },
+  { key: "track", to: "/acompanhar", label: "Acompanhar pedido", icon: "track" },
 ];
 
 // Sidebar fixa no desktop; no celular vira gaveta (drawer) com fundo escurecido.
-export function Sidebar({ id, open, onClose, active = "#visao-geral" }) {
+export function Sidebar({ id, open, onClose, onLogout, active = "overview" }) {
   const closeRef = useRef(null);
 
   // Ao abrir a gaveta, o foco vai para o botão de fechar; Esc fecha.
@@ -47,29 +47,18 @@ export function Sidebar({ id, open, onClose, active = "#visao-geral" }) {
         <nav className="v1-sidebar__nav">
           <ul>
             {ITEMS.map((item) => {
-              const content = (
-                <>
-                  <Icon name={item.icon} size={18} />
-                  {item.label}
-                </>
-              );
-              const isActive = item.href === active;
+              const isActive = item.key === active;
               return (
-                <li key={item.label}>
-                  {item.href ? (
-                    <a
-                      href={item.href}
-                      className={`v1-sidebar__link ${isActive ? "is-active" : ""}`}
-                      aria-current={isActive ? "location" : undefined}
-                      onClick={onClose}
-                    >
-                      {content}
-                    </a>
-                  ) : (
-                    <Link to={item.to} className="v1-sidebar__link">
-                      {content}
-                    </Link>
-                  )}
+                <li key={item.key}>
+                  <Link
+                    to={item.to}
+                    className={`v1-sidebar__link ${isActive ? "is-active" : ""}`}
+                    aria-current={isActive ? "page" : undefined}
+                    onClick={onClose}
+                  >
+                    <Icon name={item.icon} size={18} />
+                    {item.label}
+                  </Link>
                 </li>
               );
             })}
@@ -77,10 +66,10 @@ export function Sidebar({ id, open, onClose, active = "#visao-geral" }) {
         </nav>
 
         <div className="v1-sidebar__foot">
-          <Link to="/login" className="v1-sidebar__link">
+          <button type="button" className="v1-sidebar__link v1-sidebar__logout" onClick={onLogout}>
             <Icon name="logout" size={18} />
             Sair
-          </Link>
+          </button>
         </div>
       </aside>
     </>

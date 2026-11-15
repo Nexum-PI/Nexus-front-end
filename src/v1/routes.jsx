@@ -1,10 +1,13 @@
 import { useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
+import { AuthProvider } from "./auth/AuthProvider";
+import { RequireStaff } from "./auth/RequireStaff";
 import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
 import { Management } from "./pages/Management";
+import { NewOrder } from "./pages/NewOrder";
 import { ServiceDetails } from "./pages/ServiceDetails";
-import { ServiceOrder } from "./pages/ServiceOrder";
+import { ServicePage } from "./pages/ServicePage";
 import { TrackOrder } from "./pages/TrackOrder";
 import "./styles/tokens.css";
 import "./styles/base.css";
@@ -27,44 +30,53 @@ function ScrollManager() {
   return null;
 }
 
-// Rotas da v1. Mesmos caminhos das telas atuais: nenhuma rota foi removida.
+const SERVICE_SLUGS = ["lavagem-premium", "pintura-restauracao", "troca-solado", "customizacao"];
+
+// Rotas da v1. Mesmos caminhos das telas atuais (nenhuma foi removida),
+// mais /gerenciamento/nova-ordem.
+//
+// Público: Home, páginas de serviço, acompanhar pedido e login.
+// Equipe (exige login): painel e nova ordem.
 export default function V1Routes() {
   return (
-    <>
+    <AuthProvider>
       <ScrollManager />
       <Routes>
         <Route path="/" element={<Home />} />
-
-        {/* Login da equipe (o cliente não tem conta: consulta pelo código do pedido) */}
         <Route path="/login" element={<Login />} />
 
-        {/* Jornada do cliente */}
+        {/* Jornada do cliente: consulta pelo código, sem conta */}
         <Route path="/acompanhar" element={<TrackOrder />} />
         <Route path="/acompanhar/:code" element={<TrackOrder />} />
 
-        {/* Jornadas da equipe */}
-        <Route path="/gerenciamento" element={<Management />} />
-        {/* key: cada serviço começa com o formulário limpo */}
-        <Route
-          path="/servicos/lavagem-premium"
-          element={<ServiceOrder key="lavagem-premium" slug="lavagem-premium" />}
-        />
-        <Route
-          path="/servicos/pintura-restauracao"
-          element={<ServiceOrder key="pintura-restauracao" slug="pintura-restauracao" />}
-        />
-        <Route
-          path="/servicos/troca-solado"
-          element={<ServiceOrder key="troca-solado" slug="troca-solado" />}
-        />
-        <Route
-          path="/servicos/customizacao"
-          element={<ServiceOrder key="customizacao" slug="customizacao" />}
-        />
-
-        {/* Serviços sem página própria */}
+        {/* Páginas públicas de serviço (só apresentação, sem formulário) */}
+        {SERVICE_SLUGS.map((slug) => (
+          <Route
+            key={slug}
+            path={`/servicos/${slug}`}
+            element={<ServicePage key={slug} slug={slug} />}
+          />
+        ))}
         <Route path="/servicos/:slug" element={<ServiceDetails />} />
+
+        {/* Equipe: protegido por login */}
+        <Route
+          path="/gerenciamento"
+          element={
+            <RequireStaff>
+              <Management />
+            </RequireStaff>
+          }
+        />
+        <Route
+          path="/gerenciamento/nova-ordem"
+          element={
+            <RequireStaff>
+              <NewOrder />
+            </RequireStaff>
+          }
+        />
       </Routes>
-    </>
+    </AuthProvider>
   );
 }

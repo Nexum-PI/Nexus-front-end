@@ -115,3 +115,11 @@
     display: none;
   }
 }
+
+.v1-login__notice {
+  padding: var(--s-3) var(--s-4);
+  border: 1px solid var(--line-strong);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--r-md);
+  font-size: var(--text-sm);
+}

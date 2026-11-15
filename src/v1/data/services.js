@@ -1,4 +1,5 @@
-// Serviços da loja: alimentam os painéis da Home e as páginas de ordem de serviço.
+// Serviços da loja: alimentam os painéis da Home, as páginas públicas de cada
+// serviço e a tela "Nova ordem" do painel da equipe.
 // Os campos do formulário seguem as telas atuais (src/pages/*Service.jsx):
 // mesmos nomes, mesma validação e mesma mensagem ao registrar.
 
@@ -6,6 +7,13 @@ export const SERVICES = [
   {
     number: "01",
     slug: "lavagem-premium",
+    // O que está incluso (página pública do serviço). Ajuste com a loja.
+    includes: [
+      "Avaliação do material antes de começar",
+      "Limpeza de cabedal, entressola e sola",
+      "Higienização interna e da palmilha",
+      "Cadarços lavados ou trocados",
+    ],
     path: "/servicos/lavagem-premium",
     title: "Lavagem Premium",
     line: "Higienização profunda, por dentro e por fora, respeitando cada material.",
@@ -20,6 +28,13 @@ export const SERVICES = [
   {
     number: "02",
     slug: "pintura-restauracao",
+    // O que está incluso (página pública do serviço). Ajuste com a loja.
+    includes: [
+      "Avaliação da cor e do desgaste",
+      "Retoque ou repintura adequada ao material",
+      "Correção de arranhões e partes descascadas",
+      "Acabamento selado para durar no uso",
+    ],
     path: "/servicos/pintura-restauracao",
     title: "Pintura & Restauração",
     line: "Cor recuperada, desgaste corrigido e acabamento de volta ao original.",
@@ -34,6 +49,13 @@ export const SERVICES = [
   {
     number: "03",
     slug: "troca-solado",
+    // O que está incluso (página pública do serviço). Ajuste com a loja.
+    includes: [
+      "Avaliação da estrutura do tênis",
+      "Remoção da sola antiga e preparo da base",
+      "Sola nova colada e conferida",
+      "Revisão de caimento e acabamento",
+    ],
     path: "/servicos/troca-solado",
     title: "Troca de Solado",
     line: "Sola nova, estrutura firme e o mesmo caimento de antes.",
@@ -48,6 +70,13 @@ export const SERVICES = [
   {
     number: "04",
     slug: "customizacao",
+    // O que está incluso (página pública do serviço). Ajuste com a loja.
+    includes: [
+      "Conversa para entender a sua ideia",
+      "Proposta do desenho antes de começar",
+      "Pintura, bordado ou troca de peças à mão",
+      "Acabamento selado para durar no uso",
+    ],
     path: "/servicos/customizacao",
     title: "Customização",
     line: "Um par único, desenhado com você e feito à mão.",

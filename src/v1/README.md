@@ -38,6 +38,20 @@ As telas são carregadas sob demanda, então o CSS de uma versão não vaza na o
    O ano de abertura (2023) vem do selo.
 5. **Instagram** (opcional) em `STORE.instagram`.
 
+## Quem acessa o quê
+
+| Público (sem login) | Equipe (exige login) |
+| --- | --- |
+| `/` Home | `/gerenciamento` painel |
+| `/servicos/...` apresentação de cada serviço | `/gerenciamento/nova-ordem` abertura de ordem |
+| `/acompanhar` e `/acompanhar/:code` consulta pelo código | |
+| `/login` | |
+
+As rotas da equipe passam por `auth/RequireStaff.jsx`. **O login ainda é simulado**
+(`auth/AuthProvider.jsx`): isso só esconde as telas. A segurança de verdade vem
+do back-end, que deve exigir o token da equipe para criar pedidos, listar
+clientes e mudar status.
+
 ## Regras mantidas
 
 - Status seguem o enum do banco (`src/data/orders.js`); "Atrasado" e "Prazo

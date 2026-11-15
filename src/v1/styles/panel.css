@@ -718,3 +718,17 @@
 .v1-sidebar .v1-wordmark__sub {
   display: block;
 }
+
+/* Espaço no lugar da busca quando a tela não tem busca */
+.v1-topbar__spacer {
+  flex: 1;
+}
+
+/* "Sair" é um botão (encerra a sessão), com a mesma cara dos links */
+.v1-sidebar__logout {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}

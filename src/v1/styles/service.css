@@ -74,57 +74,189 @@
   }
 }
 
-/* ---------- Formulário ---------- */
-.v1-svc-form-wrap {
+/* ---------- O que está incluso ---------- */
+.v1-svc-detail {
   display: grid;
-  grid-template-columns: 4fr 8fr;
-  gap: clamp(32px, 5vw, 80px);
+  grid-template-columns: 5fr 7fr;
+  gap: clamp(32px, 6vw, 96px);
   padding-block: var(--section-y);
-  max-width: calc(1120px + var(--gutter) * 2);
 }
-
-.v1-svc-form-head {
+.v1-svc-detail__head {
   display: grid;
-  gap: var(--s-3);
+  gap: var(--s-4);
   align-content: start;
 }
-.v1-svc-form-title {
+.v1-svc-detail__title {
   font-size: var(--display-sm);
 }
-.v1-svc-form-sub {
-  color: var(--fg-muted);
+.v1-svc-includes {
+  display: grid;
+  border-top: 1px solid var(--line);
+}
+.v1-svc-includes li {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  align-items: baseline;
+  gap: var(--s-4);
+  padding-block: var(--s-5);
+  border-bottom: 1px solid var(--line);
+  font-size: var(--text-lg);
+}
+.v1-svc-includes__num {
+  color: var(--accent);
+  font-size: var(--text-md);
 }
 
-.v1-svc-form {
+/* ---------- Do balcão à entrega ---------- */
+.v1-svc-flow {
   display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: var(--s-5);
-  padding: clamp(20px, 3vw, 40px);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--r-lg);
+  padding-bottom: var(--section-y);
 }
-.v1-svc-form__full {
-  grid-column: 1 / -1;
+.v1-svc-flow__list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--s-3);
 }
-.v1-svc-form__actions {
+.v1-svc-flow__list li {
   display: flex;
   align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-4);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  font-weight: 600;
+}
+.v1-svc-flow__num {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--accent);
+}
+.v1-svc-flow__note {
+  color: var(--fg-muted);
+}
+.v1-svc-flow__note a {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+.v1-svc-final__title {
+  font-size: var(--display-md);
+}
+.v1-svc-others {
+  display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: var(--s-4) var(--s-6);
-  margin-top: var(--s-2);
+  margin-top: var(--s-5);
 }
 
 @media (max-width: 900px) {
-  .v1-svc-form-wrap {
+  .v1-svc-detail {
+    grid-template-columns: 1fr;
+  }
+  .v1-svc-flow__list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 480px) {
+  .v1-svc-flow__list {
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------- Nova ordem (painel da equipe) ---------- */
+.v1-order-back {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: var(--s-2);
+  margin-bottom: var(--s-4);
+  font-size: var(--text-sm);
+  color: var(--fg-muted);
+  text-decoration: none;
+}
+.v1-order-back:hover {
+  color: var(--fg);
+}
+
+.v1-order-picker {
+  margin: 0;
+  min-width: 0;
+}
+.v1-order-picker legend {
+  float: left;
+  width: 100%;
+  margin-bottom: var(--s-4);
+  padding: 0;
+}
+.v1-order-picker__list {
+  clear: both;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--s-3);
+}
+.v1-order-picker__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  min-height: 56px;
+  padding: var(--s-3) var(--s-4);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: var(--text-sm);
+  transition:
+    border-color 200ms ease,
+    background-color 200ms ease;
+}
+.v1-order-picker__item:hover {
+  border-color: var(--fg-faint);
+}
+.v1-order-picker__item.is-active {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+.v1-order-picker__item input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.v1-order-picker__item:has(input:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.v1-order-picker__num {
+  font-family: var(--font-mono);
+  color: var(--accent-ink);
+}
+
+.v1-order-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-5);
+}
+.v1-order-form__full {
+  grid-column: 1 / -1;
+}
+.v1-order-form__actions {
+  display: flex;
+  gap: var(--s-4);
+}
+
+@media (max-width: 900px) {
+  .v1-order-picker__list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
 @media (max-width: 600px) {
-  .v1-svc-form {
+  .v1-order-form {
     grid-template-columns: 1fr;
   }
-  .v1-svc-form__actions .v1-btn {
+  .v1-order-form__actions .v1-btn {
     width: 100%;
   }
 }
