@@ -48,7 +48,7 @@ export const MEDIA = {
     customizacao: slot(
       "Serviço 04 · customização",
       "4/3",
-      "Calçado de camurça caramelo com solado plataforma customizado",
+      "Calçado de camurça caramelo com o solado customizado no mesmo tom",
       { src: "/v1/servicos/customizacao-depois.jpg", position: "50% 62%" },
     ),
   },
@@ -91,10 +91,9 @@ export const MEDIA = {
       id: "solado",
       title: "Troca de sola",
       detail: "Solado novo, colado e conferido na bancada.",
-      // Sem foto de "antes" deste par: usa um solado gasto de outro par como referência
-      before: slot("Antes · troca de sola", "4/5", "Solado gasto e manchado, antes da troca", {
-        src: "/v1/servicos/lavagem-antes.webp",
-        position: "50% 70%",
+      before: slot("Antes · troca de sola", "4/5", "Solado gasto e trincado, antes da troca", {
+        src: "/v1/servicos/solado-antes.jpg",
+        position: "50% 50%",
       }),
       after: slot(
         "Depois · troca de sola",
@@ -111,17 +110,17 @@ export const MEDIA = {
       // e customizacao-depois.jpg). Sem os arquivos, aparece o bloco temporário.
       id: "customizacao",
       title: "Customização",
-      detail: "Solado plataforma aplicado à mão.",
+      detail: "Solado plataforma trocado e tingido no tom da camurça.",
       before: slot(
         "Antes · customização",
         "4/5",
-        "Calçado de camurça caramelo com o solado original",
+        "Calçado de camurça caramelo com solado plataforma branco",
         {
           src: "/v1/servicos/customizacao-antes.jpg",
           position: "40% 70%",
         },
       ),
-      after: slot("Depois · customização", "4/5", "O mesmo calçado com o novo solado plataforma", {
+      after: slot("Depois · customização", "4/5", "O mesmo calçado com o solado no tom caramelo", {
         src: "/v1/servicos/customizacao-depois.jpg",
         position: "40% 70%",
       }),
