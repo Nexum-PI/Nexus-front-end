@@ -14,7 +14,8 @@
   display: flex;
   justify-content: space-between; /* Empurra logo para esquerda e menu para direita */
   align-items: center;
-  padding: 20px 40px;
+  /* Faixa de ponta a ponta, conteúdo alinhado aos 1200px dos cards */
+  padding: 20px max(40px, calc((100% - 1200px) / 2));
   /* Faixa azul da marca, como no guia visual */
   background-color: var(--navy);
   color: var(--cream);

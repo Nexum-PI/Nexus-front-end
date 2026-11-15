@@ -19,6 +19,7 @@
   margin-bottom: 32px;
   flex-wrap: wrap;
   gap: 20px;
+  text-align: left;
 }
 
 .header-titles h1 {
