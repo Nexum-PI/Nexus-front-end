@@ -34,7 +34,7 @@ export function Footer() {
             <ul>
               <li>
                 <a href={mapsLink()} target="_blank" rel="noopener noreferrer">
-                  {address.street} · {address.district}
+                  {address.street} · {address.complement}
                 </a>
               </li>
               <li>{address.city}</li>
@@ -42,6 +42,9 @@ export function Footer() {
                 <a href={whatsappLink()} target="_blank" rel="noopener noreferrer">
                   WhatsApp <span className="v1-nowrap">{STORE.whatsappDisplay}</span>
                 </a>
+              </li>
+              <li>
+                <a href={`mailto:${STORE.email}`}>{STORE.email}</a>
               </li>
               {STORE.instagram && (
                 <li>

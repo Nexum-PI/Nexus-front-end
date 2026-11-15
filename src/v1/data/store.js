@@ -1,29 +1,30 @@
 // Dados da loja usados no site público (v1).
-// Tudo marcado com TODO é placeholder: a loja precisa preencher antes de publicar.
+// Contato, endereço e horários vêm do site atual (acasadotenis.com.br).
+// O que ainda estiver marcado com TODO é placeholder.
 
 export const STORE = {
   name: "A Casa do Tênis",
   system: "NEXUM",
   foundedYear: 2023, // ano que aparece no selo do logo
 
-  // TODO: número real do WhatsApp, só dígitos, com DDI e DDD (ex.: 5511999999999)
-  whatsappNumber: "5500000000000",
-  // TODO: como o número deve aparecer escrito na página
-  whatsappDisplay: "(00) 00000-0000",
+  // WhatsApp: só dígitos, com DDI e DDD
+  whatsappNumber: "5511993485998",
+  whatsappDisplay: "(11) 99348-5998",
+  email: "contato.acasadotenis@gmail.com",
 
-  // TODO: endereço real da loja
   address: {
-    street: "Rua Exemplo, 000",
-    district: "Bairro",
-    city: "Cidade · UF",
-    zip: "00000-000",
+    street: "Avenida Paulista, 2001",
+    complement: "Sobreloja 24",
+    city: "São Paulo · SP",
+    zip: null, // TODO: CEP (opcional; aparece no bloco da loja quando preenchido)
+    // Texto usado para buscar o endereço no Google Maps (mapa e "Como chegar")
+    mapsQuery: "Avenida Paulista 2001 sobreloja 24 São Paulo",
   },
 
-  // TODO: horários reais de funcionamento
   hours: [
-    { days: "Segunda a sexta", time: "10h às 19h" },
+    { days: "Segunda a sexta", time: "08h30 às 18h30" },
     { days: "Sábado", time: "10h às 16h" },
-    { days: "Domingo e feriados", time: "Fechado" },
+    { days: "Domingo", time: "Fechado" },
   ],
 
   // TODO: perfil real (ou deixe null para esconder o link)
@@ -56,7 +57,14 @@ export const SCHEDULE = {
 export const whatsappLink = (text = "") =>
   `https://wa.me/${STORE.whatsappNumber}${text ? `?text=${encodeURIComponent(text)}` : ""}`;
 
+// "Como chegar": abre o Google Maps (no celular, o app) já com a loja.
 export const mapsLink = () =>
-  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-    `${STORE.address.street}, ${STORE.address.district}, ${STORE.address.city}`,
-  )}`;
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(STORE.address.mapsQuery)}`;
+
+// Rotas até a loja a partir da localização do visitante.
+export const directionsLink = () =>
+  `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(STORE.address.mapsQuery)}`;
+
+// Mapa incorporado (não precisa de chave de API).
+export const mapsEmbedUrl = () =>
+  `https://www.google.com/maps?q=${encodeURIComponent(STORE.address.mapsQuery)}&z=16&output=embed`;

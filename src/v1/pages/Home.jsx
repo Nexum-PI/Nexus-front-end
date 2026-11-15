@@ -2,10 +2,10 @@ import { useRef } from "react";
 import { BeforeAfter } from "../components/BeforeAfter";
 import { Hero, ProofStrip } from "../components/Hero";
 import { Icon } from "../components/Icon";
-import { ImageSlot } from "../components/ImageSlot";
 import { ScheduleButton } from "../components/ScheduleButton";
 import { ServicePanel } from "../components/ServicePanel";
 import { SiteLayout } from "../components/SiteLayout";
+import { StoreMap } from "../components/StoreMap";
 import { TestimonialCard } from "../components/TestimonialCard";
 import { TrackForm } from "../components/TrackForm";
 import { useReveal } from "../components/useReveal";
@@ -135,7 +135,7 @@ export function Home() {
         <section className="v1-section" aria-labelledby="v1-store-title">
           <div className="v1-container v1-store">
             <div className="v1-store__media" data-reveal>
-              <ImageSlot slot={MEDIA.store} sizes="(max-width: 900px) 100vw, 55vw" />
+              <StoreMap />
             </div>
             <div className="v1-store__body" data-reveal>
               <p className="v1-kicker">A loja</p>
@@ -148,9 +148,10 @@ export function Home() {
                     <Icon name="pin" size={18} /> Endereço
                   </dt>
                   <dd>
-                    {STORE.address.street}, {STORE.address.district}
+                    {STORE.address.street} · {STORE.address.complement}
                     <br />
-                    {STORE.address.city} · CEP {STORE.address.zip}
+                    {STORE.address.city}
+                    {STORE.address.zip && ` · CEP ${STORE.address.zip}`}
                   </dd>
                 </div>
                 <div>
@@ -170,12 +171,14 @@ export function Home() {
                 </div>
                 <div>
                   <dt>
-                    <Icon name="chat" size={18} /> WhatsApp
+                    <Icon name="chat" size={18} /> Contato
                   </dt>
                   <dd>
                     <a href={whatsappLink()} target="_blank" rel="noopener noreferrer">
                       {STORE.whatsappDisplay}
                     </a>
+                    <br />
+                    <a href={`mailto:${STORE.email}`}>{STORE.email}</a>
                   </dd>
                 </div>
               </dl>
