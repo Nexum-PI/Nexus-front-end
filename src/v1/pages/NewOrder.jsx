@@ -12,6 +12,7 @@ import "../styles/service.css";
 const emptyForm = (fieldName) => ({
   cliente: "",
   telefone: "",
+  cep: "",
   modeloTenis: "",
   [fieldName]: "",
   previsaoEntrega: "",
@@ -73,7 +74,13 @@ function OrderForm({ form }) {
   const id = (name) => `${uid}-${name}`;
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name } = e.target;
+    let { value } = e.target;
+    // CEP com máscara 00000-000
+    if (name === "cep") {
+      const d = value.replace(/\D/g, "").slice(0, 8);
+      value = d.length > 5 ? `${d.slice(0, 5)}-${d.slice(5)}` : d;
+    }
     setFormulario((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -82,6 +89,11 @@ function OrderForm({ form }) {
 
     if (!formulario.cliente || !formulario.modeloTenis) {
       alert("Por favor, preencha o nome do cliente e o modelo do tênis.");
+      return;
+    }
+
+    if (formulario.cep.replace(/\D/g, "").length !== 8) {
+      alert("Por favor, informe o CEP do cliente (8 números).");
       return;
     }
 
@@ -135,6 +147,24 @@ function OrderForm({ form }) {
             onChange={handleChange}
             placeholder="(11) 90000-0000"
             autoComplete="off"
+          />
+        </div>
+
+        <div className="v1-field">
+          <label htmlFor={id("cep")} className="v1-label">
+            CEP do cliente
+          </label>
+          <input
+            id={id("cep")}
+            className="v1-input v1-mono"
+            type="text"
+            inputMode="numeric"
+            name="cep"
+            value={formulario.cep}
+            onChange={handleChange}
+            placeholder="00000-000"
+            autoComplete="off"
+            required
           />
         </div>
 

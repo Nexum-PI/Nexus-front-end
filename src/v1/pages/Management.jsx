@@ -12,6 +12,8 @@ import {
 import { ServiceBars, StatusDonut } from "../components/Charts";
 import { Icon } from "../components/Icon";
 import { KpiCard } from "../components/KpiCard";
+import { RegionHeatmap } from "../components/RegionHeatmap";
+import { brl, orderTotal, revenueOf, slaOf } from "../data/analytics";
 import { PanelLayout } from "../components/PanelLayout";
 import { StatusChip } from "../components/StatusChip";
 import { SERVICES } from "../data/services";
@@ -75,6 +77,10 @@ export function Management() {
     });
   }, [sorted, search, statusFilter, today]);
 
+  const revenue = useMemo(() => revenueOf(orders, SERVICES), [orders]);
+  const sla = useMemo(() => slaOf(orders, isLate, today), [orders, today]);
+  const maxService = Math.max(1, ...revenue.byService.map((r) => r.value));
+
   const handleStatusChange = (code, status) => {
     changeStatus(code, status, "Status atualizado pela equipe");
   };
@@ -128,6 +134,63 @@ export function Management() {
       </section>
 
       {/* Gráficos */}
+      {/* Faturamento e SLA */}
+      <section className="v1-kpis v1-kpis--money" aria-label="Faturamento e SLA">
+        <KpiCard
+          label="Faturamento total"
+          value={brl(revenue.total)}
+          hint="pedidos não cancelados"
+        />
+        <KpiCard
+          label="Recebido"
+          value={brl(revenue.received)}
+          hint="pedidos entregues"
+          tone="green"
+        />
+        <KpiCard label="A receber" value={brl(revenue.open)} hint="pedidos em aberto" />
+        <KpiCard label="Ticket médio" value={brl(revenue.ticket)} hint="por pedido" />
+        <KpiCard
+          label="SLA no prazo"
+          value={sla.rate === null ? "—" : `${sla.rate}%`}
+          hint={
+            sla.finished
+              ? `${sla.onTime} de ${sla.finished} concluídos no prazo · média de ${sla.avgDays.toFixed(1).replace(".", ",")} dias`
+              : "nenhum pedido concluído ainda"
+          }
+          tone={sla.rate !== null && sla.rate < 80 ? "orange" : "green"}
+        />
+      </section>
+
+      <section className="v1-charts" aria-label="Faturamento por serviço e clientes por região">
+        <article className="v1-card">
+          <header className="v1-card__head">
+            <h2 className="v1-card__title">Faturamento por serviço</h2>
+            <span className="v1-card__meta">em reais</span>
+          </header>
+          <ul className="v1-bars">
+            {revenue.byService.map((row) => (
+              <li key={row.label} className="v1-bars__row v1-bars__row--money">
+                <span className="v1-bars__label">{row.label}</span>
+                <span className="v1-bars__track" aria-hidden="true">
+                  <span
+                    className="v1-bars__fill"
+                    style={{ width: `${(row.value / maxService) * 100}%` }}
+                  />
+                </span>
+                <span className="v1-bars__value">{brl(row.value)}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
+        <article className="v1-card">
+          <header className="v1-card__head">
+            <h2 className="v1-card__title">Clientes por região</h2>
+            <span className="v1-card__meta">pelo CEP</span>
+          </header>
+          <RegionHeatmap orders={orders} />
+        </article>
+      </section>
+
       <section className="v1-charts" aria-label="Gráficos">
         <article className="v1-card">
           <header className="v1-card__head">
@@ -182,6 +245,7 @@ export function Management() {
                 <th scope="col">Cliente</th>
                 <th scope="col">Tênis / Serviço</th>
                 <th scope="col">Previsão</th>
+                <th scope="col">Valor</th>
                 <th scope="col">Status</th>
                 <th scope="col">
                   <span className="v1-sr-only">Ações</span>
@@ -205,6 +269,9 @@ export function Management() {
                   </td>
                   <td data-label="Previsão" className="v1-table__date">
                     {formatDate(pedido.expectedAt)}
+                  </td>
+                  <td data-label="Valor" className="v1-table__money">
+                    {brl(orderTotal(pedido))}
                   </td>
                   <td data-label="Status">
                     <div className="v1-table__status">
