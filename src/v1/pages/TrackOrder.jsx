@@ -1,7 +1,8 @@
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useOrders } from "../../context/useOrders";
 import { useAuth } from "../auth/useAuth";
-import { STATUS, findOrderByCode, formatDate, formatDateTime, isLate } from "../../data/orders";
+import { STATUS, formatDate, formatDateTime, isLate, normalizeCode } from "../../data/orders";
+import { api } from "../api/client";
 import { Icon } from "../components/Icon";
 import { SiteLayout } from "../components/SiteLayout";
 import { StatusChip } from "../components/StatusChip";
@@ -14,13 +15,30 @@ import "../styles/track.css";
 // Mostra só o primeiro nome e nenhum preço.
 export function TrackOrder() {
   const { code: codeParam } = useParams();
-  const { orders } = useOrders();
+  // Resultado da consulta pública ao pedidos-service, guardado junto com o código
+  const [result, setResult] = useState({ code: null, order: null, error: null });
   // Equipe logada (veio do painel pelo "Ver andamento"): volta para o painel
   const { session } = useAuth();
 
-  const order = codeParam ? findOrderByCode(orders, codeParam) : null;
-  const notFound = Boolean(codeParam) && !order;
-  const firstName = order?.customerName.split(" ")[0];
+  const code = codeParam ? normalizeCode(codeParam) : null;
+
+  useEffect(() => {
+    if (!code) return undefined;
+    let cancelled = false;
+    api(`/api/orders/${encodeURIComponent(code)}/tracking`, { auth: false })
+      .then((order) => !cancelled && setResult({ code, order, error: null }))
+      .catch((e) => !cancelled && setResult({ code, order: null, error: e }));
+    return () => {
+      cancelled = true;
+    };
+  }, [code]);
+
+  const current = result.code === code ? result : null;
+  const loading = Boolean(code) && !current;
+  const order = current?.order ?? null;
+  const fetchError = current?.error && current.error.status !== 404 ? current.error.message : null;
+  const notFound = Boolean(current?.error) && current.error.status === 404;
+  const firstName = order?.firstName ?? order?.customerName?.split(" ")[0];
 
   return (
     <SiteLayout>
@@ -45,6 +63,22 @@ export function TrackOrder() {
 
           {/* key: o campo recomeça com o código da URL a cada consulta */}
           <TrackForm key={codeParam ?? "vazio"} initialCode={codeParam ?? ""} />
+
+          {loading && (
+            <p className="v1-track__loading" role="status">
+              Consultando o pedido…
+            </p>
+          )}
+
+          {fetchError && (
+            <div className="v1-track__empty" role="alert">
+              <Icon name="alert" size={22} />
+              <div>
+                <h2 className="v1-track__empty-title">Não foi possível consultar agora</h2>
+                <p>{fetchError}</p>
+              </div>
+            </div>
+          )}
 
           {notFound && (
             <div className="v1-track__empty" role="alert">

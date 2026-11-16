@@ -28,7 +28,7 @@ const FILTERS = [
 ];
 
 export function Management() {
-  const { orders, changeStatus } = useOrders();
+  const { orders, changeStatus, error, loading } = useOrders();
 
   // "Hoje" fixo na abertura do painel; usado para calcular atrasos e prazos próximos
   const [today] = useState(() => new Date());
@@ -98,6 +98,13 @@ export function Management() {
       onSearch={setSearch}
       searchPlaceholder="Buscar por código ou cliente"
     >
+      {error && (
+        <p className="v1-panel-alert" role="alert">
+          {error}
+        </p>
+      )}
+      {loading && orders.length === 0 && <p className="v1-panel__date">Carregando pedidos…</p>}
+
       <div id="visao-geral" className="v1-panel__head">
         <div>
           <p className="v1-kicker">Painel da equipe</p>

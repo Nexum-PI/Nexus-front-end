@@ -9,9 +9,7 @@ import "../styles/site.css";
 import "../styles/login.css";
 
 // Área da equipe. Cliente não tem conta.
-// O login ainda é simulado (qualquer e-mail e senha): ele abre a sessão no
-// navegador e libera o painel. Quando o auth-service existir, `handleSubmit`
-// passa a enviar e-mail e senha para a API e guardar o token devolvido.
+// Envia e-mail e senha ao auth-service, que devolve o token (JWT) da sessão.
 export function Login() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -25,24 +23,32 @@ export function Login() {
   const passwordId = useId();
 
   const [formulario, setFormulario] = useState({ email: "", senha: "" });
+  const [erro, setErro] = useState("");
+  const [enviando, setEnviando] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormulario((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!formulario.email || !formulario.senha) {
-      alert("Por favor, preencha o e-mail e a senha.");
+      setErro("Preencha o e-mail e a senha.");
       return;
     }
 
-    // Em um cenário real, aqui entraria a chamada ao auth-service.
-    // Os perfis da equipe (ADMIN, ATTENDANT e TECHNICIAN) são criados pelo administrador.
-    login(formulario.email);
-    navigate(destino, { replace: true });
+    setEnviando(true);
+    setErro("");
+    try {
+      await login(formulario.email.trim(), formulario.senha);
+      navigate(destino, { replace: true });
+    } catch (err) {
+      setErro(err.message);
+    } finally {
+      setEnviando(false);
+    }
   };
 
   return (
@@ -106,8 +112,17 @@ export function Login() {
               />
             </div>
 
-            <button type="submit" className="v1-btn v1-btn--primary v1-btn--block">
-              Entrar
+            {erro && (
+              <p className="v1-login__error" role="alert">
+                {erro}
+              </p>
+            )}
+            <button
+              type="submit"
+              className="v1-btn v1-btn--primary v1-btn--block"
+              disabled={enviando}
+            >
+              {enviando ? "Entrando…" : "Entrar"}
               <Icon name="arrowRight" size={18} />
             </button>
           </form>

@@ -1,42 +1,80 @@
-import { useId, useState } from "react";
+import { useCallback, useEffect, useId, useState } from "react";
+import { api } from "../api/client";
+import { useAuth } from "../auth/useAuth";
 import { Icon } from "../components/Icon";
 import { PanelLayout } from "../components/PanelLayout";
 import { StatusChip } from "../components/StatusChip";
 import { ROLES, ROLE_KEYS } from "../data/staff";
-import { useStaff } from "../staff/useStaff";
 
-// Cadastro de funcionários (área da equipe). Os perfis seguem o auth-service:
-// Administrador, Atendente e Técnico. Ainda sem API: os dados ficam na memória.
-const EMPTY = { name: "", email: "", role: "ATTENDANT" };
+// Cadastro de funcionários (auth-service). Só Administradores gerenciam a equipe;
+// a própria API recusa (403) se outro perfil tentar.
+const EMPTY = { name: "", email: "", role: "ATTENDANT", password: "" };
 
 export function Staff() {
-  const { staff, saveMember, toggleActive } = useStaff();
+  const { session } = useAuth();
+  const [staff, setStaff] = useState([]);
   const [form, setForm] = useState(EMPTY);
   const [search, setSearch] = useState("");
   const [error, setError] = useState("");
+  const [loadError, setLoadError] = useState("");
+  const [saving, setSaving] = useState(false);
   const uid = useId();
   const id = (n) => `${uid}-${n}`;
   const editing = Boolean(form.id);
+
+  const load = useCallback(() => {
+    api("/api/staff")
+      .then((data) => {
+        setStaff(data);
+        setLoadError("");
+      })
+      .catch((e) => setLoadError(e.message));
+  }, []);
+
+  useEffect(() => {
+    load();
+  }, [load]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const email = form.email.trim().toLowerCase();
-    if (!form.name.trim() || !email) {
+    if (!form.name.trim() || !form.email.trim()) {
       setError("Preencha o nome e o e-mail.");
       return;
     }
-    if (staff.some((m) => m.email === email && m.id !== form.id)) {
-      setError("Já existe um funcionário com esse e-mail.");
+    if (!editing && form.password.length < 8) {
+      setError("Defina uma senha inicial com pelo menos 8 caracteres.");
       return;
     }
-    saveMember({ ...form, name: form.name.trim(), email });
-    setError("");
-    setForm(EMPTY);
+    setSaving(true);
+    try {
+      const body = { name: form.name, email: form.email, role: form.role, password: form.password };
+      if (editing) await api(`/api/staff/${form.id}`, { method: "PUT", body });
+      else await api("/api/staff", { method: "POST", body });
+      setError("");
+      setForm(EMPTY);
+      load();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const toggleActive = async (member) => {
+    try {
+      await api(`/api/staff/${member.id}/active`, {
+        method: "PATCH",
+        body: { active: !member.active },
+      });
+      load();
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   const term = search.trim().toLowerCase();
@@ -60,6 +98,12 @@ export function Staff() {
           </p>
         </div>
       </div>
+
+      {loadError && (
+        <p className="v1-panel-alert" role="alert">
+          {loadError}
+        </p>
+      )}
 
       <section className="v1-card" aria-labelledby={id("form-title")}>
         <header className="v1-card__head">
@@ -115,8 +159,23 @@ export function Staff() {
               ))}
             </select>
           </div>
+          <div className="v1-field">
+            <label htmlFor={id("password")} className="v1-label">
+              {editing ? "Nova senha (opcional)" : "Senha inicial"}
+            </label>
+            <input
+              id={id("password")}
+              name="password"
+              type="password"
+              className="v1-input"
+              value={form.password}
+              onChange={handleChange}
+              placeholder={editing ? "Deixe em branco para manter" : "Mínimo 8 caracteres"}
+              autoComplete="new-password"
+            />
+          </div>
           <div className="v1-staff-form__actions">
-            <button type="submit" className="v1-btn v1-btn--primary">
+            <button type="submit" className="v1-btn v1-btn--primary" disabled={saving}>
               <Icon name={editing ? "check" : "plus"} size={18} />
               {editing ? "Salvar" : "Cadastrar"}
             </button>
@@ -140,8 +199,8 @@ export function Staff() {
           )}
         </form>
         <p className="v1-staff-note">
-          A senha de acesso será definida pelo próprio funcionário no primeiro login, quando o
-          sistema de autenticação estiver ligado.
+          O funcionário entra no painel com o e-mail e a senha definidos aqui. Só administradores
+          gerenciam a equipe.
         </p>
       </section>
 
@@ -184,26 +243,24 @@ export function Staff() {
                       type="button"
                       className="v1-table__link"
                       onClick={() => {
-                        setForm({ id: m.id, name: m.name, email: m.email, role: m.role });
+                        setForm({ id: m.id, name: m.name, email: m.email, role: m.role, password: "" });
                         setError("");
                       }}
                     >
                       Editar<span className="v1-sr-only"> {m.name}</span>
                     </button>
-                    <button
-                      type="button"
-                      className="v1-table__link"
-                      onClick={() => toggleActive(m.id)}
-                    >
-                      {m.active ? "Desativar" : "Reativar"}
-                      <span className="v1-sr-only"> {m.name}</span>
-                    </button>
+                    {m.email !== session?.email && (
+                      <button type="button" className="v1-table__link" onClick={() => toggleActive(m)}>
+                        {m.active ? "Desativar" : "Reativar"}
+                        <span className="v1-sr-only"> {m.name}</span>
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          {visible.length === 0 && (
+          {visible.length === 0 && !loadError && (
             <p className="v1-orders__empty">Nenhum funcionário encontrado.</p>
           )}
         </div>

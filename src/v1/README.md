@@ -38,23 +38,28 @@ As telas são carregadas sob demanda, então o CSS de uma versão não vaza na o
    O ano de abertura (2023) vem do selo.
 5. **Instagram** (opcional) em `STORE.instagram`.
 
-## Quem acessa o quê
+## Back-end
+
+O front conversa com o back-end (repositório **Nexum-back-end**) pelo gateway em
+`http://localhost:8080` (mude em `.env` com `VITE_API_URL`).
+
+- **Login da equipe:** auth-service devolve um token (JWT), guardado na sessão do navegador.
+- **Painel, status, nova ordem:** pedidos-service (`/api/orders`).
+- **Equipe:** auth-service (`/api/staff`), só para Administrador.
+- **Acompanhar pedido:** consulta pública `/api/orders/{codigo}/tracking`.
+
+A segurança está no back: sem token válido a API recusa as ações da equipe.
 
 | Público (sem login) | Equipe (exige login) |
 | --- | --- |
 | `/` Home | `/gerenciamento` painel |
 | `/servicos/...` apresentação de cada serviço | `/gerenciamento/nova-ordem` abertura de ordem |
-| `/acompanhar` e `/acompanhar/:code` consulta pelo código | |
+| `/acompanhar` e `/acompanhar/:code` consulta pelo código | `/gerenciamento/equipe` (só Administrador) |
 | `/login` | |
-
-As rotas da equipe passam por `auth/RequireStaff.jsx`. **O login ainda é simulado**
-(`auth/AuthProvider.jsx`): isso só esconde as telas. A segurança de verdade vem
-do back-end, que deve exigir o token da equipe para criar pedidos, listar
-clientes e mudar status.
 
 ## Regras mantidas
 
 - Status seguem o enum do banco (`src/data/orders.js`); "Atrasado" e "Prazo
   próximo" são calculados pela previsão de entrega.
-- Mudar o status no painel reflete na consulta do cliente (`OrdersProvider`).
+- Mudar o status no painel grava no back e reflete na consulta do cliente.
 - O cliente não tem conta: consulta pelo código e vê só o primeiro nome, sem preços.

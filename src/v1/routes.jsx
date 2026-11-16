@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { AuthProvider } from "./auth/AuthProvider";
 import { RequireStaff } from "./auth/RequireStaff";
-import { StaffProvider } from "./staff/StaffProvider";
+import { ApiOrdersProvider } from "./orders/ApiOrdersProvider";
 import { Staff } from "./pages/Staff";
 import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
@@ -42,7 +42,7 @@ const SERVICE_SLUGS = ["lavagem-premium", "pintura-restauracao", "troca-solado",
 export default function V1Routes() {
   return (
     <AuthProvider>
-      <StaffProvider>
+      <ApiOrdersProvider>
         <ScrollManager />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -74,7 +74,7 @@ export default function V1Routes() {
           <Route
             path="/gerenciamento/equipe"
             element={
-              <RequireStaff>
+              <RequireStaff roles={["ADMIN"]}>
                 <Staff />
               </RequireStaff>
             }
@@ -88,7 +88,7 @@ export default function V1Routes() {
             }
           />
         </Routes>
-      </StaffProvider>
+      </ApiOrdersProvider>
     </AuthProvider>
   );
 }

@@ -12,7 +12,7 @@ const ITEMS = [
 ];
 
 // Sidebar fixa no desktop; no celular vira gaveta (drawer) com fundo escurecido.
-export function Sidebar({ id, open, onClose, onLogout, active = "overview" }) {
+export function Sidebar({ id, open, onClose, onLogout, active = "overview", isAdmin = false }) {
   const closeRef = useRef(null);
 
   // Ao abrir a gaveta, o foco vai para o botão de fechar; Esc fecha.
@@ -47,7 +47,7 @@ export function Sidebar({ id, open, onClose, onLogout, active = "overview" }) {
 
         <nav className="v1-sidebar__nav">
           <ul>
-            {ITEMS.map((item) => {
+            {ITEMS.filter((item) => item.key !== "staff" || isAdmin).map((item) => {
               const isActive = item.key === active;
               return (
                 <li key={item.key}>

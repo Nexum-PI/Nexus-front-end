@@ -42,7 +42,10 @@ export function PanelLayout({ active, search, onSearch, searchPlaceholder, child
   };
 
   // Iniciais a partir do nome do e-mail (parte antes do @)
-  const initials = (session?.email?.split("@")[0].replace(/[^a-z0-9]/gi, "") || "EQ")
+  const initials = (session?.name || session?.email?.split("@")[0] || "EQ")
+    .split(/\s+/)
+    .map((p) => p[0])
+    .join("")
     .slice(0, 2)
     .toUpperCase();
 
@@ -57,6 +60,7 @@ export function PanelLayout({ active, search, onSearch, searchPlaceholder, child
         onClose={closeDrawer}
         onLogout={handleLogout}
         active={active}
+        isAdmin={session?.role === "ADMIN"}
       />
 
       <div className="v1-panel__main">

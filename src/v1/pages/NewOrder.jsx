@@ -1,5 +1,6 @@
 import { useId, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
+import { useOrders } from "../../context/useOrders";
 import { Icon } from "../components/Icon";
 import { PanelLayout } from "../components/PanelLayout";
 import { SERVICES, findService } from "../data/services";
@@ -68,7 +69,10 @@ export function NewOrder() {
   );
 }
 
-function OrderForm({ form }) {
+function OrderForm({ service, form }) {
+  const { createOrder } = useOrders();
+  const [enviando, setEnviando] = useState(false);
+  const [criado, setCriado] = useState(null);
   const [formulario, setFormulario] = useState(() => emptyForm(form.field.name));
   const uid = useId();
   const id = (name) => `${uid}-${name}`;
@@ -84,7 +88,7 @@ function OrderForm({ form }) {
     setFormulario((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!formulario.cliente || !formulario.modeloTenis) {
@@ -103,9 +107,37 @@ function OrderForm({ form }) {
       return;
     }
 
-    // Quando o pedidos-service existir, aqui entra o POST /api/orders.
-    alert(form.success(formulario.cliente));
-    setFormulario(emptyForm(form.field.name));
+    if (!formulario.previsaoEntrega) {
+      alert("Por favor, informe a previsão de entrega.");
+      return;
+    }
+
+    // Grava no pedidos-service (POST /api/orders); a API gera o código NX-...
+    setEnviando(true);
+    try {
+      const pedido = await createOrder({
+        customerName: formulario.cliente.trim(),
+        customerPhone: formulario.telefone.trim() || null,
+        customerCep: formulario.cep,
+        expectedAt: formulario.previsaoEntrega,
+        notes: formulario.observacoes.trim() || null,
+        items: [
+          {
+            shoe: formulario.modeloTenis.trim(),
+            service: service.title,
+            price: valor,
+            detail: formulario[form.field.name]?.trim() || null,
+          },
+        ],
+      });
+      setCriado(pedido.code);
+      alert(`${form.success(formulario.cliente)} Código: ${pedido.code}`);
+      setFormulario(emptyForm(form.field.name));
+    } catch (err) {
+      alert(`Não foi possível registrar o pedido: ${err.message}`);
+    } finally {
+      setEnviando(false);
+    }
   };
 
   return (
@@ -246,9 +278,14 @@ function OrderForm({ form }) {
         </div>
 
         <div className="v1-order-form__full v1-order-form__actions">
-          <button type="submit" className="v1-btn v1-btn--primary">
-            Registrar Pedido
+          <button type="submit" className="v1-btn v1-btn--primary" disabled={enviando}>
+            {enviando ? "Registrando…" : "Registrar Pedido"}
           </button>
+          {criado && (
+            <Link to={`/acompanhar/${criado}`} className="v1-link-arrow">
+              Ver pedido {criado} <Icon name="arrowRight" size={16} />
+            </Link>
+          )}
         </div>
       </form>
     </section>
