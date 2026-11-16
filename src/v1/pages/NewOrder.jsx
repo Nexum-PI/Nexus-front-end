@@ -15,8 +15,12 @@ const emptyForm = (fieldName) => ({
   modeloTenis: "",
   [fieldName]: "",
   previsaoEntrega: "",
+  valor: "",
   observacoes: "",
 });
+
+// Aceita "150", "150,00" ou "1.250,50" e devolve número (ou NaN)
+const parseValor = (texto) => Number(String(texto).replace(/\./g, "").replace(",", "."));
 
 export function NewOrder() {
   const [params, setParams] = useSearchParams();
@@ -78,6 +82,12 @@ function OrderForm({ form }) {
 
     if (!formulario.cliente || !formulario.modeloTenis) {
       alert("Por favor, preencha o nome do cliente e o modelo do tênis.");
+      return;
+    }
+
+    const valor = parseValor(formulario.valor);
+    if (!formulario.valor || Number.isNaN(valor) || valor <= 0) {
+      alert("Por favor, informe o valor do serviço.");
       return;
     }
 
@@ -169,6 +179,24 @@ function OrderForm({ form }) {
             name="previsaoEntrega"
             value={formulario.previsaoEntrega}
             onChange={handleChange}
+          />
+        </div>
+
+        <div className="v1-field">
+          <label htmlFor={id("valor")} className="v1-label">
+            Valor (R$)
+          </label>
+          <input
+            id={id("valor")}
+            className="v1-input"
+            type="text"
+            inputMode="decimal"
+            name="valor"
+            value={formulario.valor}
+            onChange={handleChange}
+            placeholder="Ex: 150,00"
+            autoComplete="off"
+            required
           />
         </div>
 
