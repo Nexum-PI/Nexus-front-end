@@ -860,3 +860,33 @@
     grid-template-columns: 1fr 84px;
   }
 }
+
+/* ---------- Mapa de clientes (Leaflet) ---------- */
+.v1-clientmap {
+  display: grid;
+  gap: var(--s-3);
+}
+.v1-clientmap__map {
+  height: 300px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  z-index: 0;
+  background: var(--surface-2);
+}
+.v1-clientmap__foot {
+  font-size: var(--text-sm);
+  color: var(--fg-muted);
+}
+.v1 .v1-map-tip {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  color: #14283d;
+  font-weight: 700;
+  font-size: 11px;
+  text-shadow: 0 0 3px #fff, 0 0 3px #fff;
+}
+.v1 .v1-map-tip::before {
+  display: none;
+}

@@ -12,7 +12,7 @@ import {
 import { ServiceBars, StatusDonut } from "../components/Charts";
 import { Icon } from "../components/Icon";
 import { KpiCard } from "../components/KpiCard";
-import { RegionHeatmap } from "../components/RegionHeatmap";
+import { ClientMap } from "../components/ClientMap";
 import { brl, orderTotal, revenueOf, slaOf } from "../data/analytics";
 import { PanelLayout } from "../components/PanelLayout";
 import { StatusChip } from "../components/StatusChip";
@@ -187,7 +187,7 @@ export function Management() {
             <h2 className="v1-card__title">Clientes por região</h2>
             <span className="v1-card__meta">pelo CEP</span>
           </header>
-          <RegionHeatmap orders={orders} />
+          <ClientMap orders={orders} />
         </article>
       </section>
 
