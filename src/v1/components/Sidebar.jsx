@@ -7,6 +7,7 @@ const ITEMS = [
   { key: "overview", to: "/gerenciamento", label: "Visão geral", icon: "grid" },
   { key: "orders", to: "/gerenciamento#ordens", label: "Ordens de serviço", icon: "list" },
   { key: "new", to: "/gerenciamento/nova-ordem", label: "Nova ordem", icon: "plus" },
+  { key: "staff", to: "/gerenciamento/equipe", label: "Equipe", icon: "users" },
   { key: "track", to: "/acompanhar", label: "Acompanhar pedido", icon: "track" },
 ];
 

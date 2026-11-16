@@ -731,3 +731,64 @@
   cursor: pointer;
   text-align: left;
 }
+
+/* ---------- Equipe (cadastro de funcionários) ---------- */
+.v1-staff-form {
+  display: grid;
+  grid-template-columns: 1.2fr 1.2fr 0.8fr auto;
+  gap: var(--s-4);
+  align-items: end;
+}
+.v1-staff-form .v1-select {
+  width: 100%;
+  min-width: 0;
+}
+.v1-staff-form__actions {
+  display: flex;
+  gap: var(--s-3);
+}
+.v1-staff-form__error {
+  grid-column: 1 / -1;
+  color: var(--tone-red-fg);
+  font-weight: 600;
+  font-size: var(--text-sm);
+}
+.v1-staff-note {
+  margin-top: var(--s-4);
+  font-size: var(--text-sm);
+  color: var(--fg-muted);
+}
+.v1-staff-actions {
+  text-align: right;
+  white-space: nowrap;
+}
+.v1-staff-actions .v1-table__link {
+  width: auto;
+  padding: 0 var(--s-3);
+  background: transparent;
+  cursor: pointer;
+  font-size: var(--text-sm);
+}
+.v1-staff-actions .v1-table__link + .v1-table__link {
+  margin-left: var(--s-2);
+}
+.v1-table tr.is-inactive td {
+  color: var(--fg-faint);
+}
+@media (max-width: 1100px) {
+  .v1-staff-form {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 600px) {
+  .v1-staff-form {
+    grid-template-columns: 1fr;
+  }
+  .v1-staff-actions {
+    white-space: normal;
+  }
+}
+
+.v1-staff-name {
+  font-weight: 600;
+}
