@@ -1,0 +1,305 @@
+/* =========================================================================
+   NEXUM v1 · páginas de serviço (formulários) e serviço sem página
+   Todas as classes começam com .v1-svc- para não vazar para outras telas.
+   ========================================================================= */
+
+.v1-svc-hero {
+  position: relative;
+  display: grid;
+  align-items: end;
+  /* width explícita: sem ela o aspect-ratio + min-height alarga o bloco */
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  min-height: 460px;
+  max-height: 72svh;
+  overflow: hidden;
+  isolation: isolate;
+}
+.v1-svc-hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+.v1-svc-hero__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(var(--scrim), 0.94) 0%, rgba(var(--scrim), 0.4) 50%, rgba(var(--scrim), 0) 80%);
+}
+.v1-svc-hero .v1-slot__label {
+  top: var(--s-5);
+  bottom: auto;
+  left: auto;
+  right: var(--gutter);
+}
+
+.v1-svc-hero__content {
+  display: grid;
+  gap: var(--s-4);
+  justify-items: start;
+  padding-block: var(--s-8) clamp(32px, 5vw, 64px);
+}
+
+.v1-svc-back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-bottom: var(--s-3);
+  font-size: var(--text-sm);
+  color: var(--fg-muted);
+  text-decoration: none;
+}
+.v1-svc-back:hover {
+  color: var(--fg);
+}
+
+.v1-svc-hero__title {
+  font-size: var(--display-lg);
+}
+.v1-svc-hero__line {
+  font-size: var(--text-md);
+  color: var(--fg);
+  opacity: 0.86;
+  max-width: 46ch;
+  margin-bottom: var(--s-3);
+}
+
+@media (max-width: 720px) {
+  .v1-svc-hero {
+    aspect-ratio: 4 / 5;
+    min-height: 0;
+    max-height: none;
+  }
+  .v1-svc-hero__title {
+    font-size: clamp(3rem, 14vw, 4.5rem);
+  }
+}
+
+/* ---------- O que está incluso ---------- */
+.v1-svc-detail {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: clamp(32px, 6vw, 96px);
+  padding-block: var(--section-y);
+}
+.v1-svc-detail__head {
+  display: grid;
+  gap: var(--s-4);
+  align-content: start;
+}
+.v1-svc-detail__title {
+  font-size: var(--display-sm);
+}
+.v1-svc-includes {
+  display: grid;
+  border-top: 1px solid var(--line);
+}
+.v1-svc-includes li {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  align-items: baseline;
+  gap: var(--s-4);
+  padding-block: var(--s-5);
+  border-bottom: 1px solid var(--line);
+  font-size: var(--text-lg);
+}
+.v1-svc-includes__num {
+  color: var(--accent);
+  font-size: var(--text-md);
+}
+
+/* ---------- Do balcão à entrega ---------- */
+.v1-svc-flow {
+  display: grid;
+  gap: var(--s-5);
+  padding-bottom: var(--section-y);
+}
+.v1-svc-flow__list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--s-3);
+}
+.v1-svc-flow__list li {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-4);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  font-weight: 600;
+}
+.v1-svc-flow__num {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--accent);
+}
+.v1-svc-flow__note {
+  color: var(--fg-muted);
+}
+.v1-svc-flow__note a {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+.v1-svc-final__title {
+  font-size: var(--display-md);
+}
+.v1-svc-others {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--s-4) var(--s-6);
+  margin-top: var(--s-5);
+}
+
+@media (max-width: 900px) {
+  .v1-svc-detail {
+    grid-template-columns: 1fr;
+  }
+  .v1-svc-flow__list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 480px) {
+  .v1-svc-flow__list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Nova ordem (painel da equipe) ---------- */
+.v1-order-back {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: var(--s-2);
+  margin-bottom: var(--s-4);
+  font-size: var(--text-sm);
+  color: var(--fg-muted);
+  text-decoration: none;
+}
+.v1-order-back:hover {
+  color: var(--fg);
+}
+
+.v1-order-picker {
+  margin: 0;
+  min-width: 0;
+}
+.v1-order-picker legend {
+  float: left;
+  width: 100%;
+  margin-bottom: var(--s-4);
+  padding: 0;
+}
+.v1-order-picker__list {
+  clear: both;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--s-3);
+}
+.v1-order-picker__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  min-height: 56px;
+  padding: var(--s-3) var(--s-4);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: var(--text-sm);
+  transition:
+    border-color 200ms ease,
+    background-color 200ms ease;
+}
+.v1-order-picker__item:hover {
+  border-color: var(--fg-faint);
+}
+.v1-order-picker__item.is-active {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+.v1-order-picker__item input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.v1-order-picker__item:has(input:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.v1-order-picker__num {
+  font-family: var(--font-mono);
+  color: var(--accent-ink);
+}
+
+.v1-order-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-5);
+}
+.v1-order-form__full {
+  grid-column: 1 / -1;
+}
+.v1-order-form__actions {
+  display: flex;
+  gap: var(--s-4);
+}
+
+@media (max-width: 900px) {
+  .v1-order-picker__list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 600px) {
+  .v1-order-form {
+    grid-template-columns: 1fr;
+  }
+  .v1-order-form__actions .v1-btn {
+    width: 100%;
+  }
+}
+
+/* ---------- Serviço sem página própria ---------- */
+.v1-svc-missing {
+  display: grid;
+  gap: var(--s-5);
+  justify-items: start;
+  padding-block: clamp(56px, 9vw, 120px) var(--section-y);
+}
+.v1-svc-missing__title {
+  font-size: var(--display-md);
+}
+.v1-svc-missing__list {
+  width: 100%;
+  margin-top: var(--s-7);
+  border-top: 1px solid var(--line);
+}
+.v1-svc-missing__link {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  align-items: center;
+  gap: var(--s-4);
+  padding-block: var(--s-5);
+  border-bottom: 1px solid var(--line);
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+.v1-svc-missing__num {
+  color: var(--accent);
+  font-size: var(--text-lg);
+}
+.v1-svc-missing__name {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+}
+.v1-svc-missing__link svg {
+  transition: transform 250ms var(--ease);
+}
+.v1-svc-missing__link:hover svg {
+  transform: translateX(6px);
+}
+.v1-svc-missing__link:hover .v1-svc-missing__name {
+  color: var(--accent);
+}

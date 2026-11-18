@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Logo } from '../components/Logo';
 import './Home.css';
 
 export function Home() {
@@ -36,20 +37,22 @@ export function Home() {
 
   return (
     <div className="home-container">
-      {/* CABEÇALHO ATUALIZADO (com Entrar e Cadastre-se) */}
+      {/* CABEÇALHO: o cliente consulta o pedido pelo código; a equipe entra pela Área da equipe */}
       <header className="home-header">
-        <h2 className="logo">NEXUS<span className="text-accent">.</span>CARE</h2>
+        <Link to="/" className="brand logo">
+          <Logo size={48} />
+          <span className="brand-name">NEXUM</span>
+        </Link>
         <nav className="home-nav">
           <a href="#servicos">Serviços</a>
-          
+
           {/* Link de acesso rápido para o Painel de Gerenciamento */}
-          <Link to="/gerenciamento" className="text-accent" style={{ fontWeight: '700' }}>
+          <Link to="/gerenciamento" style={{ fontWeight: '700' }}>
             Painel Admin
           </Link>
 
-          {/* NOVOS: Login e Cadastro */}
-          <Link to="/login">Entrar</Link>
-          <Link to="/cadastro" className="btn-nav">Cadastre-se</Link>
+          <Link to="/login">Área da equipe</Link>
+          <Link to="/acompanhar" className="btn-nav">Acompanhar pedido</Link>
         </nav>
       </header>
 
@@ -80,7 +83,7 @@ export function Home() {
       </main>
 
       <footer className="home-footer">
-        <p>&copy; 2026 Nexus Sneaker Care. Todos os direitos reservados.</p>
+        <p>&copy; 2026 NEXUM · A Casa do Tênis. Todos os direitos reservados.</p>
       </footer>
     </div>
   );

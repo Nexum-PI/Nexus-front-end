@@ -83,7 +83,7 @@
 
 .auth-card .btn-submit {
   background-color: var(--accent);
-  color: #ffffff;
+  color: var(--on-accent);
   border: none;
   padding: 12px 24px;
   border-radius: 8px;
@@ -116,4 +116,9 @@
 
 .auth-card .auth-switch a:hover {
   text-decoration: underline;
+}
+.auth-card .auth-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
 }

@@ -1,16 +1,22 @@
-# React + Vite
+# NEXUM · front-end (A Casa do Tênis)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React 19 + Vite. A versão atual da interface fica em `src/v1` (veja `src/v1/README.md`).
 
-Currently, two official plugins are available:
+## Rodar
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+1. Suba o back-end (repositório **Nexum-back-end**): `docker compose up -d --build`
+2. No front:
 
-## React Compiler
+   ```bash
+   npm install
+   ```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+   ```bash
+   npm run dev
+   ```
 
-## Expanding the ESLint configuration
+3. Abra http://localhost:5173. Área da equipe: `/login` com o administrador definido no
+   `.env` do back-end.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+A API usada é `http://localhost:8080`. Para mudar, copie `.env.example` para `.env` e
+ajuste `VITE_API_URL`.

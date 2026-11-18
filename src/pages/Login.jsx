@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Logo } from "../components/Logo";
 import "./Auth.css";
 
 export function Login() {
@@ -28,11 +29,12 @@ export function Login() {
       return;
     }
 
-    // Em um cenário real, aqui entraria um fetch() ou axios.post() para a API.
+    // Em um cenário real, aqui entraria um fetch() ou axios.post() para o auth-service.
+    // Os perfis da equipe (ADMIN, ATTENDANT e TECHNICIAN) são criados pelo administrador.
     alert(`Bem-vindo de volta, ${formulario.email}!`);
 
-    // Redireciona para a Home após o login
-    navigate("/");
+    // A equipe segue para o painel de gerenciamento
+    navigate("/gerenciamento");
   };
 
   return (
@@ -42,8 +44,12 @@ export function Login() {
           &larr; Voltar para Home
         </Link>
 
-        <h1>Entrar</h1>
-        <p>Acesse sua conta para abrir e acompanhar seus pedidos.</p>
+        <div className="auth-logo">
+          <Logo size={88} />
+        </div>
+
+        <h1>Área da equipe</h1>
+        <p>Acesso para atendentes, técnicos e administradores.</p>
 
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
@@ -53,7 +59,7 @@ export function Login() {
               name="email"
               value={formulario.email}
               onChange={handleChange}
-              placeholder="voce@email.com"
+              placeholder="voce@nexum.com.br"
             />
           </div>
 
@@ -74,7 +80,7 @@ export function Login() {
         </form>
 
         <p className="auth-switch">
-          Ainda não tem conta? <Link to="/cadastro">Cadastre-se</Link>
+          É cliente? <Link to="/acompanhar">Acompanhe seu pedido</Link>
         </p>
       </div>
     </div>

@@ -1,0 +1,188 @@
+/* =========================================================================
+   NEXUM v1 · tokens
+   Paleta e fontes do guia visual NEXUM v1 (A Casa do Tênis):
+     Azul Nexum #14283D · Azul profundo #0E1C2B · Creme #F3E9C6 ·
+     Papel #FAF6E8 · Dourado #C9A24A (único acento)
+     Lilita One (títulos) · Instrument Sans (texto) · JetBrains Mono (códigos)
+   Tudo fica dentro de .v1 para não colidir com as telas antigas (src/pages).
+   ========================================================================= */
+@import url("https://fonts.googleapis.com/css2?family=Lilita+One&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap");
+
+.v1 {
+  /* Marca */
+  --navy: #14283d;
+  --navy-deep: #0e1c2b;
+  --cream: #f3e9c6;
+  --paper: #faf6e8;
+  --gold: #c9a24a;
+  --gold-hover: #d8b35c;
+  --gold-text: #8a6d22; /* dourado escurecido para texto sobre papel/creme */
+
+  /* Tema padrão do site: azul Nexum com texto creme */
+  --bg: var(--navy);
+  --bg-raised: var(--navy-deep);
+  --surface: #1a334d;
+  --surface-2: #213c59;
+  --line: rgba(243, 233, 198, 0.14);
+  --line-strong: rgba(243, 233, 198, 0.3);
+  --fg: var(--cream);
+  --fg-muted: #c9c2a8;
+  --fg-faint: #a29d88;
+
+  /* Destaque único: dourado (CTAs, kickers, números) */
+  --accent: var(--gold);
+  --accent-hover: var(--gold-hover);
+  --accent-ink: var(--gold); /* destaque usado como texto */
+  --on-accent: var(--navy);
+
+  /* Véu sobre fotos (azul profundo, nunca preto) */
+  --scrim: 14, 28, 43;
+
+  /* Bloco temporário de imagem */
+  --slot-bg: #1a334d;
+  --slot-line: rgba(243, 233, 198, 0.05);
+  --slot-glow: rgba(201, 162, 74, 0.12);
+  --slot-label: #a29d88;
+
+  /* Tons de status (chips) sobre azul */
+  --tone-yellow-bg: rgba(217, 165, 33, 0.18);
+  --tone-yellow-fg: #f0cf78;
+  --tone-blue-bg: rgba(110, 165, 230, 0.2);
+  --tone-blue-fg: #b4d1f5;
+  --tone-green-bg: rgba(90, 180, 125, 0.2);
+  --tone-green-fg: #a3dcb8;
+  --tone-gray-bg: rgba(243, 233, 198, 0.1);
+  --tone-gray-fg: #cfc9b4;
+  --tone-red-bg: rgba(230, 95, 95, 0.2);
+  --tone-red-fg: #f6b1b1;
+  --tone-orange-bg: rgba(236, 146, 64, 0.2);
+  --tone-orange-fg: #f5c18e;
+
+  /* Tipografia (guia: Lilita One só em títulos de destaque) */
+  --font-display: "Lilita One", "Instrument Sans", system-ui, sans-serif;
+  --font-sans: "Instrument Sans", system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+
+  --text-xs: 0.75rem; /* 12 */
+  --text-sm: 0.875rem; /* 14 */
+  --text-base: 1rem; /* 16 */
+  --text-md: 1.125rem; /* 18 */
+  --text-lg: 1.375rem; /* 22 */
+  --display-sm: clamp(1.875rem, 3vw, 2.5rem);
+  --display-md: clamp(2.5rem, 5vw, 4.25rem);
+  --display-lg: clamp(3.25rem, 7.4vw, 7rem);
+
+  /* Espaçamento (escala de 4px) */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+  --s-9: 96px;
+  --s-10: 136px;
+  --section-y: clamp(72px, 10vw, 136px);
+
+  /* Layout */
+  --container: 1240px;
+  --gutter: clamp(16px, 4vw, 48px);
+  --header-h: 68px;
+
+  /* Forma */
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 14px;
+  --shadow-soft: 0 1px 2px rgba(14, 28, 43, 0.2), 0 12px 32px -12px rgba(14, 28, 43, 0.45);
+
+  /* Movimento */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dur: 700ms;
+}
+
+/* =========================================================================
+   Temas de seção (guia: fundo papel com cards brancos; apoio em creme).
+   Redefinem as mesmas variáveis, então os componentes funcionam em qualquer
+   fundo. Use na <section>: className="v1-theme-paper" ou "v1-theme-cream".
+   ========================================================================= */
+.v1 .v1-theme-paper,
+.v1 .v1-theme-cream,
+.v1.v1-panel {
+  --bg: var(--paper);
+  --bg-raised: var(--cream);
+  --surface: #ffffff;
+  --surface-2: #fdfbf3;
+  --line: rgba(20, 40, 61, 0.14);
+  --line-strong: rgba(20, 40, 61, 0.3);
+  --fg: var(--navy);
+  --fg-muted: #3d5268;
+  --fg-faint: #586b7e;
+  --accent-ink: var(--gold-text);
+  --slot-bg: #ece3c4;
+  --slot-line: rgba(20, 40, 61, 0.05);
+  --slot-glow: rgba(201, 162, 74, 0.18);
+  --slot-label: #586b7e;
+  --shadow-soft: 0 1px 2px rgba(20, 40, 61, 0.05), 0 10px 28px -16px rgba(20, 40, 61, 0.22);
+
+  --tone-yellow-bg: #fbf0d2;
+  --tone-yellow-fg: #6e5200;
+  --tone-blue-bg: #e2ecf8;
+  --tone-blue-fg: #1d4b84;
+  --tone-green-bg: #e0f1e6;
+  --tone-green-fg: #1d6340;
+  --tone-gray-bg: #ece8da;
+  --tone-gray-fg: #4b5563;
+  --tone-red-bg: #fbe3e3;
+  --tone-red-fg: #9c2424;
+  --tone-orange-bg: #fde8d4;
+  --tone-orange-fg: #84460c;
+
+  background-color: var(--bg);
+  color: var(--fg);
+}
+
+.v1 .v1-theme-cream {
+  --bg: var(--cream);
+  --accent-ink: #735a1a; /* dourado-texto um pouco mais escuro: contraste AA sobre creme */
+  --bg-raised: var(--paper);
+  --surface: var(--paper);
+  --line: rgba(20, 40, 61, 0.16);
+}
+
+/* =========================================================================
+   Painel da equipe: papel com cards brancos (claro) ou azul profundo (escuro)
+   ========================================================================= */
+.v1.v1-panel {
+  --bg-raised: #f1ead3;
+}
+
+.v1.v1-panel[data-theme="dark"] {
+  --bg: var(--navy-deep);
+  --bg-raised: #0a1520;
+  --surface: var(--navy);
+  --surface-2: #1a334d;
+  --line: rgba(243, 233, 198, 0.12);
+  --line-strong: rgba(243, 233, 198, 0.26);
+  --fg: var(--cream);
+  --fg-muted: #c9c2a8;
+  --fg-faint: #a29d88;
+  --accent-ink: var(--gold);
+  --slot-bg: #1a334d;
+  --slot-line: rgba(243, 233, 198, 0.05);
+  --slot-label: #a29d88;
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -16px rgba(0, 0, 0, 0.5);
+
+  --tone-yellow-bg: rgba(217, 165, 33, 0.18);
+  --tone-yellow-fg: #f0cf78;
+  --tone-blue-bg: rgba(110, 165, 230, 0.2);
+  --tone-blue-fg: #b4d1f5;
+  --tone-green-bg: rgba(90, 180, 125, 0.2);
+  --tone-green-fg: #a3dcb8;
+  --tone-gray-bg: rgba(243, 233, 198, 0.1);
+  --tone-gray-fg: #cfc9b4;
+  --tone-red-bg: rgba(230, 95, 95, 0.2);
+  --tone-red-fg: #f6b1b1;
+  --tone-orange-bg: rgba(236, 146, 64, 0.2);
+  --tone-orange-fg: #f5c18e;
+}

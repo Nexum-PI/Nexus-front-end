@@ -100,7 +100,7 @@
 
 .btn-submit {
   background-color: var(--accent);
-  color: #ffffff;
+  color: var(--on-accent);
   border: none;
   padding: 12px 24px;
   border-radius: 8px;

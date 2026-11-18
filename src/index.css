@@ -1,23 +1,49 @@
+/* =========================================
+   IDENTIDADE VISUAL · NEXUM / A Casa do Tênis (guia visual v1)
+   Todas as páginas usam estas variáveis: mude aqui, muda o site inteiro.
+   ========================================= */
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  /* Paleta da marca */
+  --navy: #14283d; /* Azul Nexum: base, cabeçalho, botão principal */
+  --navy-deep: #0e1c2b; /* Azul profundo: hover, rodapé */
+  --cream: #f3e9c6; /* Creme: texto sobre azul, seções de apoio */
+  --paper: #faf6e8; /* Papel: fundo das páginas */
+  --gold: #c9a24a; /* Dourado: único acento, CTA e destaques */
+  --gold-hover: #d8b35c;
+  --gold-text: #8a6d22; /* Dourado escurecido para texto (contraste) */
 
-  --sans: system-ui, "Segoe UI", Roboto, sans-serif;
-  --heading: system-ui, "Segoe UI", Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  /* Status do pedido */
+  --status-received: #6b7f94;
+  --status-cleaning: #2f6f9f;
+  --status-restoring: #b9822f;
+  --status-ready: #3f7d5a;
+  --status-delivered: #14283d;
+  --status-late: #b23a3a;
+
+  /* Tokens usados pelas páginas */
+  --text: #3d5268;
+  --text-h: var(--navy);
+  --bg: var(--paper);
+  --surface: #ffffff; /* cards e formulários sobre o fundo papel */
+  --border: rgba(20, 40, 61, 0.14);
+  --code-bg: var(--cream);
+  --accent: var(--navy);
+  --accent-hover: var(--navy-deep);
+  --on-accent: var(--cream); /* texto sobre botões azuis */
+  --accent-bg: rgba(20, 40, 61, 0.07);
+  --accent-border: rgba(20, 40, 61, 0.35);
+  --social-bg: var(--surface); /* fundo dos cards */
+  --shadow:
+    rgba(20, 40, 61, 0.1) 0 10px 15px -3px, rgba(20, 40, 61, 0.05) 0 4px 6px -2px;
+
+  /* Tipografia: Lilita One só em títulos (herda o desenho do logo) */
+  --sans: "Instrument Sans", system-ui, "Segoe UI", Roboto, sans-serif;
+  --heading: "Lilita One", "Instrument Sans", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
 
   font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
+  letter-spacing: 0.1px;
+  color-scheme: light;
   color: var(--text);
   background: var(--bg);
   font-synthesis: none;
@@ -30,36 +56,20 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
-
 body {
   margin: 0;
+  background: var(--bg);
 }
 
+::selection {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+/* Ocupa a tela toda: cada página limita a largura do próprio conteúdo */
 #root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
+  width: 100%;
   text-align: center;
-  border-inline: 1px solid var(--border);
   min-height: 100svh;
   display: flex;
   flex-direction: column;
@@ -69,13 +79,14 @@ body {
 h1,
 h2 {
   font-family: var(--heading);
-  font-weight: 500;
+  font-weight: 400;
   color: var(--text-h);
 }
 
 h1 {
   font-size: 56px;
-  letter-spacing: -1.68px;
+  line-height: 1.05;
+  letter-spacing: 0.3px;
   margin: 32px 0;
   @media (max-width: 1024px) {
     font-size: 36px;
@@ -83,12 +94,12 @@ h1 {
   }
 }
 h2 {
-  font-size: 24px;
+  font-size: 26px;
   line-height: 118%;
-  letter-spacing: -0.24px;
+  letter-spacing: 0.2px;
   margin: 0 0 8px;
   @media (max-width: 1024px) {
-    font-size: 20px;
+    font-size: 22px;
   }
 }
 p {
@@ -109,3 +120,36 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+/* =========================================
+   MARCA (logo + nome)
+   ========================================= */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.brand-name {
+  font-family: var(--heading);
+  font-size: 22px;
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+
+/* =========================================
+   STATUS DO PEDIDO (badges compartilhados pelo painel e pelo acompanhamento)
+   Uma cor por status, como no guia. Texto escurecido para manter contraste.
+   ========================================= */
+.badge-received { background-color: #e9edf1; color: #4a5b6d; }
+.badge-cleaning { background-color: #e3eef6; color: #24597f; }
+.badge-restoring { background-color: #fbefd9; color: #7a5314; }
+.badge-ready { background-color: #e4f0e8; color: #2f6045; }
+.badge-delivered { background-color: var(--navy); color: var(--cream); }
+.badge-default { background-color: var(--border); color: var(--text); }
+
+/* Avisos derivados do prazo */
+.badge-warning { background-color: #fbefd9; color: #7a5314; }
+.badge-danger { background-color: #fbeeee; color: #9a2f2f; }
