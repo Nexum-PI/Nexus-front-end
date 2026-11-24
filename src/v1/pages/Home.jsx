@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 import { BeforeAfterCarousel } from "../components/BeforeAfter";
 import { Hero, ProofStrip } from "../components/Hero";
 import { Icon } from "../components/Icon";
@@ -7,7 +8,6 @@ import { ServicePanel } from "../components/ServicePanel";
 import { SiteLayout } from "../components/SiteLayout";
 import { StoreMap } from "../components/StoreMap";
 import { TestimonialCard } from "../components/TestimonialCard";
-import { TrackForm } from "../components/TrackForm";
 import { useReveal } from "../components/useReveal";
 import { MEDIA } from "../data/media";
 import { SERVICES, STEPS } from "../data/services";
@@ -96,7 +96,7 @@ export function Home() {
             </ol>
             <p className="v1-steps__note" data-reveal>
               <Icon name="track" size={18} />
-              Você acompanha cada etapa pelo código do pedido. Sem cadastro, sem senha.
+              Você acompanha cada etapa pela sua conta ou, se preferir, só com o código do pedido.
             </p>
           </div>
         </section>
@@ -122,17 +122,61 @@ export function Home() {
           </div>
         </section>
 
-        {/* 05 · Acompanhe seu pedido */}
-        <section className="v1-section v1-track-band" aria-labelledby="v1-track-title">
-          <div className="v1-container v1-track-band__inner">
-            <div data-reveal>
-              <p className="v1-kicker">Acompanhe seu pedido</p>
-              <h2 id="v1-track-title" className="v1-display v1-section-title">
-                Onde está meu tênis?
+        {/* 05 · Crie sua conta */}
+        <section className="v1-section v1-account" aria-labelledby="v1-account-title">
+          <div className="v1-container v1-account__inner">
+            <div className="v1-account__lead" data-reveal>
+              <p className="v1-kicker">Sua conta</p>
+              <h2 id="v1-account-title" className="v1-display v1-section-title">
+                Cada par na palma da mão.
               </h2>
+              <p className="v1-lead">
+                Crie sua conta gratuita e acompanhe todos os seus pedidos em um só lugar.
+              </p>
             </div>
-            <div data-reveal>
-              <TrackForm />
+
+            <div className="v1-account__side" data-reveal>
+              <ol className="v1-account__perks">
+                <li>
+                  <span className="v1-display" aria-hidden="true">
+                    01
+                  </span>
+                  <p>
+                    <strong>Andamento em tempo real.</strong> Veja em que etapa está cada tênis.
+                  </p>
+                </li>
+                <li>
+                  <span className="v1-display" aria-hidden="true">
+                    02
+                  </span>
+                  <p>
+                    <strong>Aviso na hora certa.</strong> Saiba quando o par ficar pronto.
+                  </p>
+                </li>
+                <li>
+                  <span className="v1-display" aria-hidden="true">
+                    03
+                  </span>
+                  <p>
+                    <strong>Histórico completo.</strong> Todos os seus serviços sempre à mão.
+                  </p>
+                </li>
+              </ol>
+
+              <div className="v1-account__actions">
+                <Link to="/cadastro" className="v1-btn v1-btn--primary">
+                  Criar minha conta
+                  <Icon name="arrowRight" size={18} />
+                </Link>
+                <Link to="/login" className="v1-btn v1-btn--outline">
+                  Já tenho conta
+                </Link>
+              </div>
+
+              <p className="v1-account__alt">
+                Prefere não criar conta?{" "}
+                <Link to="/acompanhar">Consulte seu pedido pelo código</Link>
+              </p>
             </div>
           </div>
         </section>

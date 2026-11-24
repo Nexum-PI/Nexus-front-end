@@ -515,15 +515,57 @@
 }
 
 /* ---------- Acompanhe seu pedido ---------- */
-.v1-track-band__inner > div:first-child {
-  display: grid;
-  gap: var(--s-4);
-}
-.v1-track-band__inner {
+/* ---------- Crie sua conta ---------- */
+.v1-account__inner {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--s-7);
-  align-items: end;
+  gap: clamp(32px, 6vw, 96px);
+  align-items: center;
+}
+.v1-account__lead {
+  display: grid;
+  gap: var(--s-4);
+  align-content: start;
+}
+.v1-account__side {
+  display: grid;
+  gap: var(--s-6);
+}
+.v1-account__perks {
+  display: grid;
+  border-top: 1px solid var(--line);
+}
+.v1-account__perks li {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  align-items: baseline;
+  gap: var(--s-4);
+  padding-block: var(--s-4);
+  border-bottom: 1px solid var(--line);
+}
+.v1-account__perks li > span {
+  color: var(--accent);
+  font-size: var(--text-md);
+}
+.v1-account__perks p {
+  color: var(--fg-muted);
+}
+.v1-account__perks strong {
+  color: var(--fg);
+  font-weight: 600;
+}
+.v1-account__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+}
+.v1-account__alt {
+  font-size: var(--text-sm);
+  color: var(--fg-muted);
+}
+.v1-account__alt a {
+  color: var(--fg);
+  font-weight: 600;
 }
 
 .v1-track-form {
@@ -550,7 +592,7 @@
 }
 
 @media (max-width: 900px) {
-  .v1-track-band__inner {
+  .v1-account__inner {
     grid-template-columns: 1fr;
   }
 }
