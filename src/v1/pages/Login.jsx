@@ -4,6 +4,7 @@ import { homeFor } from "../auth/roles";
 import { useAuth } from "../auth/useAuth";
 import { AuthShell } from "../components/AuthShell";
 import { Icon } from "../components/Icon";
+import { ResendConfirmation } from "../components/ResendConfirmation";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -39,6 +40,7 @@ export function Login() {
   const [verSenha, setVerSenha] = useState(false);
   const [capsLock, setCapsLock] = useState(false);
   const [erro, setErro] = useState("");
+  const [pendente, setPendente] = useState(false);
   const [tremer, setTremer] = useState(false);
   const [enviando, setEnviando] = useState(false);
 
@@ -65,6 +67,7 @@ export function Login() {
 
     setEnviando(true);
     setErro("");
+    setPendente(false);
     try {
       const sessao = await login(formulario.email.trim(), formulario.senha);
       // Volta para a tela que tentou abrir só se o perfil tem acesso a ela
@@ -77,6 +80,8 @@ export function Login() {
       navigate(vaiParaAnterior ? destinoAnterior : painel, { replace: true });
     } catch (err) {
       setErro(err.message);
+      // 403 "Confirme seu e-mail": oferece reenviar o link
+      setPendente(err.status === 403 && /confirme seu e-mail/i.test(err.message));
       setTremer(true);
     } finally {
       setEnviando(false);
@@ -187,6 +192,8 @@ export function Login() {
                 {erro}
               </p>
             )}
+
+            {pendente && <ResendConfirmation email={formulario.email.trim()} />}
 
             <button
               type="submit"

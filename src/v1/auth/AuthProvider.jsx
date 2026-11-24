@@ -40,11 +40,23 @@ export function AuthProvider({ children }) {
     return open(data);
   }, []);
 
-  // Cadastro público: sempre cria uma conta de cliente e já entra
-  const register = useCallback(async (payload) => {
-    const data = await api("/api/auth/register", { method: "POST", body: payload, auth: false });
+  // Cadastro público: cria uma conta de cliente pendente. A pessoa só entra depois de abrir
+  // o link enviado por e-mail (confirm), que já devolve o login.
+  const register = useCallback(
+    (payload) => api("/api/auth/register", { method: "POST", body: payload, auth: false }),
+    [],
+  );
+
+  const confirmEmail = useCallback(async (token) => {
+    const data = await api("/api/auth/confirm", { method: "POST", body: { token }, auth: false });
     return open(data);
   }, []);
+
+  const resendConfirmation = useCallback(
+    (email) =>
+      api("/api/auth/resend-confirmation", { method: "POST", body: { email }, auth: false }),
+    [],
+  );
 
   const saveProfile = useCallback(async ({ name, phone, cep }) => {
     const user = await api("/api/auth/me", { method: "PUT", body: { name, phone, cep } });
@@ -63,8 +75,10 @@ export function AuthProvider({ children }) {
   );
 
   const value = useMemo(
-    () => ({ session, login, register, saveProfile, changePassword, logout }),
-    [session, login, register, saveProfile, changePassword, logout],
+    () => ({
+      session, login, register, confirmEmail, resendConfirmation, saveProfile, changePassword, logout,
+    }),
+    [session, login, register, confirmEmail, resendConfirmation, saveProfile, changePassword, logout],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

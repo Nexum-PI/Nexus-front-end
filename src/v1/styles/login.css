@@ -602,3 +602,11 @@
   margin-top: 2px;
   accent-color: var(--accent);
 }
+
+/* ---------- Confirmação de e-mail ---------- */
+.v1-confirm__resend {
+  display: grid;
+  gap: var(--s-2);
+  justify-items: start;
+  margin-block: var(--s-4);
+}

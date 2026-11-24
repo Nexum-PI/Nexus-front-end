@@ -1,8 +1,9 @@
 import { useId, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../auth/useAuth";
 import { AuthShell } from "../components/AuthShell";
 import { Icon } from "../components/Icon";
+import { ResendConfirmation } from "../components/ResendConfirmation";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -35,7 +36,6 @@ const validate = (f) => {
 
 // Cadastro público: cria sempre uma conta de cliente e já entra na área dele.
 export function Register() {
-  const navigate = useNavigate();
   const { register } = useAuth();
   const uid = useId();
   const formRef = useRef(null);
@@ -48,6 +48,7 @@ export function Register() {
   const [erro, setErro] = useState("");
   const [tremer, setTremer] = useState(false);
   const [enviando, setEnviando] = useState(false);
+  const [enviadoPara, setEnviadoPara] = useState(null);
 
   const errors = validate(f);
   const mostrar = (campo) => (tocados[campo] ? errors[campo] : undefined);
@@ -77,7 +78,7 @@ export function Register() {
     setEnviando(true);
     setErro("");
     try {
-      await register({
+      const resposta = await register({
         name: f.nome.trim(),
         email: f.email.trim(),
         phone: f.telefone,
@@ -85,7 +86,8 @@ export function Register() {
         password: f.senha,
         acceptTerms: f.aceite,
       });
-      navigate("/minha-conta", { replace: true });
+      // A conta fica pendente até a pessoa abrir o link enviado por e-mail
+      setEnviadoPara(resposta.email);
     } catch (err) {
       setErro(
         err.status === 409
@@ -138,6 +140,28 @@ export function Register() {
       <Icon name={verSenha ? "eyeOff" : "eye"} size={18} />
     </button>
   );
+
+  if (enviadoPara) {
+    return (
+      <AuthShell demoNote="Com a conta, você acompanha todos os pedidos num só lugar">
+        <p className="v1-kicker v1-login__rise" style={{ "--d": "80ms" }}>Quase lá</p>
+        <h1 className="v1-display v1-login__title v1-login__rise" style={{ "--d": "160ms" }}>
+          Confira seu e-mail
+        </h1>
+        <p className="v1-login__sub v1-login__rise" style={{ "--d": "240ms" }}>
+          Enviamos um link de confirmação para <strong>{enviadoPara}</strong>. Abra o e-mail e
+          clique em &ldquo;Confirmar meu e-mail&rdquo; para ativar a conta. O link vale por 24 horas.
+        </p>
+        <p className="v1-field__hint">
+          <Icon name="mail" size={14} /> Não chegou? Veja a caixa de spam ou peça um novo.
+        </p>
+        <ResendConfirmation email={enviadoPara} startWaiting />
+        <p className="v1-login__switch">
+          Já confirmou? <Link to="/login">Entrar</Link>
+        </p>
+      </AuthShell>
+    );
+  }
 
   return (
     <AuthShell demoNote="Com a conta, você acompanha todos os pedidos num só lugar">

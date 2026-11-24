@@ -6,6 +6,7 @@ import { RequireStaff } from "./auth/RequireStaff";
 import { ApiOrdersProvider } from "./orders/ApiOrdersProvider";
 import { Staff } from "./pages/Staff";
 import { Home } from "./pages/Home";
+import { ConfirmEmail } from "./pages/ConfirmEmail";
 import { Login } from "./pages/Login";
 import { Management } from "./pages/Management";
 import { MyAccount } from "./pages/MyAccount";
@@ -52,6 +53,7 @@ export default function V1Routes() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro" element={<Register />} />
+          <Route path="/confirmar-email" element={<ConfirmEmail />} />
 
           {/* Cliente: só os pedidos da própria conta */}
           <Route
