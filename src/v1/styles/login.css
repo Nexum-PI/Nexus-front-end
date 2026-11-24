@@ -527,6 +527,17 @@
   flex: none;
 }
 
+/* No desktop a foto tem altura da tela e fica parada: se o formulário crescer
+   (erros, aviso de Caps Lock), a foto não estica nem parece dar zoom. */
+@media (min-width: 901px) {
+  .v1-login__media {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    align-self: start;
+  }
+}
+
 /* ---------- Celular e tablet ---------- */
 @media (max-width: 900px) {
   .v1-login {
