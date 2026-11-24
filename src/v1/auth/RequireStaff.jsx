@@ -1,4 +1,5 @@
 import { Navigate, useLocation } from "react-router-dom";
+import { isStaffRole } from "./roles";
 import { useAuth } from "./useAuth";
 
 // Envolve as telas da equipe. Sem sessão, manda para o login e, depois de
@@ -11,6 +12,10 @@ export function RequireStaff({ children, roles }) {
 
   if (!session) {
     return <Navigate to="/login" replace state={{ from: location }} />;
+  }
+  // Cliente logado não entra no painel: vai para a área dele
+  if (!isStaffRole(session.role)) {
+    return <Navigate to="/minha-conta" replace />;
   }
   if (roles && !roles.includes(session.role)) {
     return <Navigate to="/gerenciamento" replace />;

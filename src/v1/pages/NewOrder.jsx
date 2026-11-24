@@ -13,6 +13,7 @@ import "../styles/service.css";
 const emptyForm = (fieldName) => ({
   cliente: "",
   telefone: "",
+  email: "",
   cep: "",
   modeloTenis: "",
   [fieldName]: "",
@@ -118,6 +119,7 @@ function OrderForm({ service, form }) {
       const pedido = await createOrder({
         customerName: formulario.cliente.trim(),
         customerPhone: formulario.telefone.trim() || null,
+        customerEmail: formulario.email.trim() || null,
         customerCep: formulario.cep,
         expectedAt: formulario.previsaoEntrega,
         notes: formulario.observacoes.trim() || null,
@@ -180,6 +182,25 @@ function OrderForm({ service, form }) {
             placeholder="(11) 90000-0000"
             autoComplete="off"
           />
+        </div>
+
+        <div className="v1-field">
+          <label htmlFor={id("email")} className="v1-label">
+            E-mail da conta do cliente (opcional)
+          </label>
+          <input
+            id={id("email")}
+            className="v1-input"
+            type="email"
+            name="email"
+            value={formulario.email}
+            onChange={handleChange}
+            placeholder="cliente@email.com"
+            autoComplete="off"
+          />
+          <p className="v1-field__hint">
+            Se o cliente tem conta, o pedido aparece em &ldquo;Meus pedidos&rdquo; dele.
+          </p>
         </div>
 
         <div className="v1-field">

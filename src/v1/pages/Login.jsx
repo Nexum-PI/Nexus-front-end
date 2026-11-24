@@ -1,17 +1,11 @@
 import { useId, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { homeFor } from "../auth/roles";
 import { useAuth } from "../auth/useAuth";
+import { AuthShell } from "../components/AuthShell";
 import { Icon } from "../components/Icon";
-import { ImageSlot } from "../components/ImageSlot";
-import { Wordmark } from "../components/Wordmark";
-import { MEDIA } from "../data/media";
-import "../styles/site.css";
-import "../styles/login.css";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-// Etapas do card de demonstração (mesma sequência do acompanhamento do cliente)
-const DEMO_STEPS = ["Recebido", "Higienização", "Pronto", "Entregue"];
 
 // Validação no front só para dar retorno rápido a quem digita.
 // Quem decide se a pessoa entra é o auth-service (e-mail, senha e conta ativa).
@@ -19,22 +13,22 @@ const validate = ({ email, senha }) => {
   const errors = {};
   if (!email.trim()) errors.email = "Informe o seu e-mail.";
   else if (!EMAIL_RE.test(email.trim()))
-    errors.email = "Digite um e-mail válido, como nome@acasadotenis.com.br.";
+    errors.email = "Digite um e-mail válido, como nome@email.com.";
   if (!senha) errors.senha = "Informe a sua senha.";
   return errors;
 };
 
-// Área da equipe. Cliente não tem conta.
-// Envia e-mail e senha ao auth-service, que devolve o token (JWT) da sessão.
+// Entrada única: equipe vai para o painel e cliente para a própria conta.
+// Envia e-mail e senha ao auth-service, que devolve o token (JWT) e o perfil.
 export function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const { login } = useAuth();
   // Volta para a tela que a pessoa tentou abrir antes de entrar
   const from = location.state?.from;
-  const destino = from
+  const destinoAnterior = from
     ? `${from.pathname}${from.search ?? ""}${from.hash ?? ""}`
-    : "/gerenciamento";
+    : null;
 
   const uid = useId();
   const emailRef = useRef(null);
@@ -72,8 +66,15 @@ export function Login() {
     setEnviando(true);
     setErro("");
     try {
-      await login(formulario.email.trim(), formulario.senha);
-      navigate(destino, { replace: true });
+      const sessao = await login(formulario.email.trim(), formulario.senha);
+      // Volta para a tela que tentou abrir só se o perfil tem acesso a ela
+      const painel = homeFor(sessao.role);
+      const vaiParaAnterior =
+        destinoAnterior &&
+        (sessao.role === "CLIENT"
+          ? !destinoAnterior.startsWith("/gerenciamento")
+          : destinoAnterior.startsWith("/gerenciamento"));
+      navigate(vaiParaAnterior ? destinoAnterior : painel, { replace: true });
     } catch (err) {
       setErro(err.message);
       setTremer(true);
@@ -86,74 +87,19 @@ export function Login() {
   const senhaErro = mostrar("senha");
 
   return (
-    <div className="v1 v1-site v1-login">
-      <aside className="v1-login__media" aria-label="A Casa do Tênis">
-        <ImageSlot slot={MEDIA.login} fill eager showLabel={false} />
-        <div className="v1-login__veil" aria-hidden="true" />
-        <div className="v1-login__sweep" aria-hidden="true" />
-
-        <div className="v1-login__media-copy">
-          <p className="v1-kicker v1-login__rise" style={{ "--d": "100ms" }}>
-            Bancada
-          </p>
-          <p className="v1-display v1-login__quote v1-login__rise" style={{ "--d": "220ms" }}>
-            Cada par registrado. Cada etapa visível.
-          </p>
-
-          {/* Card de demonstração: o cliente acompanha assim */}
-          <div
-            className="v1-login__demo v1-login__rise"
-            style={{ "--d": "420ms" }}
-            role="img"
-            aria-label="Exemplo do acompanhamento de um pedido, passando de recebido a entregue"
-          >
-            <div className="v1-login__demo-head">
-              <span className="v1-mono v1-login__demo-code">NX-2026-000123</span>
-              <span className="v1-login__demo-chip">
-                {DEMO_STEPS.map((label, i) => (
-                  <span key={label} className={`v1-login__demo-chip-text is-${i + 1}`}>
-                    {label}
-                  </span>
-                ))}
-              </span>
-            </div>
-            <div className="v1-login__demo-track">
-              <span className="v1-login__demo-fill" />
-              {DEMO_STEPS.map((label, i) => (
-                <span key={label} className={`v1-login__demo-dot is-${i + 1}`}>
-                  <i />
-                  <b>{label}</b>
-                </span>
-              ))}
-            </div>
-            <p className="v1-login__demo-note">
-              <Icon name="track" size={14} /> O cliente acompanha cada etapa pelo código do pedido
-            </p>
-          </div>
-        </div>
-      </aside>
-
-      <main className="v1-login__main">
-        <div className="v1-login__top">
-          <Wordmark />
-          <Link to="/" className="v1-login__back">
-            <Icon name="arrowLeft" size={16} /> Voltar ao site
-          </Link>
-        </div>
-
-        <div className="v1-login__panel">
+    <AuthShell demoNote="Acompanhe cada etapa do seu pedido pela sua conta">
           <p className="v1-kicker v1-login__rise" style={{ "--d": "80ms" }}>
-            Área da equipe
+            Sua conta
           </p>
           <h1 className="v1-display v1-login__title v1-login__rise" style={{ "--d": "160ms" }}>
             Entrar
           </h1>
           <p className="v1-login__sub v1-login__rise" style={{ "--d": "240ms" }}>
-            Acesso para atendentes, técnicos e administradores.
+            Clientes e equipe entram por aqui.
           </p>
           {from && (
             <p className="v1-login__notice v1-login__rise" style={{ "--d": "280ms" }} role="status">
-              Entre para acessar o painel da equipe.
+              Entre para continuar.
             </p>
           )}
 
@@ -179,7 +125,7 @@ export function Login() {
                   value={formulario.email}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  placeholder="voce@acasadotenis.com.br"
+                  placeholder="voce@email.com"
                   autoComplete="username"
                   aria-invalid={Boolean(emailErro)}
                   aria-describedby={emailErro ? `${uid}-email-erro` : undefined}
@@ -261,15 +207,13 @@ export function Login() {
           </form>
 
           <p className="v1-login__switch v1-login__rise" style={{ "--d": "400ms" }}>
-            É cliente? <Link to="/acompanhar">Acompanhe seu pedido</Link>
+            Ainda não tem conta? <Link to="/cadastro">Criar conta</Link> · <Link to="/acompanhar">Consultar pelo código</Link>
           </p>
 
           <p className="v1-login__secure v1-login__rise" style={{ "--d": "460ms" }}>
             <Icon name="shield" size={16} />
-            Acesso restrito à equipe. A sessão expira em 10 horas.
+            Conexão protegida. A sessão expira em 10 horas.
           </p>
-        </div>
-      </main>
-    </div>
+    </AuthShell>
   );
 }

@@ -1,13 +1,16 @@
 import { useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { AuthProvider } from "./auth/AuthProvider";
+import { RequireClient } from "./auth/RequireClient";
 import { RequireStaff } from "./auth/RequireStaff";
 import { ApiOrdersProvider } from "./orders/ApiOrdersProvider";
 import { Staff } from "./pages/Staff";
 import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
 import { Management } from "./pages/Management";
+import { MyAccount } from "./pages/MyAccount";
 import { NewOrder } from "./pages/NewOrder";
+import { Register } from "./pages/Register";
 import { ServiceDetails } from "./pages/ServiceDetails";
 import { ServicePage } from "./pages/ServicePage";
 import { TrackOrder } from "./pages/TrackOrder";
@@ -37,7 +40,8 @@ const SERVICE_SLUGS = ["lavagem-premium", "pintura-restauracao", "troca-solado",
 // Rotas da v1. Mesmos caminhos das telas atuais (nenhuma foi removida),
 // mais /gerenciamento/nova-ordem.
 //
-// Público: Home, páginas de serviço, acompanhar pedido e login.
+// Público: Home, páginas de serviço, acompanhar pedido, login e cadastro.
+// Cliente (conta): /minha-conta.
 // Equipe (exige login): painel e nova ordem.
 export default function V1Routes() {
   return (
@@ -47,6 +51,17 @@ export default function V1Routes() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/cadastro" element={<Register />} />
+
+          {/* Cliente: só os pedidos da própria conta */}
+          <Route
+            path="/minha-conta"
+            element={
+              <RequireClient>
+                <MyAccount />
+              </RequireClient>
+            }
+          />
 
           {/* Jornada do cliente: consulta pelo código, sem conta */}
           <Route path="/acompanhar" element={<TrackOrder />} />

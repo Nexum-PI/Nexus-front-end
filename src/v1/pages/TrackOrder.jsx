@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { isStaffRole } from "../auth/roles";
 import { useAuth } from "../auth/useAuth";
 import { STATUS, formatDate, formatDateTime, isLate, normalizeCode } from "../../data/orders";
 import { api } from "../api/client";
@@ -46,8 +47,12 @@ export function TrackOrder() {
         <div className="v1-container v1-track">
           <header className="v1-track__head">
             {session ? (
-              <Link to="/gerenciamento#ordens" className="v1-track__back">
-                <Icon name="arrowLeft" size={16} /> Voltar ao painel
+              <Link
+                to={isStaffRole(session.role) ? "/gerenciamento#ordens" : "/minha-conta"}
+                className="v1-track__back"
+              >
+                <Icon name="arrowLeft" size={16} />{" "}
+                {isStaffRole(session.role) ? "Voltar ao painel" : "Voltar à minha conta"}
               </Link>
             ) : (
               <Link to="/" className="v1-track__back">

@@ -57,16 +57,16 @@ export function Footer() {
           </div>
 
           <nav className="v1-footer__col" aria-label="Equipe e pedidos">
-            <h2 className="v1-footer__title">Pedidos e equipe</h2>
+            <h2 className="v1-footer__title">Pedidos e conta</h2>
             <ul>
               <li>
                 <Link to="/acompanhar">Acompanhar pedido</Link>
               </li>
               <li>
-                <Link to="/login">Área da equipe</Link>
+                <Link to="/cadastro">Criar conta</Link>
               </li>
               <li>
-                <Link to="/gerenciamento">Painel</Link>
+                <Link to="/login">Entrar</Link>
               </li>
             </ul>
           </nav>

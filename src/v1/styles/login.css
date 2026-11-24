@@ -559,3 +559,33 @@
     display: none;
   }
 }
+
+/* ---------- Cadastro ---------- */
+.v1-register__form {
+  gap: var(--s-4);
+}
+.v1-register__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-4);
+}
+@media (max-width: 520px) {
+  .v1-register__row {
+    grid-template-columns: 1fr;
+  }
+}
+.v1-register__check {
+  display: flex;
+  gap: var(--s-3);
+  align-items: flex-start;
+  font-size: var(--text-sm);
+  color: var(--fg-muted);
+  cursor: pointer;
+}
+.v1-register__check input {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: var(--accent);
+}

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { OrdersContext } from "../../context/OrdersContext";
 import { api } from "../api/client";
+import { isStaffRole } from "../auth/roles";
 import { useAuth } from "../auth/useAuth";
 
 // Pedidos vindos do pedidos-service. Usa o mesmo OrdersContext do front, então as
@@ -25,7 +26,8 @@ export function ApiOrdersProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    if (!session) return undefined;
+    // Só a equipe lista pedidos da loja; o cliente usa /api/me/orders na própria área
+    if (!session || !isStaffRole(session.role)) return undefined;
     let cancelled = false;
     api("/api/orders")
       .then((data) => {

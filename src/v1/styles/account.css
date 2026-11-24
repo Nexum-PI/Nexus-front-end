@@ -1,0 +1,206 @@
+/* Área do cliente (/minha-conta) */
+.v1-acc {
+  padding-block: clamp(32px, 5vw, 64px) clamp(56px, 8vw, 96px);
+}
+.v1-acc__hello {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--s-5);
+  margin-bottom: var(--s-8);
+}
+.v1-acc__title {
+  font-size: var(--display-md);
+  margin-top: var(--s-2);
+}
+.v1-acc__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: var(--s-6);
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .v1-acc__grid {
+    grid-template-columns: 1fr;
+  }
+}
+.v1-acc__main,
+.v1-acc__side {
+  display: grid;
+  gap: var(--s-4);
+}
+.v1-acc__h {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+.v1-acc__h--gap {
+  margin-top: var(--s-4);
+}
+.v1-acc-card,
+.v1-acc-box,
+.v1-acc-empty,
+.v1-acc-past {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg, 14px);
+  padding: var(--s-5);
+}
+.v1-acc-card {
+  display: grid;
+  gap: var(--s-4);
+}
+.v1-acc-card__top {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-3);
+  flex-wrap: wrap;
+}
+.v1-acc-card__code {
+  font-size: var(--text-sm);
+  color: var(--fg-muted);
+  text-decoration: none;
+}
+.v1-acc-card__shoe {
+  font-size: 1.5rem;
+  margin-top: 2px;
+}
+.v1-acc-card__svc {
+  font-size: var(--text-sm);
+  color: var(--fg-muted);
+}
+.v1-acc-card__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--line);
+  font-size: var(--text-sm);
+  color: var(--fg-muted);
+}
+.v1-acc-card__foot b {
+  color: var(--fg);
+}
+.v1-acc-ready {
+  display: flex;
+  gap: var(--s-3);
+  align-items: flex-start;
+  padding: var(--s-3) var(--s-4);
+  border-radius: var(--r-md);
+  background: var(--tone-yellow-bg);
+  color: var(--tone-yellow-fg);
+  font-size: var(--text-sm);
+}
+.v1-acc-ready svg {
+  flex: none;
+  margin-top: 2px;
+}
+.v1-acc-empty__title {
+  font-weight: 600;
+  margin-bottom: var(--s-2);
+}
+.v1-acc-empty p:last-child {
+  color: var(--fg-muted);
+  font-size: var(--text-sm);
+}
+.v1-acc-past {
+  padding-block: var(--s-2);
+  display: grid;
+}
+.v1-acc-past li {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: var(--s-4);
+  align-items: center;
+  padding-block: var(--s-3);
+  border-bottom: 1px solid var(--line);
+  font-size: var(--text-sm);
+}
+.v1-acc-past li:last-child {
+  border-bottom: 0;
+}
+@media (max-width: 600px) {
+  .v1-acc-past li {
+    grid-template-columns: 1fr auto;
+  }
+  .v1-acc-past li .v1-chip {
+    display: none;
+  }
+}
+.v1-acc-box__title {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  margin-bottom: var(--s-3);
+}
+.v1-acc-box__text {
+  font-size: var(--text-sm);
+  color: var(--fg-muted);
+}
+.v1-acc-claim {
+  display: flex;
+  gap: var(--s-2);
+  margin-top: var(--s-3);
+}
+.v1-acc-claim .v1-input {
+  min-height: 44px;
+  min-width: 0;
+  font-size: 0.8125rem;
+}
+.v1-acc-data {
+  display: grid;
+  gap: var(--s-3);
+}
+.v1-acc-data dt {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+.v1-acc-data dd {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.v1-acc-links {
+  display: flex;
+  gap: var(--s-3);
+  flex-wrap: wrap;
+  margin-top: var(--s-4);
+  font-size: var(--text-sm);
+}
+.v1-acc-links a,
+.v1-acc-links button {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-weight: 600;
+  color: var(--fg);
+  border-bottom: 1px solid var(--line-strong);
+  cursor: pointer;
+}
+.v1-acc-form {
+  display: grid;
+  gap: var(--s-3);
+}
+.v1-acc-form__actions {
+  display: flex;
+  gap: var(--s-2);
+}
+.v1-acc-msg {
+  margin-top: var(--s-3);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+.v1-acc-msg.is-ok {
+  color: var(--tone-green-fg);
+}
+.v1-acc-msg.is-error {
+  color: var(--tone-red-fg);
+}

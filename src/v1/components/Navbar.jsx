@@ -1,5 +1,7 @@
 import { useEffect, useId, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { homeFor } from "../auth/roles";
+import { useAuth } from "../auth/useAuth";
 import { STORE } from "../data/store";
 import { Icon } from "./Icon";
 import { ScheduleButton } from "./ScheduleButton";
@@ -23,6 +25,11 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const menuId = useId();
   const close = () => setOpen(false);
+  // Visitante: Entrar. Cliente: Minha conta. Equipe: Painel.
+  const { session } = useAuth();
+  const account = session
+    ? { to: homeFor(session.role), label: session.role === "CLIENT" ? "Minha conta" : "Painel" }
+    : { to: "/login", label: "Entrar" };
 
   // Esc fecha o menu; com o menu aberto a página não rola por trás.
   useEffect(() => {
@@ -47,8 +54,8 @@ export function Navbar() {
               {link.label}
             </Link>
           ))}
-          <NavLink to="/login" className="v1-nav__link">
-            Área da equipe
+          <NavLink to={account.to} className="v1-nav__link">
+            {account.label}
           </NavLink>
         </nav>
 
@@ -83,8 +90,8 @@ export function Navbar() {
               </Link>
             </li>
             <li>
-              <Link to="/login" onClick={close} className="v1-nav__drawer-link">
-                Área da equipe
+              <Link to={account.to} onClick={close} className="v1-nav__drawer-link">
+                {account.label}
               </Link>
             </li>
           </ul>
