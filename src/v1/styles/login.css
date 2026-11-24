@@ -568,6 +568,8 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--s-4);
+  /* campo com mensagem de erro não empurra o vizinho */
+  align-items: start;
 }
 @media (max-width: 520px) {
   .v1-register__row {
