@@ -137,6 +137,7 @@ export const MEDIA = {
   login: slot(
     "Área da equipe · bancada de trabalho",
     "4/5",
-    "Bancada de trabalho da loja com ferramentas de restauração",
+    "Vitrine da A Casa do Tênis com o selo da loja no vidro e prateleiras iluminadas ao fundo",
+    { src: "/v1/loja-fachada.webp", position: "62% 50%" },
   ),
 };

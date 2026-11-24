@@ -288,6 +288,12 @@ html:has(.v1-panel[data-theme="dark"]) body {
 .v1-input:hover {
   border-color: var(--fg-faint);
 }
+/* O campo já tem anel próprio (borda dourada + sombra): sem o contorno global,
+   que também tirava o arredondamento do campo ao focar */
+.v1 .v1-input:focus-visible {
+  outline: none;
+  border-radius: var(--r-md);
+}
 .v1-input:focus {
   outline: none;
   border-color: var(--accent);

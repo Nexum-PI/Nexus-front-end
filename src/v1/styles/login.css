@@ -1,5 +1,8 @@
 /* =========================================================================
    NEXUM v1 · Área da equipe (login)
+   Lateral com a foto da loja em movimento lento, card de demonstração
+   animado e formulário com validação. Todo movimento é desligado para quem
+   pede "reduzir movimento" no sistema (veja o final do arquivo).
    ========================================================================= */
 
 .v1-login {
@@ -8,23 +11,64 @@
   min-height: 100svh;
 }
 
+/* ---------- Lateral ---------- */
 .v1-login__media {
   position: relative;
   overflow: hidden;
   isolation: isolate;
+  background: var(--navy-deep);
   border-right: 1px solid var(--line);
 }
-.v1-login__media::after {
-  content: "";
+
+/* Foto com zoom lento (efeito "Ken Burns") */
+.v1-login__media .v1-slot > img {
+  animation: v1-login-kenburns 32s ease-in-out infinite alternate;
+  transform-origin: 62% 50%;
+  filter: saturate(0.85) brightness(0.8);
+}
+@keyframes v1-login-kenburns {
+  from {
+    transform: scale(1.04) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.2) translate3d(-2.5%, -1.5%, 0);
+  }
+}
+
+/* Véu azul: dá leitura ao texto e prende a foto na paleta */
+.v1-login__veil {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: linear-gradient(to top, rgba(var(--scrim), 0.9), rgba(var(--scrim), 0) 55%);
+  background:
+    linear-gradient(to top, rgba(var(--scrim), 0.97) 0%, rgba(var(--scrim), 0.7) 38%, rgba(var(--scrim), 0.25) 75%),
+    linear-gradient(to right, rgba(20, 40, 61, 0.7), rgba(20, 40, 61, 0.1) 70%);
   pointer-events: none;
 }
-.v1-login__media .v1-slot__label {
-  top: var(--s-5);
-  bottom: auto;
+
+/* Faixa de luz dourada que atravessa devagar */
+.v1-login__sweep {
+  position: absolute;
+  inset: -20% -40%;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(201, 162, 74, 0.12) 50%,
+    transparent 60%
+  );
+  animation: v1-login-sweep 11s ease-in-out infinite;
+}
+@keyframes v1-login-sweep {
+  0%,
+  15% {
+    transform: translateX(-35%);
+  }
+  85%,
+  100% {
+    transform: translateX(35%);
+  }
 }
 
 .v1-login__media-copy {
@@ -35,16 +79,237 @@
   z-index: 1;
   display: grid;
   gap: var(--s-4);
+  max-width: 560px;
 }
 .v1-login__quote {
-  font-size: clamp(2.25rem, 4vw, 3.75rem);
+  font-size: clamp(2.25rem, 4vw, 3.5rem);
   max-width: 14ch;
 }
 
+/* ---------- Card de demonstração ---------- */
+.v1-login__demo {
+  --cycle: 12s;
+  margin-top: var(--s-4);
+  padding: var(--s-5);
+  border: 1px solid rgba(243, 233, 198, 0.2);
+  border-radius: var(--r-lg);
+  background: rgba(14, 28, 43, 0.62);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.6);
+  display: grid;
+  gap: var(--s-5);
+  animation: v1-login-float 7s ease-in-out infinite;
+}
+@keyframes v1-login-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.v1-login__demo-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  flex-wrap: wrap;
+}
+.v1-login__demo-code {
+  font-size: var(--text-sm);
+  letter-spacing: 0.04em;
+}
+
+/* Chip com o nome da etapa atual: quatro textos empilhados, um visível por vez */
+.v1-login__demo-chip {
+  position: relative;
+  display: inline-grid;
+  min-width: 118px;
+  min-height: 26px;
+  padding: 2px 12px;
+  border-radius: 999px;
+  background: var(--tone-blue-bg);
+  color: var(--tone-blue-fg);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  place-items: center;
+}
+.v1-login__demo-chip-text {
+  grid-area: 1 / 1;
+  opacity: 0;
+  animation: var(--chip-anim) var(--cycle) linear infinite;
+}
+/* Sem animação (movimento reduzido): mostra a etapa 2 */
+.v1-login__demo-chip-text.is-2 {
+  opacity: 1;
+}
+.v1-login__demo-chip-text.is-1 {
+  --chip-anim: v1-chip-1;
+}
+.v1-login__demo-chip-text.is-2 {
+  --chip-anim: v1-chip-2;
+}
+.v1-login__demo-chip-text.is-3 {
+  --chip-anim: v1-chip-3;
+}
+.v1-login__demo-chip-text.is-4 {
+  --chip-anim: v1-chip-4;
+}
+@keyframes v1-chip-1 {
+  0%, 22% { opacity: 1; }
+  25%, 100% { opacity: 0; }
+}
+@keyframes v1-chip-2 {
+  0%, 22% { opacity: 0; }
+  25%, 47% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+@keyframes v1-chip-3 {
+  0%, 47% { opacity: 0; }
+  50%, 72% { opacity: 1; }
+  75%, 100% { opacity: 0; }
+}
+@keyframes v1-chip-4 {
+  0%, 72% { opacity: 0; }
+  75%, 94% { opacity: 1; }
+  97%, 100% { opacity: 0; }
+}
+
+/* Trilho de progresso */
+.v1-login__demo-track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding-top: 2px;
+}
+.v1-login__demo-track::before,
+.v1-login__demo-fill {
+  content: "";
+  position: absolute;
+  top: 9px;
+  left: 12.5%;
+  height: 2px;
+  border-radius: 2px;
+}
+.v1-login__demo-track::before {
+  right: 12.5%;
+  background: rgba(243, 233, 198, 0.2);
+}
+.v1-login__demo-fill {
+  width: 25%; /* sem animação: etapa 2 */
+  background: var(--gold);
+  animation: v1-demo-fill var(--cycle) linear infinite;
+}
+@keyframes v1-demo-fill {
+  0%, 22% { width: 0; }
+  30%, 47% { width: 25%; }
+  55%, 72% { width: 50%; }
+  80%, 94% { width: 75%; }
+  97%, 100% { width: 0; }
+}
+
+.v1-login__demo-dot {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: var(--s-2);
+  font-size: 11px;
+  color: rgba(243, 233, 198, 0.55);
+  text-align: center;
+}
+.v1-login__demo-dot i {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid rgba(243, 233, 198, 0.3);
+  background: var(--navy);
+}
+.v1-login__demo-dot b {
+  font-weight: 600;
+}
+/* Sem animação: etapas 1 e 2 já concluídas */
+.v1-login__demo-dot.is-1 i,
+.v1-login__demo-dot.is-2 i {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+.v1-login__demo-dot.is-1,
+.v1-login__demo-dot.is-2 {
+  color: var(--cream);
+}
+.v1-login__demo-dot.is-1 i { animation: v1-dot-1 var(--cycle) linear infinite; }
+.v1-login__demo-dot.is-2 i { animation: v1-dot-2 var(--cycle) linear infinite; }
+.v1-login__demo-dot.is-3 i { animation: v1-dot-3 var(--cycle) linear infinite; }
+.v1-login__demo-dot.is-4 i { animation: v1-dot-4 var(--cycle) linear infinite; }
+.v1-login__demo-dot.is-1 { animation: v1-label-1 var(--cycle) linear infinite; }
+.v1-login__demo-dot.is-2 { animation: v1-label-2 var(--cycle) linear infinite; }
+.v1-login__demo-dot.is-3 { animation: v1-label-3 var(--cycle) linear infinite; }
+.v1-login__demo-dot.is-4 { animation: v1-label-4 var(--cycle) linear infinite; }
+
+@keyframes v1-dot-1 {
+  0%, 94% { background: var(--gold); border-color: var(--gold); }
+  97%, 100% { background: var(--navy); border-color: rgba(243, 233, 198, 0.3); }
+}
+@keyframes v1-dot-2 {
+  0%, 22% { background: var(--navy); border-color: rgba(243, 233, 198, 0.3); }
+  30%, 94% { background: var(--gold); border-color: var(--gold); }
+  97%, 100% { background: var(--navy); border-color: rgba(243, 233, 198, 0.3); }
+}
+@keyframes v1-dot-3 {
+  0%, 47% { background: var(--navy); border-color: rgba(243, 233, 198, 0.3); }
+  55%, 94% { background: var(--gold); border-color: var(--gold); }
+  97%, 100% { background: var(--navy); border-color: rgba(243, 233, 198, 0.3); }
+}
+@keyframes v1-dot-4 {
+  0%, 72% { background: var(--navy); border-color: rgba(243, 233, 198, 0.3); }
+  80%, 94% { background: var(--gold); border-color: var(--gold); }
+  97%, 100% { background: var(--navy); border-color: rgba(243, 233, 198, 0.3); }
+}
+@keyframes v1-label-1 {
+  0%, 94% { color: var(--cream); }
+  97%, 100% { color: rgba(243, 233, 198, 0.55); }
+}
+@keyframes v1-label-2 {
+  0%, 22% { color: rgba(243, 233, 198, 0.55); }
+  30%, 94% { color: var(--cream); }
+  97%, 100% { color: rgba(243, 233, 198, 0.55); }
+}
+@keyframes v1-label-3 {
+  0%, 47% { color: rgba(243, 233, 198, 0.55); }
+  55%, 94% { color: var(--cream); }
+  97%, 100% { color: rgba(243, 233, 198, 0.55); }
+}
+@keyframes v1-label-4 {
+  0%, 72% { color: rgba(243, 233, 198, 0.55); }
+  80%, 94% { color: var(--cream); }
+  97%, 100% { color: rgba(243, 233, 198, 0.55); }
+}
+
+.v1-login__demo-note {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: var(--text-xs);
+  color: rgba(243, 233, 198, 0.7);
+}
+.v1-login__demo-note svg {
+  color: var(--gold);
+  flex: none;
+}
+
+/* ---------- Coluna do formulário ---------- */
 .v1-login__main {
+  position: relative;
   display: grid;
   grid-template-rows: auto 1fr;
   padding: var(--s-5) clamp(20px, 5vw, 72px) var(--s-7);
+  background:
+    radial-gradient(60% 40% at 85% 0%, rgba(201, 162, 74, 0.09), transparent 70%),
+    var(--bg);
 }
 
 .v1-login__top {
@@ -62,6 +327,7 @@
   font-size: var(--text-sm);
   color: var(--fg-muted);
   text-decoration: none;
+  transition: color 200ms ease;
 }
 .v1-login__back:hover {
   color: var(--fg);
@@ -91,28 +357,125 @@
   margin-top: var(--s-4);
 }
 
-.v1-login__switch {
-  margin-top: var(--s-3);
-  font-size: var(--text-sm);
-  color: var(--fg-muted);
+/* Entrada em sequência */
+.v1-login__rise {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: v1-login-rise 700ms var(--ease) forwards;
+  animation-delay: var(--d, 0ms);
 }
-.v1-login__switch a {
-  color: var(--fg);
-  font-weight: 600;
+@keyframes v1-login-rise {
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-@media (max-width: 900px) {
-  .v1-login {
-    grid-template-columns: 1fr;
-  }
-  .v1-login__media {
-    aspect-ratio: 16 / 9;
-    border-right: 0;
-    border-bottom: 1px solid var(--line);
-    order: 2;
-  }
-  .v1-login__media-copy {
-    display: none;
+/* Sacudida quando há erro */
+.v1-login__form.is-shake {
+  animation:
+    v1-login-rise 700ms var(--ease) forwards,
+    v1-login-shake 420ms 80ms ease-in-out;
+}
+@keyframes v1-login-shake {
+  0%, 100% { translate: 0; }
+  20% { translate: -8px; }
+  40% { translate: 7px; }
+  60% { translate: -5px; }
+  80% { translate: 3px; }
+}
+
+/* ---------- Campos com ícone ---------- */
+.v1-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.v1-input-wrap__icon {
+  position: absolute;
+  left: 14px;
+  color: var(--fg-faint);
+  pointer-events: none;
+  transition: color 200ms ease;
+}
+.v1-input-wrap:focus-within .v1-input-wrap__icon {
+  color: var(--accent);
+}
+/* Seletores duplos: o base.css carrega depois e tem a mesma especificidade de .v1-input */
+.v1-input.v1-input--icon {
+  padding-left: 46px;
+}
+.v1-input.v1-input--action {
+  padding-right: 52px;
+}
+.v1-input-wrap__action {
+  position: absolute;
+  right: 4px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: var(--r-md);
+  background: transparent;
+  color: var(--fg-muted);
+  cursor: pointer;
+  transition:
+    color 200ms ease,
+    background-color 200ms ease;
+}
+.v1-input-wrap__action:hover {
+  color: var(--fg);
+  background: rgba(243, 233, 198, 0.08);
+}
+
+.v1-field.has-error .v1-input {
+  border-color: var(--tone-red-fg);
+  box-shadow: 0 0 0 3px var(--tone-red-bg);
+}
+.v1-field__error,
+.v1-field__hint {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+.v1-field__error {
+  color: var(--tone-red-fg);
+  animation: v1-login-rise 250ms var(--ease) both;
+}
+.v1-field__hint {
+  color: var(--tone-orange-fg);
+}
+
+/* ---------- Botão e mensagens ---------- */
+.v1-login__submit {
+  min-height: 56px;
+  font-size: 1rem;
+}
+.v1-login__submit svg {
+  transition: transform 250ms var(--ease);
+}
+.v1-login__submit:hover:not(:disabled) svg {
+  transform: translateX(4px);
+}
+.v1-login__submit:disabled {
+  opacity: 0.8;
+  cursor: wait;
+}
+
+.v1-spinner {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid rgba(20, 40, 61, 0.3);
+  border-top-color: var(--navy);
+  animation: v1-login-spin 700ms linear infinite;
+}
+@keyframes v1-login-spin {
+  to {
+    transform: rotate(360deg);
   }
 }
 
@@ -125,6 +488,9 @@
 }
 
 .v1-login__error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-3);
   padding: var(--s-3) var(--s-4);
   border-radius: var(--r-md);
   background: var(--tone-red-bg);
@@ -132,7 +498,64 @@
   font-size: var(--text-sm);
   font-weight: 600;
 }
-.v1-login__form .v1-btn:disabled {
-  opacity: 0.7;
-  cursor: wait;
+.v1-login__error svg {
+  flex: none;
+  margin-top: 1px;
+}
+
+.v1-login__switch {
+  margin-top: var(--s-3);
+  font-size: var(--text-sm);
+  color: var(--fg-muted);
+}
+.v1-login__switch a {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+.v1-login__secure {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--line);
+  font-size: var(--text-xs);
+  color: var(--fg-faint);
+}
+.v1-login__secure svg {
+  color: var(--accent);
+  flex: none;
+}
+
+/* ---------- Celular e tablet ---------- */
+@media (max-width: 900px) {
+  .v1-login {
+    grid-template-columns: 1fr;
+  }
+  /* A foto vira uma faixa abaixo do formulário; o card de demonstração some */
+  .v1-login__media {
+    min-height: 220px;
+    border-right: 0;
+    border-top: 1px solid var(--line);
+    order: 2;
+  }
+  .v1-login__media-copy {
+    display: none;
+  }
+}
+
+/* ---------- Movimento reduzido ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .v1-login *,
+  .v1-login *::before,
+  .v1-login *::after {
+    animation: none !important;
+  }
+  .v1-login__rise {
+    opacity: 1;
+    transform: none;
+  }
+  .v1-login__sweep {
+    display: none;
+  }
 }
