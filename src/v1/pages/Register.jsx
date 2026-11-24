@@ -87,7 +87,13 @@ export function Register() {
       });
       navigate("/minha-conta", { replace: true });
     } catch (err) {
-      setErro(err.status === 409 ? "Já existe uma conta com esse e-mail. Tente entrar." : err.message);
+      setErro(
+        err.status === 409
+          ? "Já existe uma conta com esse e-mail. Tente entrar."
+          : [401, 403, 404].includes(err.status)
+            ? "O cadastro não está disponível neste servidor. Atualize o back-end (git pull e docker compose up -d --build)."
+            : err.message,
+      );
       setTremer(true);
     } finally {
       setEnviando(false);
