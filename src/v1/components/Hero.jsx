@@ -3,7 +3,7 @@ import { MEDIA } from "../data/media";
 import { PROOF } from "../data/store";
 import { Icon } from "./Icon";
 import { ImageSlot } from "./ImageSlot";
-import { ScheduleButton } from "./ScheduleButton";
+import { StoreCta } from "./StoreCta";
 
 // Hero em largura total: a foto ocupa a maior parte da dobra e o texto fica
 // sobreposto no canto inferior. O espaço da foto é fixo (proporção em media.js),
@@ -27,7 +27,7 @@ export function Hero() {
           Higienização, restauração, solado e customização feitos à mão. Um par por vez.
         </p>
         <div className="v1-hero__actions">
-          <ScheduleButton />
+          <StoreCta />
           <Link to="/acompanhar" className="v1-link-arrow">
             Acompanhar pedido <Icon name="arrowRight" size={16} />
           </Link>

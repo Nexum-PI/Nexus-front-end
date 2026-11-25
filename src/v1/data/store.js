@@ -29,8 +29,6 @@ export const STORE = {
 
   // TODO: perfil real (ou deixe null para esconder o link)
   instagram: null,
-
-  announcement: "Retirada e entrega combinadas pelo WhatsApp.",
 };
 
 // Números de prova logo abaixo do hero.
@@ -42,17 +40,6 @@ export const PROOF = [
   { value: "0,0", label: "Nota média das avaliações", placeholder: true },
 ];
 
-const scheduleMessage =
-  "Olá. Quero agendar um atendimento na A Casa do Tênis.";
-
-// CTA principal "Agendar atendimento".
-// Hoje abre o WhatsApp. Para trocar por um fluxo próprio de agendamento,
-// basta mudar `href` para uma rota interna (ex.: "/agendar"): os botões
-// usam <Link> quando o endereço começa com "/".
-export const SCHEDULE = {
-  label: "Agendar atendimento",
-  href: `https://wa.me/${STORE.whatsappNumber}?text=${encodeURIComponent(scheduleMessage)}`,
-};
 
 export const whatsappLink = (text = "") =>
   `https://wa.me/${STORE.whatsappNumber}${text ? `?text=${encodeURIComponent(text)}` : ""}`;

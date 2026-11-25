@@ -18,8 +18,8 @@ As telas são carregadas sob demanda, então o CSS de uma versão não vaza na o
 | O quê | Arquivo |
 | --- | --- |
 | Cores, fontes, espaçamentos | `styles/tokens.css` |
-| WhatsApp, endereço, horários, números de prova, faixa do topo | `data/store.js` |
-| Destino do botão "Agendar atendimento" | `SCHEDULE` em `data/store.js` |
+| WhatsApp, endereço, horários, números de prova | `data/store.js` |
+| Endereço do botão "Como chegar à loja" (CTA principal) | `STORE.address` em `data/store.js` |
 | Fotos (todas) | `data/media.js` |
 | Serviços e "Como funciona" | `data/services.js` |
 | Depoimentos | `data/testimonials.js` |

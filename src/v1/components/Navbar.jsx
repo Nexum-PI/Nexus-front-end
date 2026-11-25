@@ -2,9 +2,7 @@ import { useEffect, useId, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { homeFor } from "../auth/roles";
 import { useAuth } from "../auth/useAuth";
-import { STORE } from "../data/store";
 import { Icon } from "./Icon";
-import { ScheduleButton } from "./ScheduleButton";
 import { Wordmark } from "./Wordmark";
 
 const LINKS = [
@@ -12,14 +10,6 @@ const LINKS = [
   { to: "/#como-funciona", label: "Como funciona" },
   { to: "/#depoimentos", label: "Depoimentos" },
 ];
-
-export function AnnouncementBar() {
-  return (
-    <div className="v1-announce">
-      <p className="v1-container">{STORE.announcement}</p>
-    </div>
-  );
-}
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
@@ -60,7 +50,6 @@ export function Navbar() {
         </nav>
 
         <div className="v1-nav__actions">
-          <ScheduleButton size="sm" className="v1-nav__cta" />
           <button
             type="button"
             className="v1-nav__toggle"
@@ -95,7 +84,6 @@ export function Navbar() {
               </Link>
             </li>
           </ul>
-          <ScheduleButton className="v1-btn--block" />
         </nav>
       </div>
     </header>

@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { Icon } from "../components/Icon";
-import { ScheduleButton } from "../components/ScheduleButton";
+import { StoreCta } from "../components/StoreCta";
 import { SiteLayout } from "../components/SiteLayout";
 import { SERVICES } from "../data/services";
 import "../styles/service.css";
@@ -22,7 +22,7 @@ export function ServiceDetails() {
             Você acessou <span className="v1-mono">/servicos/{slug}</span>. Este serviço ainda não
             tem página própria. Fale com a loja ou veja os serviços abaixo.
           </p>
-          <ScheduleButton />
+          <StoreCta />
 
           <ul className="v1-svc-missing__list">
             {SERVICES.map((service) => (

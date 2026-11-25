@@ -1,29 +1,9 @@
 /* =========================================================================
-   NEXUM v1 · moldura do site público (faixa, navbar, wordmark, rodapé)
+   NEXUM v1 · moldura do site público (navbar, wordmark, rodapé)
    ========================================================================= */
 
 html.v1-no-scroll {
   overflow: hidden;
-}
-
-/* ---------- Faixa de aviso ---------- */
-.v1-announce {
-  background: var(--accent);
-  color: var(--on-accent);
-  font-size: var(--text-xs);
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  text-align: center;
-}
-.v1-announce p {
-  padding-block: 9px;
-}
-@media (max-width: 520px) {
-  .v1-announce {
-    font-size: 11px;
-    letter-spacing: 0.08em;
-  }
 }
 
 /* ---------- Wordmark ---------- */
@@ -169,14 +149,6 @@ html.v1-no-scroll {
 }
 
 @media (max-width: 520px) {
-  /* No celular o CTA continua visível: na navbar em versão curta e no menu */
-  .v1-nav__cta {
-    padding-inline: var(--s-3);
-    font-size: 0.8125rem;
-  }
-  .v1-nav__cta svg {
-    display: none;
-  }
   .v1-wordmark__sub {
     display: none;
   }

@@ -4,7 +4,6 @@ import { formatDate, isLate, normalizeCode } from "../../data/orders";
 import { api } from "../api/client";
 import { useAuth } from "../auth/useAuth";
 import { Icon } from "../components/Icon";
-import { ScheduleButton } from "../components/ScheduleButton";
 import { SiteLayout } from "../components/SiteLayout";
 import { StatusChip } from "../components/StatusChip";
 import { StatusStepper } from "../components/StatusStepper";
@@ -272,7 +271,6 @@ export function MyAccount() {
               <p className="v1-kicker">Área do cliente</p>
               <h1 className="v1-display v1-acc__title">Olá, {firstName(session.name)}.</h1>
             </div>
-            <ScheduleButton label="Agendar atendimento" />
           </header>
 
           <div className="v1-acc__grid">

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { BeforeAfterCarousel } from "../components/BeforeAfter";
 import { Hero, ProofStrip } from "../components/Hero";
 import { Icon } from "../components/Icon";
-import { ScheduleButton } from "../components/ScheduleButton";
+import { StoreCta } from "../components/StoreCta";
 import { ServicePanel } from "../components/ServicePanel";
 import { SiteLayout } from "../components/SiteLayout";
 import { StoreMap } from "../components/StoreMap";
@@ -247,14 +247,14 @@ export function Home() {
         {/* 07 · CTA final */}
         <section className="v1-final" aria-labelledby="v1-final-title">
           <div className="v1-container v1-final__inner" data-reveal>
-            <p className="v1-kicker">Agende seu horário</p>
+            <p className="v1-kicker">Visite a loja</p>
             <h2 id="v1-final-title" className="v1-display v1-final__title">
               Traga o par.
               <br />
               Nós cuidamos do resto.
             </h2>
             <p className="v1-lead">Avaliação na loja e prazo combinado antes de começar.</p>
-            <ScheduleButton />
+            <StoreCta />
           </div>
         </section>
       </div>

@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { Icon } from "../components/Icon";
 import { ImageSlot } from "../components/ImageSlot";
-import { ScheduleButton } from "../components/ScheduleButton";
+import { StoreCta } from "../components/StoreCta";
 import { SiteLayout } from "../components/SiteLayout";
 import { useReveal } from "../components/useReveal";
 import { MEDIA } from "../data/media";
@@ -34,7 +34,7 @@ export function ServicePage({ slug }) {
               {service.title}
             </h1>
             <p className="v1-svc-hero__line">{service.line}</p>
-            <ScheduleButton />
+            <StoreCta />
           </div>
         </section>
 
@@ -89,7 +89,7 @@ export function ServicePage({ slug }) {
             <h2 id="v1-svc-final-title" className="v1-display v1-svc-final__title">
               Traga o par para avaliação.
             </h2>
-            <ScheduleButton />
+            <StoreCta />
             <ul className="v1-svc-others" aria-label="Outros serviços">
               {others.map((s) => (
                 <li key={s.slug}>
