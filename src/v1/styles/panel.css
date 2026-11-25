@@ -434,10 +434,19 @@
   padding: clamp(18px, 2vw, 28px);
   border-bottom: 1px solid var(--line);
 }
-.v1-orders__filter {
+/* Filtros da tabela: status, data (entrada/previsão), dia e ordenação */
+.v1-orders__filters {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
+  flex-wrap: wrap;
   gap: var(--s-3);
+}
+.v1-orders__field {
+  display: grid;
+  gap: var(--s-1);
+}
+.v1-orders__filters .v1-btn--sm {
+  min-height: 44px;
 }
 .v1-select {
   min-height: 44px;
@@ -446,6 +455,14 @@
   padding-right: var(--s-6);
   font-size: var(--text-sm);
   cursor: pointer;
+}
+.v1-select--narrow {
+  min-width: 130px;
+}
+.v1-orders__date {
+  min-height: 44px;
+  width: auto;
+  font-size: var(--text-sm);
 }
 
 .v1-table-wrap {
@@ -654,11 +671,15 @@
   .v1-table__actions::before {
     visibility: hidden;
   }
-  .v1-orders__filter {
+  .v1-orders__filters {
     width: 100%;
   }
-  .v1-select {
-    flex: 1;
+  .v1-orders__field {
+    flex: 1 1 140px;
+  }
+  .v1-select,
+  .v1-orders__date {
+    width: 100%;
     min-width: 0;
   }
 }

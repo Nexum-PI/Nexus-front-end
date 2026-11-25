@@ -8,6 +8,7 @@ import {
   formatDate,
   isDueSoon,
   isLate,
+  toISODate,
 } from "../../data/orders";
 import { ServiceBars, StatusDonut } from "../components/Charts";
 import { Icon } from "../components/Icon";
@@ -27,6 +28,26 @@ const FILTERS = [
   { value: "DUE_SOON", label: "Prazo próximo" },
 ];
 
+// Qual data do pedido vale para o filtro de dia e para a ordenação por data.
+const DATE_FIELDS = [
+  { value: "receivedAt", label: "Entrada" },
+  { value: "expectedAt", label: "Previsão" },
+];
+
+const SORTS = [
+  { value: "PRIORITY", label: "Prioridade (prazo)" },
+  { value: "NEWEST", label: "Mais recentes" },
+  { value: "OLDEST", label: "Mais antigas" },
+];
+
+// Dia (AAAA-MM-DD, no fuso do navegador) da data escolhida.
+// expectedAt já é só o dia; receivedAt é data e hora (ISO).
+const dayOf = (order, field) =>
+  field === "expectedAt" ? order.expectedAt : toISODate(new Date(order.receivedAt));
+
+// Valor comparável da data escolhida (receivedAt mantém a hora para desempatar).
+const dateKey = (order, field) => (field === "expectedAt" ? order.expectedAt : order.receivedAt);
+
 export function Management() {
   const { orders, changeStatus, error, loading } = useOrders();
 
@@ -34,7 +55,16 @@ export function Management() {
   const [today] = useState(() => new Date());
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("ALL");
+  const [dateField, setDateField] = useState("receivedAt");
+  const [day, setDay] = useState("");
+  const [sortBy, setSortBy] = useState("PRIORITY");
   const filterId = useId();
+  const hasFilters = statusFilter !== "ALL" || day !== "" || sortBy !== "PRIORITY";
+  const clearFilters = () => {
+    setStatusFilter("ALL");
+    setDay("");
+    setSortBy("PRIORITY");
+  };
 
   // Atrasado e prazo próximo são derivados da previsão de entrega (expected_at),
   // não são status gravados no banco.
@@ -49,16 +79,21 @@ export function Management() {
     [orders, today],
   );
 
-  // Em andamento primeiro, pelos prazos mais curtos; depois os demais
+  // Prioridade: em andamento primeiro, pelos prazos mais curtos; depois os demais.
+  // Mais recentes / mais antigas: pela data escolhida (entrada ou previsão).
   const sorted = useMemo(
     () =>
       [...orders].sort((a, b) => {
+        if (sortBy !== "PRIORITY") {
+          const diff = dateKey(a, dateField).localeCompare(dateKey(b, dateField));
+          return sortBy === "NEWEST" ? -diff : diff;
+        }
         const aAtivo = ACTIVE_STATUS.includes(a.status);
         const bAtivo = ACTIVE_STATUS.includes(b.status);
         if (aAtivo !== bAtivo) return aAtivo ? -1 : 1;
         return a.expectedAt.localeCompare(b.expectedAt);
       }),
-    [orders],
+    [orders, sortBy, dateField],
   );
 
   const visible = useMemo(() => {
@@ -73,9 +108,10 @@ export function Management() {
         (statusFilter === "LATE" && isLate(order, today)) ||
         (statusFilter === "DUE_SOON" && isDueSoon(order, today)) ||
         order.status === statusFilter;
-      return matchesTerm && matchesStatus;
+      const matchesDay = !day || dayOf(order, dateField) === day;
+      return matchesTerm && matchesStatus && matchesDay;
     });
-  }, [sorted, search, statusFilter, today]);
+  }, [sorted, search, statusFilter, today, day, dateField]);
 
   const revenue = useMemo(() => revenueOf(orders, SERVICES), [orders]);
   const sla = useMemo(() => slaOf(orders, isLate, today), [orders, today]);
@@ -225,22 +261,75 @@ export function Management() {
               {visible.length} de {orders.length} {orders.length === 1 ? "ordem" : "ordens"}
             </p>
           </div>
-          <div className="v1-orders__filter">
-            <label htmlFor={filterId} className="v1-label">
-              Filtrar
-            </label>
-            <select
-              id={filterId}
-              className="v1-input v1-select"
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-            >
-              {FILTERS.map((f) => (
-                <option key={f.value} value={f.value}>
-                  {f.label}
-                </option>
-              ))}
-            </select>
+          <div className="v1-orders__filters" role="group" aria-label="Filtros das ordens">
+            <div className="v1-orders__field">
+              <label htmlFor={`${filterId}-status`} className="v1-label">
+                Status
+              </label>
+              <select
+                id={`${filterId}-status`}
+                className="v1-input v1-select"
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+              >
+                {FILTERS.map((f) => (
+                  <option key={f.value} value={f.value}>
+                    {f.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="v1-orders__field">
+              <label htmlFor={`${filterId}-field`} className="v1-label">
+                Data de
+              </label>
+              <select
+                id={`${filterId}-field`}
+                className="v1-input v1-select v1-select--narrow"
+                value={dateField}
+                onChange={(e) => setDateField(e.target.value)}
+              >
+                {DATE_FIELDS.map((f) => (
+                  <option key={f.value} value={f.value}>
+                    {f.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="v1-orders__field">
+              <label htmlFor={`${filterId}-day`} className="v1-label">
+                Dia
+              </label>
+              <input
+                id={`${filterId}-day`}
+                type="date"
+                className="v1-input v1-orders__date"
+                value={day}
+                onChange={(e) => setDay(e.target.value)}
+              />
+            </div>
+            <div className="v1-orders__field">
+              <label htmlFor={`${filterId}-sort`} className="v1-label">
+                Ordenar
+              </label>
+              <select
+                id={`${filterId}-sort`}
+                className="v1-input v1-select"
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+              >
+                {SORTS.map((f) => (
+                  <option key={f.value} value={f.value}>
+                    {f.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            {hasFilters && (
+              <button type="button" className="v1-btn v1-btn--outline v1-btn--sm" onClick={clearFilters}>
+                Limpar filtros
+              </button>
+            )}
           </div>
         </header>
 
